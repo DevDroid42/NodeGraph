@@ -26,12 +26,12 @@ public class NodeSysTest : MonoBehaviour
 
     public void NumNode0(string data)
     {
-        numNode0.InvokeNum(int.Parse(data));
+        //numNode0.InvokeNum(int.Parse(data));
     }
 
     public void NumNode1(string data)
     {
-        numNode1.InvokeNum(int.Parse(data));
+        //numNode1.InvokeNum(int.Parse(data));
     }
 
     // Update is called once per frame

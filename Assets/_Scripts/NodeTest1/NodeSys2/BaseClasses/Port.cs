@@ -19,7 +19,7 @@ namespace nodeSys2
         private Port connectedPort;
 
         //used to track if there an existing connection to prevent multiple connections to the same port                
-        [JsonProperty] private bool connected = false;
+        private bool connected = false;
 
         public Port(int index)
         {
@@ -42,9 +42,11 @@ namespace nodeSys2
         //re-established
         public void Reconnect()
         {
-            if(connected)
+            if (connectedPort != null)
             {
+                connectedPort.portDel -= Handle;
                 connectedPort.portDel += Handle;
+                connected = true;
             }
         }
 
@@ -56,7 +58,7 @@ namespace nodeSys2
                 connectedPort.portDel -= Handle;
                 connected = false;
             }
-            
+
         }
 
         //wrapper meathod to invoke the delagate without needing the index

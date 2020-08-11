@@ -34,12 +34,14 @@ public class NodeJsonTesting : MonoBehaviour
 
     public void NumNode0(string data)
     {
-        ((NumTestNode)(nodeGraph.nodes[0])).InvokeNum(int.Parse(data));
+        ((NumTestNode)(nodeGraph.nodes[0])).constants[0] = int.Parse(data);
+        nodeGraph.InitGraph();
     }
 
     public void NumNode1(string data)
     {
-        ((NumTestNode)(nodeGraph.nodes[1])).InvokeNum(int.Parse(data));
+        ((NumTestNode)nodeGraph.nodes[1]).constants[0] = int.Parse(data);
+        nodeGraph.InitGraph();
     }
 
     string json = "";

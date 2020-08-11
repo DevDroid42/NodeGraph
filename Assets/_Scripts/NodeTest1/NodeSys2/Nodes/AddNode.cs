@@ -10,6 +10,7 @@ public class AddNode : Node
         nodeDisc = "Add Node";
         inputs = new Port[2];
         outputs = new Port[1];
+
         InitPorts();
     }
 

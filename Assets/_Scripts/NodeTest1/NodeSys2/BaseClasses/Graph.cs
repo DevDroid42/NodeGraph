@@ -22,6 +22,10 @@ namespace nodeSys2
                     nodes[i].outputs[j].Reconnect();
                 }
             }
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                nodes[i].IntialInvoke();
+            }
         }
 
     }

@@ -9,6 +9,14 @@ namespace nodeSys2
     {
         public Port[] inputs;
         public Port[] outputs;
+        public float xPos, yPos;
+        //these are constants that will be set before runtime. Examples are colors, numbers, ip adresses, ect
+        public object[] constants;
+        public string[] constantsDisc;
+        //this is data to be used for debugging. It will contain things such as connection status
+        public object[] statusData;
+        public string[] statusDisc;
+
 
         //the node discription for identification in JSON and GUI 
         [JsonProperty] protected string nodeDisc;
@@ -20,6 +28,9 @@ namespace nodeSys2
             {
                 if (inputs[i] == null)
                     inputs[i] = new Port(i);
+                //we remove the handle first. If there is no handle already attached then it does nothing.
+                //If there is then it prevents dupicates
+                inputs[i].portDel -= Handle;
                 inputs[i].portDel += Handle;
             }
 
@@ -37,7 +48,7 @@ namespace nodeSys2
 
         //to be called on every node after all nodes are instantiated and connected. Usefull for sending constants down the graph
         //on startup
-        public virtual void IntialInvokes()
+        public virtual void IntialInvoke()
         {
 
         }
