@@ -16,10 +16,15 @@ namespace nodeSys2
 
         //used to save the reference to the port that last connected
         [JsonProperty(IsReference = true)]
-        private Port connectedPort;
+        public Port connectedPort;
 
         //used to track if there an existing connection to prevent multiple connections to the same port                
         private bool connected = false;
+
+        public bool isConnected()
+        {
+            return connected;
+        }
 
         public Port(int index)
         {

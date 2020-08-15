@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using nodeSys2;
+using System;
 
 public class IntEditor : MonoBehaviour
 {
@@ -21,8 +22,8 @@ public class IntEditor : MonoBehaviour
         discText.text = disc;
     }
 
-    public void EditInt(int num)
+    public void EditInt(string num)
     {
-        intData.num = num;
+        intData.num = int.Parse(num);
     }
 }

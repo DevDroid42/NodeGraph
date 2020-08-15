@@ -11,8 +11,10 @@ public class IntConstant : Node
     {
         nodeDisc = "IntConstant";
         constants = new object[1];
+        constantsDisc = new string[1];
         IntData constant = new IntData(0);
-        constants[0] = constant;
+        constantsDisc[0] = "IntConstant";
+        constants[0] = constant;        
         inputs = new Port[0];
         outputs = new Port[1];
         base.InitPorts();        

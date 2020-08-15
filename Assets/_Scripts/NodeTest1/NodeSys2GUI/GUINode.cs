@@ -42,7 +42,7 @@ public class GUINode : MonoBehaviour
     //sets up the node GUI to match with a given node
     public void SetupNode(Node node)
     {
-        nodeRef = node;
+        nodeRef = node;       
         nodeTitle.text = nodeRef.GetName();
         SetupPorts();
         SetupNodeData();
@@ -73,22 +73,27 @@ public class GUINode : MonoBehaviour
 
     private void SetupNodeData()
     {
+                             
         if (nodeRef.constants != null)
         {
+            Debug.Log(nodeTitle.text + " is setting up. Has " + nodeRef.constants.Length + "constants");
             float offset = 0;
             for (int i = 0; i < nodeRef.constants.Length; i++)
             {
                 GameObject editor;
                 switch (nodeRef.constants[i])
                 {
-                    case IntData intData:
+                    case IntData intData:                        
                         GUIGraph.editors.TryGetValue("int", out editor);
-                        GameObject intEditor = Instantiate(editor, editorContent);
-                        RectTransform rt = intEditor.GetComponent<RectTransform>();                        
+                        GameObject intEditorGameObject = Instantiate(editor, editorContent);
+                        RectTransform rt = intEditorGameObject.GetComponent<RectTransform>();                        
                         rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, offset, rt.rect.height);
                         offset += rt.rect.height + 5;
-                        intEditor.GetComponent<IntEditor>().intData = intData;                        
-                        editors.Add(intEditor);
+                        IntEditor intEdit = intEditorGameObject.GetComponent<IntEditor>();
+                        intEdit.intData = intData;                        
+                        intEdit.UpdateDisc(nodeRef.constantsDisc[i]);
+                        editors.Add(intEditorGameObject);
+
                         break;
                     default:
                         Debug.Log("constants array in node " + nodeRef.GetName() + " contains an unsupported data type at index:" + i);
@@ -98,5 +103,7 @@ public class GUINode : MonoBehaviour
             RectTransform rt1 = editorContent.GetComponent<RectTransform>();
             rt1.sizeDelta = new Vector2(rt1.sizeDelta.x, rt1.sizeDelta.y);
         }
+        
+
     }
 }

@@ -1,7 +1,8 @@
-﻿namespace nodeSys2
+﻿using System;
+namespace nodeSys2
 {
     //wrapper classes for primitive data types for easy reference passing and serialization
-
+    [Serializable]
     public class IntData
     {
         public int num;
@@ -16,6 +17,7 @@
         }
     }
 
+    [Serializable]
     public class FloatData
     {
         public float num;
@@ -29,6 +31,7 @@
         }
     }
 
+    [Serializable]
     public class StringData
     {
         public string txt;
