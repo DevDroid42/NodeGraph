@@ -4,6 +4,7 @@ using UnityEngine;
 using nodeSys2;
 using UnityEditor;
 using System;
+using UnityEngine.Events;
 
 public class GUIGraph : MonoBehaviour
 {
@@ -12,20 +13,34 @@ public class GUIGraph : MonoBehaviour
     //reference to node prefab
     public GameObject baseNode;
     public GameObject baseLineRenderer;
+    public Transform lineRendererParent;
     public List<GameObject> guiNodes = new List<GameObject>();
     public EditorNameLink[] editorTypes;
+    public EditorNameLink[] viewerTypes;
     public static Dictionary<string, GameObject> editors = new Dictionary<string, GameObject>();
+    public static Dictionary<string, GameObject> viewers = new Dictionary<string, GameObject>();
+    public static UnityEvent updateGraphGUI;
     private void Awake()
-    {
+    {        
         for (int i = 0; i < editorTypes.Length; i++)
         {
             editors.Add(editorTypes[i].name, editorTypes[i].editor);
+        }
+        for (int i = 0; i < viewerTypes.Length; i++)
+        {
+            viewers.Add(viewerTypes[i].name, viewerTypes[i].editor);
+        }
+        if (updateGraphGUI == null)
+        {
+            updateGraphGUI = new UnityEvent();
+            updateGraphGUI.AddListener(UpdateGraph);
+            updateGraphGUI.AddListener(UpdateGUI);
         }
     }    
 
     IntConstant numNode0, numNode1;
     AddNode addNode;
-    ReceiveNode receiveNode;
+    ViewerNode receiveNode;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,14 +48,17 @@ public class GUIGraph : MonoBehaviour
         numNode0 = new IntConstant();
         numNode1 = new IntConstant();
         addNode = new AddNode();
-        receiveNode = new ReceiveNode();
+        receiveNode = new ViewerNode();
         addNode.inputs[0].Connect(numNode0.outputs[0]);
         addNode.inputs[1].Connect(numNode1.outputs[0]);
+        addNode.inputs[1].Disconnect();
         receiveNode.inputs[0].Connect(addNode.outputs[0]);
         nodeGraph.nodes.Add(numNode0);
         nodeGraph.nodes.Add(numNode1);
         nodeGraph.nodes.Add(addNode);
         nodeGraph.nodes.Add(receiveNode);
+        nodeGraph.nodes.Add(new IntConstant());
+        nodeGraph.nodes.Add(new AddNode());
         Debug.Log(GraphSerialization.GraphToJson(nodeGraph));
 
         UpdateGUI();
@@ -74,7 +92,7 @@ public class GUIGraph : MonoBehaviour
             node.GetComponent<GUINode>().SetupNode(nodeGraph.nodes[i]);
             guiNodes.Add(node);
         }
-        
+        MakeConnections();
     }
 
     public List<GameObject> lines = new List<GameObject>();
@@ -105,7 +123,7 @@ public class GUIGraph : MonoBehaviour
                     outPort = nodeGraph.nodes[i].inputs[j].connectedPort;
                     inPortGO = findGUI(inPort);
                     outPortGO = findGUI(outPort);
-                    DrawLines(inPortGO, outPortGO);
+                    lines.Add(DrawLinesFromRect(inPortGO, outPortGO, baseLineRenderer, lineRendererParent));
                 }
             }
         }
@@ -137,7 +155,7 @@ public class GUIGraph : MonoBehaviour
         }
     }
 
-    void DrawLines(GameObject obj1, GameObject obj2)
+    public static GameObject DrawLinesFromRect(GameObject obj1, GameObject obj2, GameObject prefab, Transform parent)
     {
         Vector3[] points1 = new Vector3[4];
         obj1.GetComponent<RectTransform>().GetWorldCorners(points1);
@@ -147,9 +165,12 @@ public class GUIGraph : MonoBehaviour
         Vector3[] points = new Vector3[2];
         points[0] = average(points1);
         points[1] = average(points2);
-        GameObject lr = Instantiate(baseLineRenderer);
-        lr.GetComponent<LineRenderer>().SetPositions(points);
-        lines.Add(lr);
+        GameObject lr = Instantiate(prefab, parent);
+        lr.transform.localScale = new Vector2(110,110);
+        LineRenderer lrScript = lr.GetComponent<LineRenderer>();
+        lrScript.SetPositions(points);
+        lrScript.widthMultiplier = BackgroundScroll.zoom.x / 5;
+        return lr;
         
 
         Vector3 average(Vector3[] vectors)
@@ -163,6 +184,22 @@ public class GUIGraph : MonoBehaviour
                 count++;
             }
             return new Vector3(x / count, y / count, 0.99f);
+        }
+    }
+
+    
+
+    public void SavePosition(GameObject node)
+    {
+        GUINode guiNode = node.GetComponent<GUINode>();
+        RectTransform rt = node.GetComponent<RectTransform>();
+        for (int i = 0; i < nodeGraph.nodes.Count; i++)
+        {
+            if (guiNode.nodeRef == nodeGraph.nodes[i])
+            {
+                nodeGraph.nodes[i].xPos = rt.localPosition.x;
+                nodeGraph.nodes[i].yPos = rt.localPosition.y;
+            }
         }
     }
 }

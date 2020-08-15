@@ -12,7 +12,7 @@ public class NodeJsonTesting : MonoBehaviour
 
     IntConstant numNode0, numNode1;
     AddNode addNode;
-    ReceiveNode receiveNode;
+    ViewerNode receiveNode;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +21,7 @@ public class NodeJsonTesting : MonoBehaviour
         numNode0 = new IntConstant();
         numNode1 = new IntConstant();
         addNode = new AddNode();
-        receiveNode = new ReceiveNode();
+        receiveNode = new ViewerNode();
         addNode.inputs[0].Connect(numNode0.outputs[0]);
         addNode.inputs[1].Connect(numNode1.outputs[0]);
         receiveNode.inputs[0].Connect(addNode.outputs[0]);
@@ -65,13 +65,15 @@ public class NodeJsonTesting : MonoBehaviour
     {
         if (nodeGraph != null)
         {
-            if (((ReceiveNode)(nodeGraph.nodes[3])).newData)
+            /*
+            if (((ViewerNode)(nodeGraph.nodes[3])).newData)
             {
-                object data = ((ReceiveNode)(nodeGraph.nodes[3])).data;
+                object data = ((ViewerNode)(nodeGraph.nodes[3])).data;
                 Debug.Log(data);
                 viewer.text = data.ToString();
-                ((ReceiveNode)(nodeGraph.nodes[3])).newData = false;
+                ((ViewerNode)(nodeGraph.nodes[3])).newData = false;
             }
+            */
         }
     }
 }

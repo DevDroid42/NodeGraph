@@ -87,3 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74aeb67662dfaa941acb012392adf10a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputPort: 0
+  PortColor: {r: 0, g: 0, b: 0, a: 0}
+  LinePrefab: {fileID: 5045478019256941109, guid: 2e547cd32c6e75a4b8eb6eb04a957dd6,
+    type: 3}

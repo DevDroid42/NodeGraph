@@ -14,8 +14,8 @@ namespace nodeSys2
         public object[] constants;
         public string[] constantsDisc;
         //this is data to be used for debugging. It will contain things such as connection status
-        public object[] statusData;
-        public string[] statusDisc;
+        public object[] viewableData;
+        public string[] viewableDisc;
 
 
         //the node discription for identification in JSON and GUI 

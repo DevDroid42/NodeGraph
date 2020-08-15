@@ -11,14 +11,14 @@ public class NodeSysTest : MonoBehaviour
 
     IntConstant numNode0, numNode1;
     AddNode addNode;
-    ReceiveNode receiveNode;
+    ViewerNode receiveNode;
     // Start is called before the first frame update
     void Start()
     {
         numNode0 = new IntConstant();
         numNode1 = new IntConstant();
         addNode = new AddNode();
-        receiveNode = new ReceiveNode();
+        receiveNode = new ViewerNode();
         addNode.inputs[0].Connect(numNode0.outputs[0]);
         addNode.inputs[1].Connect(numNode1.outputs[0]);
         receiveNode.inputs[0].Connect(addNode.outputs[0]);
@@ -37,11 +37,13 @@ public class NodeSysTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (receiveNode.newData)
         {
             Debug.Log(receiveNode.data);
             viewer.text = receiveNode.data.ToString();
             receiveNode.newData = false;
         }
+        */
     }
 }

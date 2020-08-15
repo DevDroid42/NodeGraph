@@ -5,9 +5,12 @@ using UnityEngine.UI;
 using nodeSys2;
 using System;
 
-public class IntEditor : MonoBehaviour
+public class TxtEditor : MonoBehaviour
 {
     public IntData intData;
+    public StringData stringData;
+    public FloatData floatData;
+    public InputField inputField;
     public Text discText;
     public string disc;
     // Start is called before the first frame update
@@ -22,8 +25,28 @@ public class IntEditor : MonoBehaviour
         discText.text = disc;
     }
 
+    public void UpdateField(string data)
+    {
+        inputField.text = data;
+    }
+
+    public void UpdateGUI()
+    {
+        GUIGraph.updateGraphGUI.Invoke();
+    }
+
+    public void EditString(string str)
+    {
+        stringData.txt = str;
+    }
+
     public void EditInt(string num)
     {
         intData.num = int.Parse(num);
+    }
+
+    public void EditFloat(string num)
+    {
+        floatData.num = float.Parse(num);
     }
 }

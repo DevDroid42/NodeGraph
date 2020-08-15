@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace nodeSys2
 {
@@ -61,6 +62,7 @@ namespace nodeSys2
             if (connected)
             {
                 connectedPort.portDel -= Handle;
+                connectedPort = null;
                 connected = false;
             }
 
@@ -69,14 +71,20 @@ namespace nodeSys2
         //wrapper meathod to invoke the delagate without needing the index
         public void Invoke(object data)
         {
-            portDel.Invoke(index, data);
+            if (portDel != null)
+            {
+                portDel.Invoke(index, data);
+            }
         }
 
         //this method is invoked from another connected port delagate. It then takes the data from that 
         //delagate and invokes it's own delagate attaching it's index to be used for processing in nodes
         private void Handle(int OtherIndex, object data)
         {
-            portDel.Invoke(index, data);
+            if (portDel != null)
+            {
+                portDel.Invoke(index, data);
+            }
         }
     }
 }
