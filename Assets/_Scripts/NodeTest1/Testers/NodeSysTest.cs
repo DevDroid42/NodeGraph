@@ -9,14 +9,14 @@ public class NodeSysTest : MonoBehaviour
 {
     public Text viewer;
 
-    NumTestNode numNode0, numNode1;
+    IntConstant numNode0, numNode1;
     AddNode addNode;
     ReceiveNode receiveNode;
     // Start is called before the first frame update
     void Start()
     {
-        numNode0 = new NumTestNode();
-        numNode1 = new NumTestNode();
+        numNode0 = new IntConstant();
+        numNode1 = new IntConstant();
         addNode = new AddNode();
         receiveNode = new ReceiveNode();
         addNode.inputs[0].Connect(numNode0.outputs[0]);

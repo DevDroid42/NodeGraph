@@ -1,6 +1,6 @@
 ﻿using nodeSys2;
 using System;
-using System.Diagnostics;
+using UnityEngine;
 
 public class AddNode : Node
 {
@@ -42,6 +42,7 @@ public class AddNode : Node
         if(num0 != null && num1 != null)
         {
             outputs[0].Invoke(num0 + num1);
+            Debug.Log("invoking after add:" + (num0 + num1));
         }
     }
 }

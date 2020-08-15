@@ -1,17 +1,18 @@
 ﻿using nodeSys2;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NumTestNode : Node
+public class IntConstant : Node
 {    
     // Start is called before the first frame update
-    public NumTestNode()
+    public IntConstant()
     {
-        nodeDisc = "NumberTestNode";
+        nodeDisc = "IntConstant";
         constants = new object[1];
-        int intConst = 0;
-        constants[0] = intConst;
+        IntData constant = new IntData(0);
+        constants[0] = constant;
         inputs = new Port[0];
         outputs = new Port[1];
         base.InitPorts();        
@@ -19,7 +20,8 @@ public class NumTestNode : Node
 
     public override void IntialInvoke()
     {
-        outputs[0].Invoke(constants[0]);
+        outputs[0].Invoke(((IntData)constants[0]).num);
+        Debug.Log("invoking :" + constants[0]);
     }
 
 
