@@ -60,7 +60,7 @@ namespace nodeSys2
 
         //to be called on every node after all nodes are instantiated and connected. Usefull for sending constants down the graph
         //on startup
-        public virtual void IntialInvoke()
+        public virtual void Init()
         {
 
         }

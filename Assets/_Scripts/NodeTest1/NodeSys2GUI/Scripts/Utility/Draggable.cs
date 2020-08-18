@@ -66,8 +66,7 @@ public class Draggable : MonoBehaviour
     public void OnDrag(PointerEventData eventData)
     {
         pointerData = eventData;
-        drag.Invoke();
-        onDrag.Invoke();
+        drag.Invoke();        
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -77,6 +76,7 @@ public class Draggable : MonoBehaviour
 
     private void Translate()
     {
+        onDrag.Invoke();
         if (selected)
             transform.position = initialObjectPos + ((Vector2)pointerData.pointerCurrentRaycast.worldPosition - initialCursorPos);
     }

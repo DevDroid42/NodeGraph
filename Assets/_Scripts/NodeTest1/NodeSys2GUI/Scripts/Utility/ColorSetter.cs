@@ -12,8 +12,7 @@ public class ColorSetter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        images = GetComponentsInChildren<Image>();
-        SetColor();
+        images = GetComponentsInChildren<Image>();        
     }
 
     public void SetColor()

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -15,10 +16,13 @@ public class ResizeBar : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public Color defaultColor;
     public Color hoverColor;
+
+    public UnityEvent onResize;
     private RawImage image;
     // Start is called before the first frame update
     void Start()
     {
+        onResize = new UnityEvent();
         image = GetComponent<RawImage>();
         image.color = defaultColor;
     }
@@ -49,6 +53,7 @@ public class ResizeBar : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             default:
                 break;
         }
+        onResize.Invoke();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

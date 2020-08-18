@@ -55,7 +55,7 @@ public class GUINode : MonoBehaviour
     public void SetupNode(Node node)
     {
         nodeRef = node;
-        transform.localPosition = new Vector3(nodeRef.xPos, nodeRef.yPos, 20f);        
+        transform.localPosition = new Vector3(nodeRef.xPos, nodeRef.yPos, 20f);           
         nodeTitle.text = nodeRef.GetName();
         SetupPorts();
         SetupNodeData();

@@ -18,8 +18,9 @@ public class IntConstant : Node
         InitPorts(0,1);        
     }
 
-    public override void IntialInvoke()
+    public override void Init()
     {
+        outputs[0].portDisc = constants[0].ToString();
         outputs[0].Invoke(((IntData)constants[0]).num);
         Debug.Log("invoking :" + constants[0]);
     }

@@ -32,9 +32,11 @@ public class AddNode : Node
         {
             case 0:
                 num0 = data;
+                inputs[0].portDisc = data.ToString();
                 break;
             case 1:
                 num1 = data;
+                inputs[1].portDisc = data.ToString();
                 break;
             default:
                 break;
@@ -42,6 +44,7 @@ public class AddNode : Node
         if(num0 != null && num1 != null)
         {
             outputs[0].Invoke(num0 + num1);
+            outputs[0].portDisc = (num0 + num1).ToString();
             Debug.Log("invoking after add:" + (num0 + num1));
         }
     }

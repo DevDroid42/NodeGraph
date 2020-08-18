@@ -48,23 +48,23 @@ public class GUIGraph : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //nodeGraph = GraphSerialization.JsonToGraph("{\"$id\":\"1\",\"nodes\":[{\"$id\":\"2\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-714.2998,\"yPos\":-83.2910156,\"xScale\":250.0,\"yScale\":140.36792,\"expanded\":true,\"inputs\":[],\"outputs\":[{\"$id\":\"3\",\"index\":0,\"connectedPort\":null,\"portDisc\":null}],\"constants\":[{\"$id\":\"4\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":6}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"5\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-655.5957,\"yPos\":149.014648,\"xScale\":250.0,\"yScale\":140.36792,\"expanded\":true,\"inputs\":[],\"outputs\":[{\"$id\":\"6\",\"index\":0,\"connectedPort\":null,\"portDisc\":null}],\"constants\":[{\"$id\":\"7\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":3}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"8\",\"$type\":\"AddNode, Assembly-CSharp\",\"xPos\":-266.05957,\"yPos\":33.0859375,\"xScale\":250.0,\"yScale\":205.73584,\"expanded\":false,\"inputs\":[{\"$id\":\"9\",\"index\":0,\"connectedPort\":{\"$ref\":\"6\"},\"portDisc\":null},{\"$id\":\"10\",\"index\":1,\"connectedPort\":{\"$ref\":\"3\"},\"portDisc\":null}],\"outputs\":[{\"$id\":\"11\",\"index\":0,\"connectedPort\":null,\"portDisc\":null}],\"constants\":null,\"constantsDisc\":null,\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"Add Node\"},{\"$id\":\"12\",\"$type\":\"ViewerNode, Assembly-CSharp\",\"data\":11,\"xPos\":470.7832,\"yPos\":-44.4785156,\"xScale\":250.0,\"yScale\":140.36792,\"expanded\":true,\"inputs\":[{\"$id\":\"13\",\"index\":0,\"connectedPort\":{\"$id\":\"14\",\"index\":0,\"connectedPort\":null,\"portDisc\":null},\"portDisc\":null}],\"outputs\":[],\"constants\":null,\"constantsDisc\":null,\"viewableData\":[11],\"viewableDisc\":[\"data:\"],\"nodeDisc\":\"Viewer node\"},{\"$id\":\"15\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-322.228516,\"yPos\":-246.139648,\"xScale\":250.0,\"yScale\":140.36792,\"expanded\":true,\"inputs\":[],\"outputs\":[{\"$id\":\"16\",\"index\":0,\"connectedPort\":null,\"portDisc\":null}],\"constants\":[{\"$id\":\"17\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":2}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"18\",\"$type\":\"AddNode, Assembly-CSharp\",\"xPos\":114.518555,\"yPos\":-64.8125,\"xScale\":250.0,\"yScale\":205.73584,\"expanded\":false,\"inputs\":[{\"$id\":\"19\",\"index\":0,\"connectedPort\":{\"$ref\":\"11\"},\"portDisc\":null},{\"$id\":\"20\",\"index\":1,\"connectedPort\":{\"$ref\":\"16\"},\"portDisc\":null}],\"outputs\":[{\"$ref\":\"14\"}],\"constants\":null,\"constantsDisc\":null,\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"Add Node\"}]}");    
-        nodeGraph = new Graph();
-        numNode0 = new IntConstant();
-        numNode1 = new IntConstant();
-        addNode = new AddNode();
-        receiveNode = new ViewerNode();
-        addNode.inputs[0].Connect(numNode0.outputs[0]);
-        addNode.inputs[1].Connect(numNode1.outputs[0]);
-        addNode.inputs[1].Disconnect();
-        receiveNode.inputs[0].Connect(addNode.outputs[0]);
-        nodeGraph.nodes.Add(numNode0);
-        nodeGraph.nodes.Add(numNode1);
-        nodeGraph.nodes.Add(addNode);
-        nodeGraph.nodes.Add(receiveNode);
-        nodeGraph.nodes.Add(new IntConstant());
-        nodeGraph.nodes.Add(new AddNode());
-        Debug.Log(GraphSerialization.GraphToJson(nodeGraph));
+        nodeGraph = GraphSerialization.JsonToGraph("{\"$id\":\"1\",\"nodes\":[{\"$id\":\"2\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-704.917,\"yPos\":-88.11426,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":false,\"inputs\":[],\"outputs\":[{\"$id\":\"3\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"IntWrapper: 0\"}],\"constants\":[{\"$id\":\"4\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":0}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"5\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-622.7563,\"yPos\":77.39801,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":false,\"inputs\":[],\"outputs\":[{\"$id\":\"6\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"IntWrapper: 0\"}],\"constants\":[{\"$id\":\"7\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":0}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"8\",\"$type\":\"AddNode, Assembly-CSharp\",\"xPos\":-265.535156,\"yPos\":-140.506836,\"xScale\":250.0,\"yScale\":164.194458,\"expanded\":false,\"inputs\":[{\"$id\":\"9\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"0\"},{\"$id\":\"10\",\"index\":1,\"connectedPort\":null,\"portDisc\":\"element 2\"}],\"outputs\":[{\"$id\":\"11\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"output\"}],\"constants\":null,\"constantsDisc\":null,\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"Add Node\"},{\"$id\":\"12\",\"$type\":\"ViewerNode, Assembly-CSharp\",\"data\":14,\"xPos\":367.938477,\"yPos\":146.460938,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":true,\"inputs\":[{\"$id\":\"13\",\"index\":0,\"connectedPort\":{\"$id\":\"14\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"IntWrapper: 14\"},\"portDisc\":\"DefaultDisc\"}],\"outputs\":[],\"constants\":null,\"constantsDisc\":null,\"viewableData\":[14],\"viewableDisc\":[\"data:\"],\"nodeDisc\":\"Viewer node\"},{\"$id\":\"15\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-170.275085,\"yPos\":133.362488,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":true,\"inputs\":[],\"outputs\":[{\"$ref\":\"14\"}],\"constants\":[{\"$id\":\"16\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":14}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"17\",\"$type\":\"AddNode, Assembly-CSharp\",\"xPos\":331.025818,\"yPos\":-95.25922,\"xScale\":250.0,\"yScale\":164.194458,\"expanded\":false,\"inputs\":[{\"$id\":\"18\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"element 1\"},{\"$id\":\"19\",\"index\":1,\"connectedPort\":null,\"portDisc\":\"element 2\"}],\"outputs\":[{\"$id\":\"20\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"output\"}],\"constants\":null,\"constantsDisc\":null,\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"Add Node\"}]}");    
+        //nodeGraph = new Graph();
+        //numNode0 = new IntConstant();
+        //numNode1 = new IntConstant();
+        //addNode = new AddNode();
+        //receiveNode = new ViewerNode();
+        //addNode.inputs[0].Connect(numNode0.outputs[0]);
+        //addNode.inputs[1].Connect(numNode1.outputs[0]);
+        //addNode.inputs[1].Disconnect();
+        //receiveNode.inputs[0].Connect(addNode.outputs[0]);
+        //nodeGraph.nodes.Add(numNode0);
+        //nodeGraph.nodes.Add(numNode1);
+        //nodeGraph.nodes.Add(addNode);
+        //nodeGraph.nodes.Add(receiveNode);
+        //nodeGraph.nodes.Add(new IntConstant());
+        //nodeGraph.nodes.Add(new AddNode());
+        //Debug.Log(GraphSerialization.GraphToJson(nodeGraph));
 
         UpdateGUI();
         //graph = new Graph();
@@ -96,6 +96,9 @@ public class GUIGraph : MonoBehaviour
             GameObject node = Instantiate(baseNode, background);
             node.SetActive(true);
             node.GetComponent<GUINode>().SetupNode(nodeGraph.nodes[i]);
+            Draggable draggable = node.GetComponent<Draggable>();
+            draggable.defaultColor = DefaultColor;
+            draggable.selectedColor = SelectedColor;
             guiNodes.Add(node);
         }
         MakeConnections();

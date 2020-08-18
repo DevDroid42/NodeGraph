@@ -24,7 +24,7 @@ namespace nodeSys2
             }
             for (int i = 0; i < nodes.Count; i++)
             {
-                nodes[i].IntialInvoke();
+                nodes[i].Init();
             }
         }
 
