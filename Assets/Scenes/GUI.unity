@@ -408,6 +408,46 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.00047837495
       objectReference: {fileID: 0}
+    - target: {fileID: 1565915133888001660, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565915133888001660, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 699167037}
+    - target: {fileID: 1565915133888001660, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MakeConnections
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565915133888001660, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410911701651516437, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410911701651516437, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 699167037}
+    - target: {fileID: 2410911701651516437, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MakeConnections
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410911701651516437, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
       propertyPath: onDrag.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -418,6 +458,36 @@ PrefabInstance:
       propertyPath: onDrag.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 699167037}
+    - target: {fileID: 6444033307507403989, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6444033307507403989, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 699167037}
+    - target: {fileID: 6444033307507403989, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MakeConnections
+      objectReference: {fileID: 0}
+    - target: {fileID: 6444033307507403989, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6444033307507403989, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6444033307507403989, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onResize.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6519188589033213024, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
       propertyPath: m_AnchoredPosition.y

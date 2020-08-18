@@ -838,7 +838,18 @@ MonoBehaviour:
   hoverColor: {r: 1, g: 1, b: 1, a: 0.7294118}
   onResize:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3462339813688736585
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,7 +1128,18 @@ MonoBehaviour:
   hoverColor: {r: 1, g: 1, b: 1, a: 0.7294118}
   onResize:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6847797773063527637
 GameObject:
   m_ObjectHideFlags: 0

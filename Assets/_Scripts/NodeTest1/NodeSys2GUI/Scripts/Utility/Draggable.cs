@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-using System.Diagnostics.Eventing.Reader;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Image))]
 public class Draggable : MonoBehaviour
@@ -27,6 +27,7 @@ public class Draggable : MonoBehaviour
     //list of all other draggable items
     private static List<Draggable> draggables;
 
+    private bool dragged;
     private Vector2 initialObjectPos;
     private Vector2 initialCursorPos;
 
@@ -56,8 +57,19 @@ public class Draggable : MonoBehaviour
         beginDrag.AddListener(BeginTranslate);
     }
 
+    private void OnDestroy()
+    {
+        draggables.Remove(this);
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!selected)
+        {
+            DeselectAll();
+            Select();
+        }
+        dragged = true;
         Select();
         pointerData = eventData;
         beginDrag.Invoke();
@@ -69,9 +81,9 @@ public class Draggable : MonoBehaviour
         drag.Invoke();        
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData) 
     {
-        Deselect();
+        //Deselect();
     }
 
     private void Translate()
@@ -92,13 +104,16 @@ public class Draggable : MonoBehaviour
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        //if shift isn't held
-        foreach (Draggable draggable in draggables)
+        if (!InputSystem.GetDevice<Keyboard>().shiftKey.isPressed)
         {
-            //draggable.Deselect();
+            if (!dragged)
+            {
+                DeselectAll();
+            }
         }
+        
 
-        if (selected)
+        if (selected && !dragged)
         {
             Deselect();
         }
@@ -106,6 +121,16 @@ public class Draggable : MonoBehaviour
         {
             Select();
         }
+
+        dragged = false;
+    }
+
+    public static void DeselectAll()
+    {
+        foreach (Draggable draggable in draggables)
+        {
+            draggable.Deselect();
+        }        
     }
 
     public void OnPointerEnter(PointerEventData eventData)

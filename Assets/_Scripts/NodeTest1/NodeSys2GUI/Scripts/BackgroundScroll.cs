@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
-public class BackgroundScroll : MonoBehaviour
+public class BackgroundScroll : MonoBehaviour, IPointerClickHandler
 {
     public float scrollSensitivity;
     public static Vector2 zoom = new Vector2(1,1);
@@ -20,5 +21,10 @@ public class BackgroundScroll : MonoBehaviour
     public void SetZoom(InputAction.CallbackContext callback)
     {
         
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Draggable.DeselectAll();
     }
 }
