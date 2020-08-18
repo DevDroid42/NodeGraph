@@ -19,58 +19,144 @@ public class GUINode : MonoBehaviour
 
     public List<GameObject> NodeDataList = new List<GameObject>();
     public Transform editorContent;
+    public RectTransform editor;
+    public GameObject openButton;
+    public GameObject closeButton;
 
-    Vector2 minSize;
+    public Vector2 minSize;
+
+    private RectTransform rect;
 
     private void Awake()
     {
-
+        rect = GetComponent<RectTransform>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(rect.sizeDelta.x < minSize.x)
+        {
+            rect.sizeDelta = new Vector2(minSize.x, rect.sizeDelta.y);
+        }
+        if(rect.sizeDelta.y < minSize.y)
+        {
+            rect.sizeDelta = new Vector2(rect.sizeDelta.x, minSize.y);
+        }
     }
 
     //sets up the node GUI to match with a given node
     public void SetupNode(Node node)
     {
         nodeRef = node;
-        transform.localPosition = new Vector2(nodeRef.xPos, nodeRef.yPos);
+        transform.localPosition = new Vector3(nodeRef.xPos, nodeRef.yPos, 20f);        
         nodeTitle.text = nodeRef.GetName();
         SetupPorts();
         SetupNodeData();
+        SetupEditor();
+        SetupScale();
+    }
+
+    private void SetupScale()
+    {
+        Vector2 size = new Vector2(minSize.x, minSize.y);
+        if(nodeRef.xScale > minSize.x)
+        {
+            size.x = nodeRef.xScale;
+        }
+        if (nodeRef.yScale > minSize.y)
+        {
+            size.y = nodeRef.yScale;
+        }
+        rect.sizeDelta = size;
     }
 
     private void SetupPorts()
     {
+        float minHeight = 0;
+
         inputPorts = new GameObject[nodeRef.inputs.Length];
         outputPorts = new GameObject[nodeRef.outputs.Length];
 
         createPorts(nodeRef.inputs, inputPorts, inputPortHolder, true);
         createPorts(nodeRef.outputs, outputPorts, outputPortHolder, false);
-
+        
         void createPorts(Port[] ports, GameObject[] gameObjects, Transform portHolder, bool isInput)
         {
+            RectTransform rt = null;
+            float position = 0;
             for (int i = 0; i < ports.Length; i++)
             {
                 GameObject port = Instantiate(basePort, portHolder);
-                RectTransform rt = port.GetComponent<RectTransform>();
-                float size = i * rt.rect.height + 10;
-                rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, size, rt.rect.height);
+                rt = port.GetComponent<RectTransform>();
+                position = -i * (rt.rect.height - 2);
+                //rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, position, rt.rect.height);
+                rt.anchoredPosition = new Vector2(0.5f, position);
                 gameObjects[i] = port;
-                gameObjects[i].GetComponent<GUIPort>().portRef = ports[i];
-                gameObjects[i].GetComponent<GUIPort>().inputPort = isInput;
+                GUIPort guiPort = gameObjects[i].GetComponentInChildren<GUIPort>();
+                guiPort.portRef = ports[i];
+                guiPort.inputPort = isInput;
             }
+                        
+            //add some padding
+            position -= 122.5f;
+            position = 0 - position;
+            if(position > minHeight)
+            {
+                //Debug.Log("position: " + position);
+                minHeight = position;
+            }
+            
+        }
+        minSize =  new Vector2(20, minHeight);
+    }
+
+    private void SetupEditor()
+    {
+        if(nodeRef.constants == null && nodeRef.viewableData == null)
+        {
+            editor.gameObject.SetActive(false);
         }
 
+        if (nodeRef.expanded)
+        {
+            SetEditorOpen();
+        }
+        else
+        {
+            SetEditorClosed();
+        }
+    }
+
+    public void SetExpanded(bool state)
+    {
+        nodeRef.expanded = state;
+    }
+
+    private void SetEditorOpen()
+    {
+        openButton.SetActive(false);
+        closeButton.SetActive(true);
+        editor.sizeDelta = new Vector2(0f, -61.8f);
+        editor.anchoredPosition = new Vector2(0f, -30.8f);
+        editor.anchorMax = new Vector2(1f, 1f);
+        editor.anchorMin = new Vector2(0f, 0f);
+    }
+
+    private void SetEditorClosed()
+    {
+        openButton.SetActive(true);
+        closeButton.SetActive(false);
+        editor.sizeDelta = new Vector2(0f,19f);
+        editor.anchoredPosition = new Vector2(0f,-71.1f);
+        editor.anchorMax = new Vector2(1f, 1f);
+        editor.anchorMin = new Vector2(0f, 1f);
     }
 
     private void SetupNodeData()

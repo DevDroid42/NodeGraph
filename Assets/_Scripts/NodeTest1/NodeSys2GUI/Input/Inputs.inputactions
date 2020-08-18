@@ -1,0 +1,39 @@
+{
+    "name": "Inputs",
+    "maps": [
+        {
+            "name": "Main",
+            "id": "454f63ef-e183-45b4-a53f-0787633ffcae",
+            "actions": [
+                {
+                    "name": "zoom",
+                    "type": "Value",
+                    "id": "1ca91a50-1d5e-4086-82a2-54e69ccbbb35",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "60083b42-2d2d-40ec-a57e-0fd64a86e4b1",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Default",
+            "bindingGroup": "Default",
+            "devices": []
+        }
+    ]
+}

@@ -13,6 +13,7 @@ public class GUIGraph : MonoBehaviour
     //reference to node prefab
     public GameObject baseNode;
     public GameObject baseLineRenderer;
+    public float LineZOffset;
     public Transform lineRendererParent;
     public List<GameObject> guiNodes = new List<GameObject>();
     public EditorNameLink[] editorTypes;
@@ -33,7 +34,6 @@ public class GUIGraph : MonoBehaviour
         if (updateGraphGUI == null)
         {
             updateGraphGUI = new UnityEvent();
-            updateGraphGUI.AddListener(UpdateGraph);
             updateGraphGUI.AddListener(UpdateGUI);
         }
     }    
@@ -44,6 +44,7 @@ public class GUIGraph : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //nodeGraph = GraphSerialization.JsonToGraph("{\"$id\":\"1\",\"nodes\":[{\"$id\":\"2\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-714.2998,\"yPos\":-83.2910156,\"xScale\":250.0,\"yScale\":140.36792,\"expanded\":true,\"inputs\":[],\"outputs\":[{\"$id\":\"3\",\"index\":0,\"connectedPort\":null,\"portDisc\":null}],\"constants\":[{\"$id\":\"4\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":6}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"5\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-655.5957,\"yPos\":149.014648,\"xScale\":250.0,\"yScale\":140.36792,\"expanded\":true,\"inputs\":[],\"outputs\":[{\"$id\":\"6\",\"index\":0,\"connectedPort\":null,\"portDisc\":null}],\"constants\":[{\"$id\":\"7\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":3}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"8\",\"$type\":\"AddNode, Assembly-CSharp\",\"xPos\":-266.05957,\"yPos\":33.0859375,\"xScale\":250.0,\"yScale\":205.73584,\"expanded\":false,\"inputs\":[{\"$id\":\"9\",\"index\":0,\"connectedPort\":{\"$ref\":\"6\"},\"portDisc\":null},{\"$id\":\"10\",\"index\":1,\"connectedPort\":{\"$ref\":\"3\"},\"portDisc\":null}],\"outputs\":[{\"$id\":\"11\",\"index\":0,\"connectedPort\":null,\"portDisc\":null}],\"constants\":null,\"constantsDisc\":null,\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"Add Node\"},{\"$id\":\"12\",\"$type\":\"ViewerNode, Assembly-CSharp\",\"data\":11,\"xPos\":470.7832,\"yPos\":-44.4785156,\"xScale\":250.0,\"yScale\":140.36792,\"expanded\":true,\"inputs\":[{\"$id\":\"13\",\"index\":0,\"connectedPort\":{\"$id\":\"14\",\"index\":0,\"connectedPort\":null,\"portDisc\":null},\"portDisc\":null}],\"outputs\":[],\"constants\":null,\"constantsDisc\":null,\"viewableData\":[11],\"viewableDisc\":[\"data:\"],\"nodeDisc\":\"Viewer node\"},{\"$id\":\"15\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-322.228516,\"yPos\":-246.139648,\"xScale\":250.0,\"yScale\":140.36792,\"expanded\":true,\"inputs\":[],\"outputs\":[{\"$id\":\"16\",\"index\":0,\"connectedPort\":null,\"portDisc\":null}],\"constants\":[{\"$id\":\"17\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":2}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"18\",\"$type\":\"AddNode, Assembly-CSharp\",\"xPos\":114.518555,\"yPos\":-64.8125,\"xScale\":250.0,\"yScale\":205.73584,\"expanded\":false,\"inputs\":[{\"$id\":\"19\",\"index\":0,\"connectedPort\":{\"$ref\":\"11\"},\"portDisc\":null},{\"$id\":\"20\",\"index\":1,\"connectedPort\":{\"$ref\":\"16\"},\"portDisc\":null}],\"outputs\":[{\"$ref\":\"14\"}],\"constants\":null,\"constantsDisc\":null,\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"Add Node\"}]}");    
         nodeGraph = new Graph();
         numNode0 = new IntConstant();
         numNode1 = new IntConstant();
@@ -71,13 +72,14 @@ public class GUIGraph : MonoBehaviour
         //MakeConnections();
     }
 
-    public void UpdateGraph()
+    public void PrintJson()
     {
-        nodeGraph.InitGraph();
+        Debug.Log(GraphSerialization.GraphToJson(nodeGraph));
     }
 
     public void UpdateGUI()
     {
+        nodeGraph.InitGraph();
         for (int i = 0; i < guiNodes.Count; i++)
         {
             Destroy(guiNodes[i]);
@@ -121,8 +123,8 @@ public class GUIGraph : MonoBehaviour
                     //if it does store the reference to the port and it's connection
                     inPort = nodeGraph.nodes[i].inputs[j];
                     outPort = nodeGraph.nodes[i].inputs[j].connectedPort;
-                    inPortGO = findGUI(inPort);
-                    outPortGO = findGUI(outPort);
+                    inPortGO = findGUI(inPort).GetComponent<GUIPortHolder>().Port;
+                    outPortGO = findGUI(outPort).GetComponent<GUIPortHolder>().Port;
                     lines.Add(DrawLinesFromRect(inPortGO, outPortGO, baseLineRenderer, lineRendererParent));
                 }
             }
@@ -133,18 +135,18 @@ public class GUIGraph : MonoBehaviour
             //go through all gui nodes to search for node with the reference to the same port
             for (int i = 0; i < guiNodes.Count; i++)
             {
-                GUINode guiNode = guiNodes[i].GetComponent<GUINode>();
+                GUINode guiNode = guiNodes[i].GetComponentInChildren<GUINode>();
                 for (int j = 0; j < guiNode.inputPorts.Length; j++)
                 {
                     //if the gui port has the same port referenced then store it 
-                    if (guiNode.inputPorts[j].GetComponent<GUIPort>().portRef == port)
+                    if (guiNode.inputPorts[j].GetComponentInChildren<GUIPort>().portRef == port)
                     {
                         return guiNode.inputPorts[j];
                     }
                 }
                 for (int j = 0; j < guiNode.outputPorts.Length; j++)
                 {
-                    if (guiNode.outputPorts[j].GetComponent<GUIPort>().portRef == port)
+                    if (guiNode.outputPorts[j].GetComponentInChildren<GUIPort>().portRef == port)
                     {
                         return guiNode.outputPorts[j];
                     }
@@ -169,7 +171,7 @@ public class GUIGraph : MonoBehaviour
         lr.transform.localScale = new Vector2(110,110);
         LineRenderer lrScript = lr.GetComponent<LineRenderer>();
         lrScript.SetPositions(points);
-        lrScript.widthMultiplier = BackgroundScroll.zoom.x / 5;
+        lrScript.widthMultiplier = BackgroundScroll.zoom.x / 10;
         return lr;
         
 
@@ -183,7 +185,7 @@ public class GUIGraph : MonoBehaviour
                 z += vectors[i].z;
                 count++;
             }
-            return new Vector3(x / count, y / count, 0.99f);
+            return new Vector3(x / count, y / count, 0.9f);
         }
     }
 
@@ -199,6 +201,8 @@ public class GUIGraph : MonoBehaviour
             {
                 nodeGraph.nodes[i].xPos = rt.localPosition.x;
                 nodeGraph.nodes[i].yPos = rt.localPosition.y;
+                nodeGraph.nodes[i].xScale = rt.sizeDelta.x;
+                nodeGraph.nodes[i].yScale = rt.sizeDelta.y;
             }
         }
     }

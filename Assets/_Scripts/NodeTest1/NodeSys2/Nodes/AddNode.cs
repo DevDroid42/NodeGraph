@@ -8,10 +8,10 @@ public class AddNode : Node
     public AddNode()
     {
         nodeDisc = "Add Node";
-        inputs = new Port[2];
-        outputs = new Port[1];
-
-        InitPorts();
+        InitPorts(2, 1);
+        base.inputs[0].portDisc = "element 1";
+        base.inputs[1].portDisc = "element 2";
+        base.outputs[0].portDisc = "output";
     }
 
     public override void Handle(int index, object data)

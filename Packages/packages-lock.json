@@ -98,6 +98,13 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.inputsystem": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.mathematics": {
       "version": "1.1.0",
       "depth": 1,
@@ -139,6 +146,13 @@
       "dependencies": {
         "com.unity.modules.ui": "1.0.0"
       }
+    },
+    "com.unity.uiextensions": {
+      "version": "https://bitbucket.org/UnityUIExtensions/unity-ui-extensions.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "214b4a1a6965559b13f5363bbddb380b86f45c13"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

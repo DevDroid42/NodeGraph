@@ -15,9 +15,7 @@ public class IntConstant : Node
         IntData constant = new IntData(0);
         constantsDisc[0] = "IntConstant";
         constants[0] = constant;        
-        inputs = new Port[0];
-        outputs = new Port[1];
-        base.InitPorts();        
+        InitPorts(0,1);        
     }
 
     public override void IntialInvoke()

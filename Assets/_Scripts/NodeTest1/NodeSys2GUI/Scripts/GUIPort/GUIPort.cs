@@ -13,8 +13,9 @@ public class GUIPort : MonoBehaviour
     public Port portRef;
     public bool inputPort;
     public Color PortColor;
+    public Sprite HoverSprite;
     public GameObject LinePrefab;
-    public GameObject line;
+    private GameObject line;
     //used to store cursors position
     private GameObject cursor;
     private RectTransform ct;

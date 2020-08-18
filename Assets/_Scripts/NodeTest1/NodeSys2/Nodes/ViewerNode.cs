@@ -11,9 +11,7 @@ public class ViewerNode : Node
         viewableDisc = new string[1];
         viewableData[0] = data;
         viewableDisc[0] = "data:";
-        inputs = new Port[1];
-        outputs = new Port[0];
-        InitPorts();
+        InitPorts(1,0);
     }
 
     public override void Handle(int index, object data)

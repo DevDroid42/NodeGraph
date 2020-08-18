@@ -19,6 +19,8 @@ namespace nodeSys2
         [JsonProperty(IsReference = true)]
         public Port connectedPort;
 
+        public string portDisc = "DefaultDisc";
+
         //used to track if there an existing connection to prevent multiple connections to the same port                
         private bool connected = false;
 

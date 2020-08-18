@@ -7,9 +7,13 @@ namespace nodeSys2
 {
     public class Node
     {
-        public Port[] inputs;
-        public Port[] outputs;
+        //GUI info
         public float xPos, yPos;
+        public float xScale = 250, yScale = 10;
+        public bool expanded = false;
+
+        public Port[] inputs;
+        public Port[] outputs;        
         //these are constants that will be set before runtime. Examples are colors, numbers, ip adresses, ect
         public object[] constants;
         public string[] constantsDisc;
@@ -22,6 +26,14 @@ namespace nodeSys2
         [JsonProperty] protected string nodeDisc;
 
         //assigns indexes to all of the ports and links the input ports to the handle method
+        public void InitPorts(int inputCount, int outputCount)
+        {
+            inputs = new Port[inputCount];
+            outputs = new Port[outputCount];
+
+            InitPorts();
+        }
+
         public void InitPorts()
         {
             for (int i = 0; i < inputs.Length; i++)
