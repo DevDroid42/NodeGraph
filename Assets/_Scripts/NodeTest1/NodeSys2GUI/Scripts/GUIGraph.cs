@@ -21,6 +21,10 @@ public class GUIGraph : MonoBehaviour
     public static Dictionary<string, GameObject> editors = new Dictionary<string, GameObject>();
     public static Dictionary<string, GameObject> viewers = new Dictionary<string, GameObject>();
     public static UnityEvent updateGraphGUI;
+    [Header("Colors")]
+    public Color DefaultColor;
+    public Color SelectedColor;
+
     private void Awake()
     {        
         for (int i = 0; i < editorTypes.Length; i++)
@@ -123,8 +127,15 @@ public class GUIGraph : MonoBehaviour
                     //if it does store the reference to the port and it's connection
                     inPort = nodeGraph.nodes[i].inputs[j];
                     outPort = nodeGraph.nodes[i].inputs[j].connectedPort;
-                    inPortGO = findGUI(inPort).GetComponent<GUIPortHolder>().Port;
-                    outPortGO = findGUI(outPort).GetComponent<GUIPortHolder>().Port;
+                    //save the reference to the GUIPortHolders
+                    GUIPortHolder portHolder1 = findGUI(inPort).GetComponent<GUIPortHolder>();
+                    inPortGO = portHolder1.Port;
+                    portHolder1.SetupPortPos();
+
+                    GUIPortHolder portHolder2 = findGUI(outPort).GetComponent<GUIPortHolder>();
+                    outPortGO = portHolder2.Port;
+                    portHolder2.SetupPortPos();
+                    
                     lines.Add(DrawLinesFromRect(inPortGO, outPortGO, baseLineRenderer, lineRendererParent));
                 }
             }

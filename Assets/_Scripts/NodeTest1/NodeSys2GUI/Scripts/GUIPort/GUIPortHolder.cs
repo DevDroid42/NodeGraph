@@ -13,6 +13,11 @@ public class GUIPortHolder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SetupPortPos();
+    }
+
+    public void SetupPortPos()
+    {
         guiPort = Port.GetComponent<GUIPort>();
         rt = Port.GetComponent<RectTransform>();
         //if the port is an input put it on the left
