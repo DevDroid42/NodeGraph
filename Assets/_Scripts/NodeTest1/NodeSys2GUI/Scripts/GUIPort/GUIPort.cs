@@ -67,27 +67,34 @@ public class GUIPort : MonoBehaviour
     }
 
     public void OnPointerUp(PointerEventData eventData)
-    {        
-        //check if over other port
-        if(eventData.pointerCurrentRaycast.gameObject.TryGetComponent(out GUIPort otherPort))
+    {
+        if (eventData.pointerCurrentRaycast.gameObject != null)
         {
-            //if so make sure it's a different type of port
-            if(otherPort.inputPort != inputPort)
+            //check if over other port
+            if (eventData.pointerCurrentRaycast.gameObject.TryGetComponent(out GUIPort otherPort))
             {
-                //run the connection method on the input port
-                if (inputPort)
+                //if so make sure it's a different type of port
+                if (otherPort.inputPort != inputPort)
                 {
-                    if (portRef.isConnected())
-                        portRef.Disconnect();
-                    portRef.Connect(otherPort.portRef);
-                }
-                else
-                {
-                    if (otherPort.portRef.isConnected())
-                        otherPort.portRef.Disconnect();
-                    otherPort.portRef.Connect(portRef);
+                    //run the connection method on the input port
+                    if (inputPort)
+                    {
+                        if (portRef.isConnected())
+                            portRef.Disconnect();
+                        portRef.Connect(otherPort.portRef);
+                    }
+                    else
+                    {
+                        if (otherPort.portRef.isConnected())
+                            otherPort.portRef.Disconnect();
+                        otherPort.portRef.Connect(portRef);
+                    }
                 }
             }
+        }
+        else
+        {
+            Destroy(line);
         }
 
         GUIGraph.updateGraphGUI.Invoke();

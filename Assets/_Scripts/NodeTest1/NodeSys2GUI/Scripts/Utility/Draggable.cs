@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Image))]
 public class Draggable : MonoBehaviour
@@ -19,7 +18,7 @@ public class Draggable : MonoBehaviour
     private Image image;
     private Sprite initalSprite;
     public Sprite hoverSprite;
-    public UnityEvent onDrag;    
+    public UnityEvent onDrag;
     public Color defaultColor;
     public Color selectedColor;
     public ColorSetter childrenColor;
@@ -40,7 +39,7 @@ public class Draggable : MonoBehaviour
     {
         image = GetComponent<Image>();
         initalSprite = image.sprite;
-        if(draggables == null)
+        if (draggables == null)
         {
             draggables = new List<Draggable>();
         }
@@ -64,24 +63,30 @@ public class Draggable : MonoBehaviour
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!selected)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            DeselectAll();
+            if (!selected)
+            {
+                DeselectAll();
+                Select();
+            }
+            dragged = true;
             Select();
+            pointerData = eventData;
+            beginDrag.Invoke();
         }
-        dragged = true;
-        Select();
-        pointerData = eventData;
-        beginDrag.Invoke();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        pointerData = eventData;
-        drag.Invoke();        
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            pointerData = eventData;
+            drag.Invoke();
+        }
     }
 
-    public void OnEndDrag(PointerEventData eventData) 
+    public void OnEndDrag(PointerEventData eventData)
     {
         //Deselect();
     }
@@ -104,25 +109,29 @@ public class Draggable : MonoBehaviour
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!InputSystem.GetDevice<Keyboard>().shiftKey.isPressed)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (!dragged)
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
             {
-                DeselectAll();
+                if (!dragged)
+                {
+                    DeselectAll();
+                }
             }
-        }
-        
 
-        if (selected && !dragged)
-        {
-            Deselect();
-        }
-        else
-        {
-            Select();
-        }
 
-        dragged = false;
+            if (selected && !dragged)
+            {
+                Deselect();
+            }
+            else
+            {
+                Select();
+            }
+
+            dragged = false;
+        }
     }
 
     public static void DeselectAll()
@@ -130,7 +139,7 @@ public class Draggable : MonoBehaviour
         foreach (Draggable draggable in draggables)
         {
             draggable.Deselect();
-        }        
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
