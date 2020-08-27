@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ColorSetter : MonoBehaviour
+public class ChildColorSetter : MonoBehaviour
 {
     public bool limitToSprite;
     public Sprite[] imageSprite;

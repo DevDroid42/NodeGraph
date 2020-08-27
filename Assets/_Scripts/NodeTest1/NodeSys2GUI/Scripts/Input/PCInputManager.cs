@@ -18,21 +18,37 @@ public class PCInputManager : MonoBehaviour
             GlobalInputDelagates.InvokeOpenMenu();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Backspace))
         {
             GlobalInputDelagates.InvokeBack();
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GlobalInputDelagates.InvokeMove(Vector2.one);
+            GlobalInputDelagates.InvokeEscape();
         }
 
-        if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            GlobalInputDelagates.InvokeMove(-Vector2.one);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            GlobalInputDelagates.InvokeSelect();
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) ||
+            Input.GetKeyDown(KeyCode.RightArrow))
         {
             GlobalInputDelagates.InvokeMove(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
         }
-        
+
+        if (Input.GetMouseButtonDown((int)MouseButton.MiddleMouse))
+        {
+            GlobalInputDelagates.InvokePanStart();
+        }
+
         if (Input.GetMouseButton((int)MouseButton.MiddleMouse))
         {
             GlobalInputDelagates.InvokePan();

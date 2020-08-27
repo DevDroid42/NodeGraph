@@ -11,6 +11,7 @@ public class GlobalInputDelagates
     public static FloatDel scroll;
     public static TriggerDel openMenu;
     public static TriggerDel back;
+    public static TriggerDel escape;
     public static TriggerDel select;
     public static Vector2Del move;
     public static TriggerDel panStart;
@@ -60,6 +61,22 @@ public class GlobalInputDelagates
         if (pan != null)
         {
             pan.Invoke();
+        }
+    }
+
+    public static void InvokePanStart()
+    {
+        if(panStart != null)
+        {
+            panStart.Invoke();
+        }
+    }
+
+    public static void InvokeEscape()
+    {
+        if (escape != null)
+        {
+            escape.Invoke();
         }
     }
 

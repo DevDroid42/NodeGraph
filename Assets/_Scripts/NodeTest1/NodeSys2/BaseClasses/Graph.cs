@@ -5,6 +5,9 @@ namespace nodeSys2
 {
     public class Graph
     {
+        public delegate void FloatDelagate(float num);
+        public FloatDelagate frameStarted;
+
         public List<Node> nodes = new List<Node>();
 
         //to be used after loading from json

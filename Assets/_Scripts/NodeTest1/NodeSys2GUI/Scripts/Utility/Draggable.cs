@@ -8,6 +8,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Image))]
 public class Draggable : MonoBehaviour
      , IPointerClickHandler // 2
+     , IPointerDownHandler
      , IBeginDragHandler
      , IDragHandler
      , IEndDragHandler
@@ -21,7 +22,7 @@ public class Draggable : MonoBehaviour
     public UnityEvent onDrag;
     public Color defaultColor;
     public Color selectedColor;
-    public ColorSetter childrenColor;
+    public ChildColorSetter childrenColor;
     private bool selected = false;
     //list of all other draggable items
     private static List<Draggable> draggables;
@@ -107,12 +108,13 @@ public class Draggable : MonoBehaviour
         }
     }
 
+
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
-        {
-
-            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        {            
+            if (!Input.GetKey(KeyCode.LeftShift))
             {
                 if (!dragged)
                 {
@@ -175,5 +177,10 @@ public class Draggable : MonoBehaviour
     public bool IsSelected()
     {
         return selected;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        transform.SetSiblingIndex(draggables.Count);
     }
 }

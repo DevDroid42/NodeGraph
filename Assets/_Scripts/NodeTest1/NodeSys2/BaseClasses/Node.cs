@@ -53,6 +53,11 @@ namespace nodeSys2
             }
         }
 
+        public void setupFrameDel(Graph.FloatDelagate frameDealagate)
+        {
+            frameDealagate += Frame;
+        }
+
         public string GetName()
         {
             return nodeDisc;
@@ -61,6 +66,13 @@ namespace nodeSys2
         //to be called on every node after all nodes are instantiated and connected. Usefull for sending constants down the graph
         //on startup
         public virtual void Init()
+        {
+
+        }
+
+        //called on every "frame" if running in unity these frames are called each unity frame. 
+        //If running standalone then a main class will be invoked on a while loop
+        public virtual void Frame(float deltaTime)
         {
 
         }
