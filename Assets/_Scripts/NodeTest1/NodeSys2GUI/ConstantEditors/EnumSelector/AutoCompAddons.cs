@@ -99,7 +99,7 @@ public class AutoCompAddons : MonoBehaviour
             box.pauseUpdate = false;
             inputField.text = MoveText.text;
             inputField.caretPosition = MoveText.text.Length + 1;
-            //GlobalInputDelagates.select.Invoke();
+            GlobalInputDelagates.select.Invoke();
         }
     }
 

@@ -23,6 +23,11 @@ public class PCInputManager : MonoBehaviour
             GlobalInputDelagates.InvokeBack();
         }
 
+        if (Input.GetKeyDown(KeyCode.Delete))
+        {
+            GlobalInputDelagates.InvokeDelete();
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             GlobalInputDelagates.InvokeEscape();

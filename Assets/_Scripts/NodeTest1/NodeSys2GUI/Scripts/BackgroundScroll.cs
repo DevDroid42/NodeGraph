@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -17,6 +18,8 @@ public class BackgroundScroll : MonoBehaviour, IPointerClickHandler
     public float minZoom;
     public float maxZoom;
     public static Vector2 zoom;
+
+    public UnityEvent OnTranslate;
 
     private void Awake()
     {        
@@ -47,7 +50,8 @@ public class BackgroundScroll : MonoBehaviour, IPointerClickHandler
 
     private void PanPreformed()
     {
-        transform.position = initialObjectPos + (Vector3)(RaycastPos() - initialCursorPos);               
+        transform.position = initialObjectPos + (Vector3)(RaycastPos() - initialCursorPos) * panSensitivity;
+        OnTranslate.Invoke();
     }
 
     private void Zoom_performed(float deltaScroll)
@@ -76,6 +80,7 @@ public class BackgroundScroll : MonoBehaviour, IPointerClickHandler
             zoom.y = minZoom;
         }
         transform.localScale = zoom;
+        OnTranslate.Invoke();
     }
 
     // Update is called once per frame

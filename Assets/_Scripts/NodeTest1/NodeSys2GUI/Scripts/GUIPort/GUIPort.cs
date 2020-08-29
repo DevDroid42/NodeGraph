@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class GUIPort : MonoBehaviour
      , IPointerClickHandler // 2
+     , IPointerDownHandler
+     , IPointerUpHandler 
      , IDragHandler
+     , IEndDragHandler
      , IPointerEnterHandler
-     , IPointerExitHandler
-     , IPointerUpHandler
+     , IPointerExitHandler     
 {    
     public Port portRef;
     public bool inputPort;
@@ -47,7 +49,8 @@ public class GUIPort : MonoBehaviour
     }
 
     public void OnDrag(PointerEventData eventData)
-    {        
+    {
+        Debug.Log("dragging");
         if(line != null)
         {
             Destroy(line);
@@ -66,10 +69,11 @@ public class GUIPort : MonoBehaviour
         
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData)
     {
+        Debug.Log("pointer up");
         if (eventData.pointerCurrentRaycast.gameObject != null)
-        {
+        {            
             //check if over other port
             if (eventData.pointerCurrentRaycast.gameObject.TryGetComponent(out GUIPort otherPort))
             {
@@ -102,5 +106,16 @@ public class GUIPort : MonoBehaviour
         {
             Destroy(line);
         }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        //these need to be implemented because of a unity bug:
+        //https://answers.unity.com/questions/1082179/mouse-drag-element-inside-scrollrect-throws-pointe.html
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        //need to be implemented because of unity bug
     }
 }

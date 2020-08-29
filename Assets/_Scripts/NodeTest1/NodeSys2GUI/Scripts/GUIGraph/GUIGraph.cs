@@ -9,7 +9,7 @@ using UnityEngine.Events;
 public class GUIGraph : MonoBehaviour
 {
     Graph nodeGraph;
-    public Transform background;
+    public Transform NodeParent;
     //reference to node prefab
     public GameObject baseNode;
     public GameObject baseLineRenderer;
@@ -40,6 +40,8 @@ public class GUIGraph : MonoBehaviour
             updateGraphGUI = new UnityEvent();
             updateGraphGUI.AddListener(UpdateGUI);
         }
+        nodeGraph = new Graph();
+        UpdateGUI();
     }    
 
     IntConstant numNode0, numNode1;
@@ -81,6 +83,12 @@ public class GUIGraph : MonoBehaviour
         Debug.Log(GraphSerialization.GraphToJson(nodeGraph));
     }
 
+    public void AddNode(NodeRegistration.NodeTypes nodeType)
+    {
+        nodeGraph.nodes.Add(NodeRegistration.GetNode(nodeType));
+        UpdateGUI();
+    }
+
     public void UpdateGUI()
     {
         nodeGraph.InitGraph();
@@ -93,7 +101,7 @@ public class GUIGraph : MonoBehaviour
         
         for (int i = 0; i < nodeGraph.nodes.Count; i++)
         {
-            GameObject node = Instantiate(baseNode, background);
+            GameObject node = Instantiate(baseNode, NodeParent);
             node.SetActive(true);
             node.GetComponent<GUINode>().SetupNode(nodeGraph.nodes[i]);
             Draggable draggable = node.GetComponent<Draggable>();

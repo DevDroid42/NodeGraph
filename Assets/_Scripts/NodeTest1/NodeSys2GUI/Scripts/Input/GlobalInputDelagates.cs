@@ -11,6 +11,7 @@ public class GlobalInputDelagates
     public static FloatDel scroll;
     public static TriggerDel openMenu;
     public static TriggerDel back;
+    public static TriggerDel delete;
     public static TriggerDel escape;
     public static TriggerDel select;
     public static Vector2Del move;
@@ -77,6 +78,14 @@ public class GlobalInputDelagates
         if (escape != null)
         {
             escape.Invoke();
+        }
+    }
+
+    public static void InvokeDelete()
+    {
+        if (delete != null)
+        {
+            delete.Invoke();
         }
     }
 

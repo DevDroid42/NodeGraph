@@ -34,6 +34,7 @@ public class Draggable : MonoBehaviour
     //used to move all slelected nodes at once
     public static UnityEvent drag;
     public static UnityEvent beginDrag;
+    public static UnityEvent OnDelete;
     public static PointerEventData pointerData;
 
     private void Start()
@@ -174,6 +175,13 @@ public class Draggable : MonoBehaviour
         }
     }
 
+    private void Delete()
+    {
+        if (selected)
+            OnDelete.Invoke();
+            Destroy(gameObject);
+    }
+
     public bool IsSelected()
     {
         return selected;
@@ -182,5 +190,15 @@ public class Draggable : MonoBehaviour
     public void OnPointerDown(PointerEventData eventData)
     {
         transform.SetSiblingIndex(draggables.Count);
+    }
+
+    private void OnEnable()
+    {
+        //GlobalInputDelagates.delete += Delete;
+    }
+
+    private void OnDisable()
+    {
+        //GlobalInputDelagates.delete -= Delete;
     }
 }

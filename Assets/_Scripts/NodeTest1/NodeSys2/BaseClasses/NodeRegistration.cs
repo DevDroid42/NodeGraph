@@ -5,7 +5,7 @@ public class NodeRegistration
 {
     public enum NodeTypes {integerConst, add, Viewer}
 
-    public Node GetNode(NodeTypes type)
+    public static Node GetNode(NodeTypes type)
     {
         switch (type)
         {

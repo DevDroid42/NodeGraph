@@ -8,16 +8,21 @@ using UnityEngine.UI.Extensions;
 
 public class EnumSelector : MonoBehaviour
 {
-    public enum DropDownType {searchable = 0, normal = 1}
+    public enum DropDownType {searchable, normal}
     public DropDownType ddtype;
     public GameObject normalTemplate;
     private Dropdown dropdown;
     public GameObject searchableTemplate;
     private AutoCompleteComboBox comboBox;
+    private AutoCompAddons comboBoxAddon;
 
     private GameObject InstantiatedBox;
 
-    public UnityEvent selectionMade;
+    public class EnumSelectedEvent : UnityEngine.Events.UnityEvent<int>
+    {
+    }
+    public EnumSelectedEvent selectionMade;
+
     public bool maskable = false;
 
     Type EnumType;
@@ -29,16 +34,17 @@ public class EnumSelector : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        selectionMade = new EnumSelectedEvent();
         normalTemplate.SetActive(false);
         searchableTemplate.SetActive(false);
-        SetUpEnum(typeof(NodeRegistration.NodeTypes), types);
+        //SetUpEnum(typeof(NodeRegistration.NodeTypes), types);
     }
 
     //used for the default dropdown
     public void OnSelect(int selection)
     {
         _enum = selection;
-        selectionMade.Invoke();
+        selectionMade.Invoke((int)_enum);
         Destroy(InstantiatedBox);
         InstantiatedBox = null;
     }
@@ -56,12 +62,11 @@ public class EnumSelector : MonoBehaviour
 
     private void Submit()
     {
-
         if(currentSelection != "")
         {
             _enum = Enum.Parse(EnumType, currentSelection, true);
             Debug.Log("Submitted: " + _enum);
-            selectionMade.Invoke();
+            selectionMade.Invoke((int)_enum);
             currentSelection = "";
             Destroy(InstantiatedBox);
             InstantiatedBox = null;
@@ -83,7 +88,15 @@ public class EnumSelector : MonoBehaviour
         {
             Debug.LogError("Invalid data type. Not an enum");
         }
-        CreateDropDown();
+        //CreateDropDown();
+    }
+
+    public void OpenMenu()
+    {
+        if (InstantiatedBox == null)
+        {
+            CreateDropDown();
+        }
     }
 
     private void CreateDropDown()
@@ -123,7 +136,8 @@ public class EnumSelector : MonoBehaviour
 
     void Close()
     {
-        gameObject.SetActive(false);
+        Destroy(InstantiatedBox);
+        InstantiatedBox = null;
     }
 
     private void OnEnable()
@@ -138,3 +152,4 @@ public class EnumSelector : MonoBehaviour
         GlobalInputDelagates.select += Submit;
     }
 }
+
