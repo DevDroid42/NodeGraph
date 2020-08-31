@@ -25,6 +25,8 @@ namespace nodeSys2
         //the node discription for identification in JSON and GUI 
         [JsonProperty] protected string nodeDisc;
 
+        [JsonIgnore]public bool MarkedForDeletion = false;
+
         //assigns indexes to all of the ports and links the input ports to the handle method
         public void InitPorts(int inputCount, int outputCount)
         {
@@ -32,7 +34,7 @@ namespace nodeSys2
             outputs = new Port[outputCount];
 
             InitPorts();
-        }
+        }        
 
         public void InitPorts()
         {

@@ -81,7 +81,7 @@ public class EnumSelector : MonoBehaviour
             EnumType = _enumType;
             enumStrings = Enum.GetNames(_enumType).ToList();
             foreach(string s in enumStrings){
-                Debug.Log(s);
+                //Debug.Log(s);
             }
         }
         else

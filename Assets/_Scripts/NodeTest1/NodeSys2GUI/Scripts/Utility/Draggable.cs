@@ -20,6 +20,7 @@ public class Draggable : MonoBehaviour
     private Sprite initalSprite;
     public Sprite hoverSprite;
     public UnityEvent onDrag;
+    public UnityEvent OnDelete;
     public Color defaultColor;
     public Color selectedColor;
     public ChildColorSetter childrenColor;
@@ -34,7 +35,6 @@ public class Draggable : MonoBehaviour
     //used to move all slelected nodes at once
     public static UnityEvent drag;
     public static UnityEvent beginDrag;
-    public static UnityEvent OnDelete;
     public static PointerEventData pointerData;
 
     private void Start()
@@ -114,7 +114,7 @@ public class Draggable : MonoBehaviour
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
-        {            
+        {
             if (!Input.GetKey(KeyCode.LeftShift))
             {
                 if (!dragged)
@@ -178,8 +178,10 @@ public class Draggable : MonoBehaviour
     private void Delete()
     {
         if (selected)
+        {
             OnDelete.Invoke();
             Destroy(gameObject);
+        }
     }
 
     public bool IsSelected()
@@ -194,11 +196,11 @@ public class Draggable : MonoBehaviour
 
     private void OnEnable()
     {
-        //GlobalInputDelagates.delete += Delete;
+        GlobalInputDelagates.delete += Delete;
     }
 
     private void OnDisable()
     {
-        //GlobalInputDelagates.delete -= Delete;
+        GlobalInputDelagates.delete -= Delete;
     }
 }

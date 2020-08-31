@@ -24,7 +24,7 @@ namespace nodeSys2
         //used to track if there an existing connection to prevent multiple connections to the same port                
         private bool connected = false;
 
-        public bool isConnected()
+        public bool IsConnected()
         {
             return connected;
         }

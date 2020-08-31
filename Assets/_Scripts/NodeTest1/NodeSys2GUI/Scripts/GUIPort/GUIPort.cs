@@ -40,7 +40,7 @@ public class GUIPort : MonoBehaviour
 
     public void OnPointerClick(PointerEventData eventData) // 3
     {
-        print("I was clicked at " + eventData.position);
+        //print("I was clicked at " + eventData.position);
         if (inputPort)
         {
             portRef.Disconnect();
@@ -50,7 +50,7 @@ public class GUIPort : MonoBehaviour
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("dragging");
+        //Debug.Log("dragging");
         if(line != null)
         {
             Destroy(line);
@@ -71,7 +71,7 @@ public class GUIPort : MonoBehaviour
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("pointer up");
+        //Debug.Log("pointer up");
         if (eventData.pointerCurrentRaycast.gameObject != null)
         {            
             //check if over other port
@@ -83,13 +83,13 @@ public class GUIPort : MonoBehaviour
                     //run the connection method on the input port
                     if (inputPort)
                     {
-                        if (portRef.isConnected())
+                        if (portRef.IsConnected())
                             portRef.Disconnect();
                         portRef.Connect(otherPort.portRef);
                     }
                     else
                     {
-                        if (otherPort.portRef.isConnected())
+                        if (otherPort.portRef.IsConnected())
                             otherPort.portRef.Disconnect();
                         otherPort.portRef.Connect(portRef);
                     }

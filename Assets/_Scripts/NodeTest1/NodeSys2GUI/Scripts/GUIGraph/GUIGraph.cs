@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using nodeSys2;
 using UnityEditor;
@@ -26,7 +27,7 @@ public class GUIGraph : MonoBehaviour
     public Color SelectedColor;
 
     private void Awake()
-    {        
+    {
         for (int i = 0; i < editorTypes.Length; i++)
         {
             editors.Add(editorTypes[i].name, editorTypes[i].editor);
@@ -42,7 +43,7 @@ public class GUIGraph : MonoBehaviour
         }
         nodeGraph = new Graph();
         UpdateGUI();
-    }    
+    }
 
     IntConstant numNode0, numNode1;
     AddNode addNode;
@@ -50,7 +51,7 @@ public class GUIGraph : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nodeGraph = GraphSerialization.JsonToGraph("{\"$id\":\"1\",\"nodes\":[{\"$id\":\"2\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-704.917,\"yPos\":-88.11426,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":false,\"inputs\":[],\"outputs\":[{\"$id\":\"3\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"IntWrapper: 0\"}],\"constants\":[{\"$id\":\"4\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":0}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"5\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-622.7563,\"yPos\":77.39801,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":false,\"inputs\":[],\"outputs\":[{\"$id\":\"6\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"IntWrapper: 0\"}],\"constants\":[{\"$id\":\"7\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":0}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"8\",\"$type\":\"AddNode, Assembly-CSharp\",\"xPos\":-265.535156,\"yPos\":-140.506836,\"xScale\":250.0,\"yScale\":164.194458,\"expanded\":false,\"inputs\":[{\"$id\":\"9\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"0\"},{\"$id\":\"10\",\"index\":1,\"connectedPort\":null,\"portDisc\":\"element 2\"}],\"outputs\":[{\"$id\":\"11\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"output\"}],\"constants\":null,\"constantsDisc\":null,\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"Add Node\"},{\"$id\":\"12\",\"$type\":\"ViewerNode, Assembly-CSharp\",\"data\":14,\"xPos\":367.938477,\"yPos\":146.460938,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":true,\"inputs\":[{\"$id\":\"13\",\"index\":0,\"connectedPort\":{\"$id\":\"14\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"IntWrapper: 14\"},\"portDisc\":\"DefaultDisc\"}],\"outputs\":[],\"constants\":null,\"constantsDisc\":null,\"viewableData\":[14],\"viewableDisc\":[\"data:\"],\"nodeDisc\":\"Viewer node\"},{\"$id\":\"15\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-170.275085,\"yPos\":133.362488,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":true,\"inputs\":[],\"outputs\":[{\"$ref\":\"14\"}],\"constants\":[{\"$id\":\"16\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":14}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"17\",\"$type\":\"AddNode, Assembly-CSharp\",\"xPos\":331.025818,\"yPos\":-95.25922,\"xScale\":250.0,\"yScale\":164.194458,\"expanded\":false,\"inputs\":[{\"$id\":\"18\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"element 1\"},{\"$id\":\"19\",\"index\":1,\"connectedPort\":null,\"portDisc\":\"element 2\"}],\"outputs\":[{\"$id\":\"20\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"output\"}],\"constants\":null,\"constantsDisc\":null,\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"Add Node\"}]}");    
+        nodeGraph = GraphSerialization.JsonToGraph("{\"$id\":\"1\",\"nodes\":[{\"$id\":\"2\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-704.917,\"yPos\":-88.11426,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":false,\"inputs\":[],\"outputs\":[{\"$id\":\"3\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"IntWrapper: 0\"}],\"constants\":[{\"$id\":\"4\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":0}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"5\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-622.7563,\"yPos\":77.39801,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":false,\"inputs\":[],\"outputs\":[{\"$id\":\"6\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"IntWrapper: 0\"}],\"constants\":[{\"$id\":\"7\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":0}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"8\",\"$type\":\"AddNode, Assembly-CSharp\",\"xPos\":-265.535156,\"yPos\":-140.506836,\"xScale\":250.0,\"yScale\":164.194458,\"expanded\":false,\"inputs\":[{\"$id\":\"9\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"0\"},{\"$id\":\"10\",\"index\":1,\"connectedPort\":null,\"portDisc\":\"element 2\"}],\"outputs\":[{\"$id\":\"11\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"output\"}],\"constants\":null,\"constantsDisc\":null,\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"Add Node\"},{\"$id\":\"12\",\"$type\":\"ViewerNode, Assembly-CSharp\",\"data\":14,\"xPos\":367.938477,\"yPos\":146.460938,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":true,\"inputs\":[{\"$id\":\"13\",\"index\":0,\"connectedPort\":{\"$id\":\"14\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"IntWrapper: 14\"},\"portDisc\":\"DefaultDisc\"}],\"outputs\":[],\"constants\":null,\"constantsDisc\":null,\"viewableData\":[14],\"viewableDisc\":[\"data:\"],\"nodeDisc\":\"Viewer node\"},{\"$id\":\"15\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-170.275085,\"yPos\":133.362488,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":true,\"inputs\":[],\"outputs\":[{\"$ref\":\"14\"}],\"constants\":[{\"$id\":\"16\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":14}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"17\",\"$type\":\"AddNode, Assembly-CSharp\",\"xPos\":331.025818,\"yPos\":-95.25922,\"xScale\":250.0,\"yScale\":164.194458,\"expanded\":false,\"inputs\":[{\"$id\":\"18\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"element 1\"},{\"$id\":\"19\",\"index\":1,\"connectedPort\":null,\"portDisc\":\"element 2\"}],\"outputs\":[{\"$id\":\"20\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"output\"}],\"constants\":null,\"constantsDisc\":null,\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"Add Node\"}]}");
         //nodeGraph = new Graph();
         //numNode0 = new IntConstant();
         //numNode1 = new IntConstant();
@@ -91,6 +92,7 @@ public class GUIGraph : MonoBehaviour
 
     public void UpdateGUI()
     {
+        VerifyNodes();
         nodeGraph.InitGraph();
         for (int i = 0; i < guiNodes.Count; i++)
         {
@@ -98,7 +100,7 @@ public class GUIGraph : MonoBehaviour
         }
         guiNodes.Clear();
 
-        
+
         for (int i = 0; i < nodeGraph.nodes.Count; i++)
         {
             GameObject node = Instantiate(baseNode, NodeParent);
@@ -115,6 +117,7 @@ public class GUIGraph : MonoBehaviour
     public List<GameObject> lines = new List<GameObject>();
     public void MakeConnections()
     {
+        VerifyNodes();
         for (int i = 0; i < lines.Count; i++)
         {
             Destroy(lines[i]);
@@ -133,7 +136,7 @@ public class GUIGraph : MonoBehaviour
             for (int j = 0; j < nodeGraph.nodes[i].inputs.Length; j++)
             {
                 //check if the port has a connection
-                if (nodeGraph.nodes[i].inputs[j].isConnected())
+                if (nodeGraph.nodes[i].inputs[j].IsConnected())
                 {
                     //if it does store the reference to the port and it's connection
                     inPort = nodeGraph.nodes[i].inputs[j];
@@ -146,7 +149,7 @@ public class GUIGraph : MonoBehaviour
                     GUIPortHolder portHolder2 = findGUI(outPort).GetComponent<GUIPortHolder>();
                     outPortGO = portHolder2.Port;
                     portHolder2.SetupPortPos();
-                    
+
                     lines.Add(DrawLinesFromRect(inPortGO, outPortGO, baseLineRenderer, lineRendererParent));
                 }
             }
@@ -190,12 +193,12 @@ public class GUIGraph : MonoBehaviour
         points[0] = average(points1);
         points[1] = average(points2);
         GameObject lr = Instantiate(prefab, parent);
-        lr.transform.localScale = new Vector2(110,110);
+        lr.transform.localScale = new Vector2(110, 110);
         LineRenderer lrScript = lr.GetComponent<LineRenderer>();
         lrScript.SetPositions(points);
         lrScript.widthMultiplier = BackgroundScroll.zoom.x / 10;
         return lr;
-        
+
 
         Vector3 average(Vector3[] vectors)
         {
@@ -211,7 +214,53 @@ public class GUIGraph : MonoBehaviour
         }
     }
 
-    
+    //verifies that there are no nulls in the node lists. These happen from deletes
+    private void VerifyNodes()
+    {
+        
+        nodeGraph.nodes.RemoveAll(_node => _node.MarkedForDeletion);
+
+        for (int i = 0; i < nodeGraph.nodes.Count; i++)
+        {
+            for (int j = 0; j < nodeGraph.nodes[i].inputs.Length; j++)
+            {
+                if (!PortExistsInNodeGraph(nodeGraph.nodes[i].inputs[j].connectedPort))
+                {
+                    nodeGraph.nodes[i].inputs[j].Disconnect();
+                }
+            }
+        }
+        //when deleting a node other nodes input ports that were connected to the deleted output ports will still
+        //be in a connected state. Because objects are reference types these ports will still exist in memory referenced from the input port
+        //Check for a reference to the same port in the root nodeSys node list. If one exists then the port hasn't been deleted
+        bool PortExistsInNodeGraph(Port port)
+        {            
+            for (int i = 0; i < nodeGraph.nodes.Count; i++)
+            {
+                for (int j = 0; j < nodeGraph.nodes[i].outputs.Length; j++)
+                {
+                    if (nodeGraph.nodes[i].outputs[j] == port)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        ////when destroying the unity GameObject the reference will still remain in code. Remove all null references
+        //guiNodes.RemoveAll(_node => _node == null);
+        //for (int i = 0; i < nodeGraph.nodes.Count; i++)
+        //{
+        //    for (int j = 0; j < nodeGraph.nodes[i].inputs.Length; j++)
+        //    {
+        //        if (nodeGraph.nodes[i].inputs[j].connectedPort == null)
+        //        {
+        //            //if the connected port is null that means that the port either isn't connected to another node
+        //            //or the connection has been broken by a delete.
+        //            nodeGraph.nodes[i].inputs[j].Disconnect();
+        //        }
+        //    }
+        //}
+    }
 
     public void SavePosition(GameObject node)
     {

@@ -63,6 +63,17 @@ public class GUINode : MonoBehaviour
         SetupScale();
     }
 
+    public void DeleteNode()
+    {
+        for (int i = 0; i < nodeRef.inputs.Length; i++)
+        {
+            //this will clear all delagates pointing towards this node to avoid delagates pointing to null function locations
+            nodeRef.inputs[i].Disconnect();
+        }
+        nodeRef.MarkedForDeletion = true;
+        GUIGraph.updateGraphGUI.Invoke();
+    }
+
     private void SetupScale()
     {
         Vector2 size = new Vector2(minSize.x, minSize.y);

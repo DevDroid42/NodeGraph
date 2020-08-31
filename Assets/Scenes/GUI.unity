@@ -428,6 +428,11 @@ PrefabInstance:
       propertyPath: onResize.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2066570212998209082, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.002243042
+      objectReference: {fileID: 0}
     - target: {fileID: 2410911701651516437, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
       propertyPath: onResize.m_PersistentCalls.m_Calls.Array.size
@@ -735,7 +740,7 @@ PrefabInstance:
     - target: {fileID: 355438195293011493, guid: 8524b549aded35b4faa28f04f238ec0a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000038146973
+      value: -0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 355438195452295772, guid: 8524b549aded35b4faa28f04f238ec0a,
         type: 3}
