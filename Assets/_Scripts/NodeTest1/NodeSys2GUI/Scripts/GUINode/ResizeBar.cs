@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using nodeSys2;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,23 +7,23 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(RawImage))]
-public class ResizeBar : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler
+public class ResizeBar : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     public RectTransform resizeTarget;
     public float sensitivity;
 
-    public enum ResizeType {vertical, horizontal, both};
+    public enum ResizeType { vertical, horizontal, both };
     public ResizeType resizeType;
 
     public Color defaultColor;
     public Color hoverColor;
 
     public UnityEvent onResize;
+    public UnityEvent onEndDrag;
     private RawImage image;
     // Start is called before the first frame update
     void Start()
     {
-        onResize = new UnityEvent();
         image = GetComponent<RawImage>();
         image.color = defaultColor;
     }
@@ -49,7 +50,7 @@ public class ResizeBar : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 break;
             case ResizeType.both:
                 resizeTarget.sizeDelta = new Vector2(initialSize.x + PosDiff.x * sensitivity, initialSize.y - (PosDiff.y * sensitivity));
-                break;                
+                break;
             default:
                 break;
         }
@@ -64,5 +65,10 @@ public class ResizeBar : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void OnPointerExit(PointerEventData eventData)
     {
         image.color = defaultColor;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        onEndDrag.Invoke();
     }
 }

@@ -7,6 +7,10 @@ namespace nodeSys2
 {
     public class Node
     {
+        public delegate void FloatDelagate(float num);
+        [JsonIgnore]
+        public static FloatDelagate frameDelagate;
+
         //GUI info
         public float xPos, yPos;
         public float xScale = 250, yScale = 10;
@@ -55,9 +59,9 @@ namespace nodeSys2
             }
         }
 
-        public void setupFrameDel(Graph.FloatDelagate frameDealagate)
+        public void CleanUp()
         {
-            frameDealagate += Frame;
+            frameDelagate -= Frame;
         }
 
         public string GetName()
@@ -69,11 +73,13 @@ namespace nodeSys2
         //on startup
         public virtual void Init()
         {
-
+            //removing does nothing if it's not already assigned so remove first incase it's already there to prevent dulplicates
+            frameDelagate -= Frame;
+            frameDelagate += Frame;
         }
 
         //called on every "frame" if running in unity these frames are called each unity frame. 
-        //If running standalone then a main class will be invoked on a while loop
+        //If running standalone then a main class will invoke on a while loop
         public virtual void Frame(float deltaTime)
         {
 

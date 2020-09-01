@@ -16,7 +16,7 @@ public class ViewerNode : Node
 
     public override void Handle(int index, object data)
     {
-        Debug.Log(data);
+        //Debug.Log(data);
         viewableData[0] = data;
         this.data = data;
     }

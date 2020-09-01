@@ -26,6 +26,12 @@ public class GUIGraph : MonoBehaviour
     public Color DefaultColor;
     public Color SelectedColor;
 
+    [Serializable]
+    public class StringEvent : UnityEvent<string>
+    {
+    }    
+    public StringEvent GraphChanged;
+
     private void Awake()
     {
         for (int i = 0; i < editorTypes.Length; i++)
@@ -71,12 +77,18 @@ public class GUIGraph : MonoBehaviour
 
         UpdateGUI();
         //graph = new Graph();
+        ActionPreformed();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void setGraph(string _graphJSON)
     {
-        //MakeConnections();
+        nodeGraph = GraphSerialization.JsonToGraph(_graphJSON);
+        UpdateGUI();
+    }
+
+    public void ActionPreformed()
+    {
+        GraphChanged.Invoke(GraphSerialization.GraphToJson(nodeGraph));
     }
 
     public void PrintJson()
@@ -87,6 +99,7 @@ public class GUIGraph : MonoBehaviour
     public void AddNode(NodeRegistration.NodeTypes nodeType)
     {
         nodeGraph.nodes.Add(NodeRegistration.GetNode(nodeType));
+        ActionPreformed();
         UpdateGUI();
     }
 
@@ -111,7 +124,7 @@ public class GUIGraph : MonoBehaviour
             draggable.selectedColor = SelectedColor;
             guiNodes.Add(node);
         }
-        MakeConnections();
+        MakeConnections();        
     }
 
     public List<GameObject> lines = new List<GameObject>();
@@ -232,7 +245,7 @@ public class GUIGraph : MonoBehaviour
         }
         //when deleting a node other nodes input ports that were connected to the deleted output ports will still
         //be in a connected state. Because objects are reference types these ports will still exist in memory referenced from the input port
-        //Check for a reference to the same port in the root nodeSys node list. If one exists then the port hasn't been deleted
+        //Check for a reference to the same port in the nodeSys node list. If one exists then the port hasn't been deleted
         bool PortExistsInNodeGraph(Port port)
         {            
             for (int i = 0; i < nodeGraph.nodes.Count; i++)
@@ -245,24 +258,9 @@ public class GUIGraph : MonoBehaviour
             }
             return false;
         }
-
-        ////when destroying the unity GameObject the reference will still remain in code. Remove all null references
-        //guiNodes.RemoveAll(_node => _node == null);
-        //for (int i = 0; i < nodeGraph.nodes.Count; i++)
-        //{
-        //    for (int j = 0; j < nodeGraph.nodes[i].inputs.Length; j++)
-        //    {
-        //        if (nodeGraph.nodes[i].inputs[j].connectedPort == null)
-        //        {
-        //            //if the connected port is null that means that the port either isn't connected to another node
-        //            //or the connection has been broken by a delete.
-        //            nodeGraph.nodes[i].inputs[j].Disconnect();
-        //        }
-        //    }
-        //}
     }
 
-    public void SavePosition(GameObject node)
+    public void SaveTransform(GameObject node)
     {
         GUINode guiNode = node.GetComponent<GUINode>();
         RectTransform rt = node.GetComponent<RectTransform>();
@@ -275,7 +273,7 @@ public class GUIGraph : MonoBehaviour
                 nodeGraph.nodes[i].xScale = rt.sizeDelta.x;
                 nodeGraph.nodes[i].yScale = rt.sizeDelta.y;
             }
-        }
+        }        
     }
 }
 

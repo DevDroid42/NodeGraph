@@ -59,5 +59,40 @@ public class PCInputManager : MonoBehaviour
             GlobalInputDelagates.InvokePan();
         }
 
+        if(Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+        {
+            //doing unity's job for them
+            if (!Application.isEditor)
+            {
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    GlobalInputDelagates.InvokeUndo();
+                }
+                if (Input.GetKeyDown(KeyCode.Y))
+                {
+                    GlobalInputDelagates.InvokeRedo();
+                }
+                if (Input.GetKeyDown(KeyCode.S))
+                {
+                    GlobalInputDelagates.InvokeSave();
+                }
+            }
+            else
+            {
+                //this is stupid and unity devs are incompetent
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {                    
+                    GlobalInputDelagates.InvokeUndo();
+                }
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    GlobalInputDelagates.InvokeRedo();
+                }
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    GlobalInputDelagates.InvokeSave();
+                }
+            }
+        }
     }
 }

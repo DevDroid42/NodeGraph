@@ -20,6 +20,7 @@ public class Draggable : MonoBehaviour
     private Sprite initalSprite;
     public Sprite hoverSprite;
     public UnityEvent onDrag;
+    public UnityEvent onEndDrag;
     public UnityEvent OnDelete;
     public Color defaultColor;
     public Color selectedColor;
@@ -90,7 +91,7 @@ public class Draggable : MonoBehaviour
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //Deselect();
+        onEndDrag.Invoke();
     }
 
     private void Translate()

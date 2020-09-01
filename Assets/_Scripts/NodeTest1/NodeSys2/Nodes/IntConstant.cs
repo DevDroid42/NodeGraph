@@ -22,7 +22,7 @@ public class IntConstant : Node
     {
         outputs[0].portDisc = constants[0].ToString();
         outputs[0].Invoke(((IntData)constants[0]).num);
-        Debug.Log("invoking :" + constants[0]);
+        //Debug.Log("invoking :" + constants[0]);
     }
 
 

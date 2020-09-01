@@ -6,7 +6,7 @@ public class GlobalInputDelagates
 {
     public delegate void Vector2Del(Vector2 vector);
     public delegate void FloatDel(float num);
-    public delegate void TriggerDel();    
+    public delegate void TriggerDel();
 
     public static FloatDel scroll;
     public static TriggerDel openMenu;
@@ -17,10 +17,13 @@ public class GlobalInputDelagates
     public static Vector2Del move;
     public static TriggerDel panStart;
     public static TriggerDel pan;
+    public static TriggerDel Undo;
+    public static TriggerDel Redo;
+    public static TriggerDel Save;
 
     public static void InvokeScroll(float val)
     {
-        if(scroll != null)
+        if (scroll != null)
         {
             scroll.Invoke(val);
         }
@@ -51,7 +54,7 @@ public class GlobalInputDelagates
 
     public static void InvokeMove(Vector2 val)
     {
-        if(move != null)
+        if (move != null)
         {
             move.Invoke(val);
         }
@@ -67,7 +70,7 @@ public class GlobalInputDelagates
 
     public static void InvokePanStart()
     {
-        if(panStart != null)
+        if (panStart != null)
         {
             panStart.Invoke();
         }
@@ -86,6 +89,30 @@ public class GlobalInputDelagates
         if (delete != null)
         {
             delete.Invoke();
+        }
+    }
+
+    public static void InvokeUndo()
+    {
+        if (Undo != null)
+        {
+            Undo.Invoke();
+        }
+    }
+
+    public static void InvokeRedo()
+    {
+        if (Redo != null)
+        {
+            Redo.Invoke();
+        }
+    }
+
+    public static void InvokeSave()
+    {
+        if (Save != null)
+        {
+            Save.Invoke();
         }
     }
 

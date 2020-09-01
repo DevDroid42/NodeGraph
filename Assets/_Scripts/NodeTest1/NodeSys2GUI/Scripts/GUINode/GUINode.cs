@@ -69,6 +69,7 @@ public class GUINode : MonoBehaviour
         {
             //this will clear all delagates pointing towards this node to avoid delagates pointing to null function locations
             nodeRef.inputs[i].Disconnect();
+            nodeRef.CleanUp();
         }
         nodeRef.MarkedForDeletion = true;
         GUIGraph.updateGraphGUI.Invoke();
