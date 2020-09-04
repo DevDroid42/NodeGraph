@@ -23,17 +23,18 @@ public class UndoRedo : MonoBehaviour
 
     public void AddEntry(string entry)
     {
-        for (int i = currentPos; i < history.Count; i++)
+        currentPos++;
+        history.Insert(currentPos - 1,entry);
+        for (int i = currentPos + 1; i < history.Count;)
         {
-            history.RemoveAt(i);
+            history.RemoveAt(history.Count-1);
         }
-
-        history.Add(entry);        
+             
         if(history.Count > maxHistory)
         {
             history.RemoveAt(0);
+            currentPos--;
         }
-        currentPos = history.Count;
     }
 
     private void OnEnable()
