@@ -26,7 +26,14 @@ public class SaveLoadManager : MonoBehaviour
         {
             Debug.Log("Save does not exist, creating new one at: " + Application.persistentDataPath + "\\save.json");
             globalData = new GlobalData();
-            File.WriteAllText(Application.persistentDataPath + "\\save.json", JsonConvert.SerializeObject(globalData));
+            SaveGlobalData();
+        }
+        if (globalData.GetRecentlyOpened().Count > 0)
+        {
+            if (File.Exists(globalData.GetRecentlyOpened()[0]))
+            {
+                OpenProject(File.ReadAllText(globalData.GetRecentlyOpened()[0]));
+            }
         }
     }
 
@@ -51,12 +58,18 @@ public class SaveLoadManager : MonoBehaviour
             Debug.Log("Overwrite saving at: " + currentPath);
             File.WriteAllText(currentPath, guiGraph.GetGraphJson());
         }
+        globalData.AddRecentlyOpened(currentPath);
+        SaveGlobalData();
     }
 
     public void SaveAs()
     {
-        File.WriteAllText(StandaloneFileBrowser.SaveFilePanel("Save File", "", "", "Json"), guiGraph.GetGraphJson());
+        string path = StandaloneFileBrowser.SaveFilePanel("Save File", "", "", "Json");
+        File.WriteAllText(path, guiGraph.GetGraphJson());
         Debug.Log("Creating new save at: ");
+        currentPath = path;
+        globalData.AddRecentlyOpened(currentPath);
+        SaveGlobalData();
     }
 
     public void OpenProject()
@@ -67,6 +80,14 @@ public class SaveLoadManager : MonoBehaviour
         {
             json = File.ReadAllText(paths[0]);
         }
+        OpenProject(json);
+        currentPath = paths[0];
+        globalData.AddRecentlyOpened(paths[0]);
+        SaveGlobalData();
+    }
+
+    private void OpenProject(string json)
+    {
         if (json != "")
         {
             guiGraph.setGraph(json);
@@ -82,6 +103,11 @@ public class SaveLoadManager : MonoBehaviour
         currentPath = "";
         guiGraph.CreateNewGraph();
     }
+
+    private void SaveGlobalData()
+    {
+        File.WriteAllText(Application.persistentDataPath + "\\save.json", JsonConvert.SerializeObject(globalData));
+    }
 }
 
 [System.Serializable]
@@ -96,14 +122,17 @@ public class GlobalData
     }
     public void AddRecentlyOpened(string path)
     {
+        //if it's already in the list remove it and add it back to the front
         if (!recentProjects.Contains(path))
         {
-            recentProjects.Insert(0, path);
-            if (recentProjects.Count > 5)
-            {
-                recentProjects.RemoveAt(recentProjects.Count - 1);
-            }
+            recentProjects.Remove(path);
         }
+        recentProjects.Insert(0, path);
+        if (recentProjects.Count > 5)
+        {
+            recentProjects.RemoveAt(recentProjects.Count - 1);
+        }
+
     }
 
 }
