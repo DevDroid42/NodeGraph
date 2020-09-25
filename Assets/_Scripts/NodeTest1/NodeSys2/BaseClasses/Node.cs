@@ -38,7 +38,29 @@ namespace nodeSys2
             outputs = new Port[outputCount];
 
             InitPorts();
-        }        
+        }   
+        
+        //used to instantiate constants and viewable object arrays to specified lengths
+        //also instantiates Disc string arrays
+        protected void SetupConstantsViewables(int constantsSize, int viewableSize)
+        {
+            constants = new object[constantsSize];
+            constantsDisc = new string[constantsSize];
+            viewableData = new object[viewableSize];
+            viewableDisc = new string[viewableSize];
+        }
+
+        protected void SetConstant(int index, object data, string discription)
+        {
+            constants[index] = data;
+            constantsDisc[index] = discription;
+        }
+
+        protected void SetViewable(int index, object data, string discription)
+        {
+            viewableData[index] = data;
+            viewableDisc[index] = discription;
+        }
 
         public void InitPorts()
         {
@@ -70,16 +92,14 @@ namespace nodeSys2
         }
 
         //to be called on every node after all nodes are instantiated and connected. Usefull for sending constants down the graph
-        //on startup
+        //on startup. 
         public virtual void Init()
         {
-            //removing does nothing if it's not already assigned so remove first incase it's already there to prevent dulplicates
-            frameDelagate -= Frame;
-            frameDelagate += Frame;
+
         }
 
         //called on every "frame" if running in unity these frames are called each unity frame. 
-        //If running standalone then a main class will invoke on a while loop
+        //If running standalone then a main class will invoke on a while loop. In order for this to work Base.Init must be called at some point to register the node
         public virtual void Frame(float deltaTime)
         {
 

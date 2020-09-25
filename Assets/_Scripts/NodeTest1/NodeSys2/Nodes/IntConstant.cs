@@ -10,11 +10,9 @@ public class IntConstant : Node
     public IntConstant()
     {
         nodeDisc = "IntConstant";
-        constants = new object[1];
-        constantsDisc = new string[1];
+        SetupConstantsViewables(1, 0);
         IntData constant = new IntData(0);
-        constantsDisc[0] = "IntConstant";
-        constants[0] = constant;        
+        SetConstant(0, constant, "intConstant");
         InitPorts(0,1);        
     }
 

@@ -31,7 +31,7 @@ public class GUIGraph : MonoBehaviour
     [Serializable]
     public class StringEvent : UnityEvent<string>
     {
-    }    
+    }
     public StringEvent GraphChanged;
 
     private void Awake()
@@ -142,7 +142,7 @@ public class GUIGraph : MonoBehaviour
             draggable.selectedColor = SelectedColor;
             guiNodes.Add(node);
         }
-        MakeConnections();        
+        MakeConnections();
     }
 
     public List<GameObject> lines = new List<GameObject>();
@@ -248,7 +248,7 @@ public class GUIGraph : MonoBehaviour
     //verifies that there are no nulls in the node lists. These happen from deletes
     private void VerifyNodes()
     {
-        
+
         nodeGraph.nodes.RemoveAll(_node => _node.MarkedForDeletion);
 
         for (int i = 0; i < nodeGraph.nodes.Count; i++)
@@ -265,7 +265,7 @@ public class GUIGraph : MonoBehaviour
         //be in a connected state. Because objects are reference types these ports will still exist in memory referenced from the input port
         //Check for a reference to the same port in the nodeSys node list. If one exists then the port hasn't been deleted
         bool PortExistsInNodeGraph(Port port)
-        {            
+        {
             for (int i = 0; i < nodeGraph.nodes.Count; i++)
             {
                 for (int j = 0; j < nodeGraph.nodes[i].outputs.Length; j++)
@@ -291,7 +291,15 @@ public class GUIGraph : MonoBehaviour
                 nodeGraph.nodes[i].xScale = rt.sizeDelta.x;
                 nodeGraph.nodes[i].yScale = rt.sizeDelta.y;
             }
-        }        
+        }
+    }
+
+    private void Update()
+    {
+        if (Node.frameDelagate != null)
+        {
+            Node.frameDelagate.Invoke(Time.deltaTime);
+        }
     }
 }
 

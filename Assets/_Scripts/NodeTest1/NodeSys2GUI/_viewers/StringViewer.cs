@@ -19,6 +19,6 @@ public class StringViewer : MonoBehaviour
         if(dataObj != null)
         {
             data.text = dataObj.ToString();
-        }
+        }        
     }
 }
