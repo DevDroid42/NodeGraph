@@ -37,6 +37,12 @@ public class UndoRedo : MonoBehaviour
         }
     }
 
+    public void ClearHistory()
+    {
+        currentPos = 0;
+        history.Clear();
+    }
+
     private void OnEnable()
     {
         GlobalInputDelagates.Undo += Undo;

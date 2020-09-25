@@ -26,6 +26,8 @@ public class GUIGraph : MonoBehaviour
     public Color DefaultColor;
     public Color SelectedColor;
 
+    private UndoRedo undoRedo;
+
     [Serializable]
     public class StringEvent : UnityEvent<string>
     {
@@ -48,6 +50,7 @@ public class GUIGraph : MonoBehaviour
             updateGraphGUI.AddListener(UpdateGUI);
         }
         nodeGraph = new Graph();
+        undoRedo = GetComponent<UndoRedo>();
         UpdateGUI();
     }
 
@@ -80,10 +83,20 @@ public class GUIGraph : MonoBehaviour
         ActionPreformed();
     }
 
+    public void CreateNewGraph()
+    {
+        nodeGraph = new Graph();
+        UpdateGUI();
+        undoRedo.ClearHistory();
+        ActionPreformed();
+    }
+
     public void setGraph(string _graphJSON)
     {
         nodeGraph = GraphSerialization.JsonToGraph(_graphJSON);
         UpdateGUI();
+        undoRedo.ClearHistory();
+        ActionPreformed();
     }
 
     public void ActionPreformed()
@@ -94,6 +107,11 @@ public class GUIGraph : MonoBehaviour
     public void PrintJson()
     {
         Debug.Log(GraphSerialization.GraphToJson(nodeGraph));
+    }
+
+    public string GetGraphJson()
+    {
+        return GraphSerialization.GraphToJson(nodeGraph);
     }
 
     public void AddNode(NodeRegistration.NodeTypes nodeType)
