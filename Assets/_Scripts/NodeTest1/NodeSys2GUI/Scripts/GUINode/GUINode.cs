@@ -109,7 +109,7 @@ public class GUINode : MonoBehaviour
             {
                 GameObject port = Instantiate(basePort, portHolder);
                 rt = port.GetComponent<RectTransform>();
-                position = -i * (rt.rect.height - 2);
+                position = -i * (rt.rect.height - 2) - 15;
                 //rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, position, rt.rect.height);
                 rt.anchoredPosition = new Vector2(0.5f, position);
                 gameObjects[i] = port;
@@ -121,7 +121,7 @@ public class GUINode : MonoBehaviour
             }
                         
             //add some padding
-            position -= 122.5f;
+            position -= 45f;
             position = 0 - position;
             if(position > minHeight)
             {
