@@ -118,7 +118,7 @@ public class GUIGraph : MonoBehaviour
         {
             GameObject node = Instantiate(baseNode, NodeParent);
             node.SetActive(true);
-            node.GetComponent<GUINode>().SetupNode(nodeGraph.nodes[i]);
+            node.GetComponent<GUINode>().SetupNode(nodeGraph.nodes[i], this);
             Draggable draggable = node.GetComponent<Draggable>();
             draggable.defaultColor = DefaultColor;
             draggable.selectedColor = SelectedColor;

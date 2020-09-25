@@ -11,7 +11,9 @@ public class GUIPort : MonoBehaviour
      , IEndDragHandler
      , IPointerEnterHandler
      , IPointerExitHandler     
-{    
+{
+    public GUIGraph GUIGraphRef;
+    public GUINode GUINodeRef;
     public Port portRef;
     public bool inputPort;
     public Color PortColor;
@@ -44,6 +46,7 @@ public class GUIPort : MonoBehaviour
         if (inputPort)
         {
             portRef.Disconnect();
+            GUIGraphRef.ActionPreformed();
         }
         GUIGraph.updateGraphGUI.Invoke();
     }
@@ -94,6 +97,7 @@ public class GUIPort : MonoBehaviour
                         otherPort.portRef.Connect(portRef);
                     }
                 }
+                GUIGraphRef.ActionPreformed();                
             }
         }
         else

@@ -25,7 +25,7 @@ public class UndoRedo : MonoBehaviour
     {
         currentPos++;
         history.Insert(currentPos - 1,entry);
-        for (int i = currentPos + 1; i < history.Count;)
+        for (int i = currentPos + 1; i <= history.Count;)
         {
             history.RemoveAt(history.Count-1);
         }

@@ -6,6 +6,7 @@ using nodeSys2;
 
 public class GUINode : MonoBehaviour
 {
+    public GUIGraph GUIGraphRef;
     //a reference to the node running in nodeSys
     public Node nodeRef;
     public Text nodeTitle;
@@ -52,8 +53,9 @@ public class GUINode : MonoBehaviour
     }
 
     //sets up the node GUI to match with a given node
-    public void SetupNode(Node node)
+    public void SetupNode(Node node, GUIGraph graphRef)
     {
+        GUIGraphRef = graphRef;
         nodeRef = node;
         transform.localPosition = new Vector3(nodeRef.xPos, nodeRef.yPos, 0f);           
         nodeTitle.text = nodeRef.GetName();
@@ -113,6 +115,8 @@ public class GUINode : MonoBehaviour
                 gameObjects[i] = port;
                 GUIPort guiPort = gameObjects[i].GetComponentInChildren<GUIPort>();
                 guiPort.portRef = ports[i];
+                guiPort.GUIGraphRef = GUIGraphRef;
+                guiPort.GUINodeRef = this;
                 guiPort.inputPort = isInput;
             }
                         
