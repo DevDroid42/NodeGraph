@@ -9,6 +9,7 @@ namespace nodeSys2
     {
         public delegate void FloatDelagate(float num);
         [JsonIgnore]
+        //Frame delagate is a delage that belongs to all nodes. It is called each frame by whatever host is currently running the graph. 
         public static FloatDelagate frameDelagate;
 
         //GUI info

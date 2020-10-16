@@ -159,8 +159,6 @@ public class GUINode : MonoBehaviour
     {
         openButton.SetActive(false);
         closeButton.SetActive(true);
-        editor.sizeDelta = new Vector2(0f, -61.8f);
-        editor.anchoredPosition = new Vector2(0f, -30.8f);
         editor.anchorMax = new Vector2(1f, 1f);
         editor.anchorMin = new Vector2(0f, 0f);
     }
@@ -169,8 +167,6 @@ public class GUINode : MonoBehaviour
     {
         openButton.SetActive(true);
         closeButton.SetActive(false);
-        editor.sizeDelta = new Vector2(0f,19f);
-        editor.anchoredPosition = new Vector2(0f,-71.1f);
         editor.anchorMax = new Vector2(1f, 1f);
         editor.anchorMin = new Vector2(0f, 1f);
     }
