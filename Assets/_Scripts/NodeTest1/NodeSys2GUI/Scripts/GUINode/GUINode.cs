@@ -67,10 +67,10 @@ public class GUINode : MonoBehaviour
 
     public void DeleteNode()
     {
-        for (int i = 0; i < nodeRef.inputs.Length; i++)
+        for (int i = 0; i < nodeRef.inputs.Count; i++)
         {
             //this will clear all delagates pointing towards this node to avoid delagates pointing to null function locations
-            nodeRef.inputs[i].Disconnect();
+            nodeRef.inputs[i].dataPort.Disconnect();
             nodeRef.CleanUp();
         }
         nodeRef.MarkedForDeletion = true;
@@ -95,29 +95,44 @@ public class GUINode : MonoBehaviour
     {
         float minHeight = 0;
 
-        inputPorts = new GameObject[nodeRef.inputs.Length];
-        outputPorts = new GameObject[nodeRef.outputs.Length];
+        int connectableCount = 0;
+        //get the amount if connectable input properties exist. 
+        for (int i = 0; i < nodeRef.inputs.Count; i++)
+        {
+            if (nodeRef.inputs[i].connectable)
+            {
+                connectableCount++;
+            }
+        }
+
+        inputPorts = new GameObject[connectableCount];
+        //all output ports are connectable 
+        outputPorts = new GameObject[nodeRef.outputs.Count];
 
         createPorts(nodeRef.inputs, inputPorts, inputPortHolder, true);
         createPorts(nodeRef.outputs, outputPorts, outputPortHolder, false);
         
-        void createPorts(Port[] ports, GameObject[] gameObjects, Transform portHolder, bool isInput)
+        void createPorts(List<Property> properties, GameObject[] gameObjects, Transform portHolder, bool isInput)
         {
-            RectTransform rt = null;
             float position = 0;
-            for (int i = 0; i < ports.Length; i++)
+            int index = 0;
+            for (int i = 0; i < properties.Count; i++)
             {
-                GameObject port = Instantiate(basePort, portHolder);
-                rt = port.GetComponent<RectTransform>();
-                position = -i * (rt.rect.height - 2) - 15;
-                //rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, position, rt.rect.height);
-                rt.anchoredPosition = new Vector2(0.5f, position);
-                gameObjects[i] = port;
-                GUIPort guiPort = gameObjects[i].GetComponentInChildren<GUIPort>();
-                guiPort.portRef = ports[i];
-                guiPort.GUIGraphRef = GUIGraphRef;
-                guiPort.GUINodeRef = this;
-                guiPort.inputPort = isInput;
+                if (properties[i].connectable)
+                {
+                    index++;
+                    GameObject port = Instantiate(basePort, portHolder);
+                    RectTransform rt = port.GetComponent<RectTransform>();
+                    position = -index * (rt.rect.height - 2) - 15;
+                    //rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, position, rt.rect.height);
+                    rt.anchoredPosition = new Vector2(0.5f, position);
+                    gameObjects[index] = port;
+                    GUIPort guiPort = gameObjects[index].GetComponentInChildren<GUIPort>();
+                    guiPort.portRef = properties[i].dataPort;
+                    guiPort.GUIGraphRef = GUIGraphRef;
+                    guiPort.GUINodeRef = this;
+                    guiPort.inputPort = isInput;
+                }
             }
                         
             //add some padding
@@ -135,11 +150,6 @@ public class GUINode : MonoBehaviour
 
     private void SetupEditor()
     {
-        if(nodeRef.constants == null && nodeRef.viewableData == null)
-        {
-            editor.gameObject.SetActive(false);
-        }
-
         if (nodeRef.expanded)
         {
             SetEditorOpen();
@@ -173,6 +183,7 @@ public class GUINode : MonoBehaviour
 
     private void SetupNodeData()
     {
+        /** //To be moved to new class
         float offset = 0;
         if (nodeRef.constants != null)
         {
@@ -232,6 +243,6 @@ public class GUINode : MonoBehaviour
             rt1.sizeDelta = new Vector2(rt1.sizeDelta.x, offset);
         }
 
-
+        **/
     }
 }

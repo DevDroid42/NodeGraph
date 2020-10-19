@@ -54,29 +54,10 @@ public class GUIGraph : MonoBehaviour
         UpdateGUI();
     }
 
-    IntConstant numNode0, numNode1;
-    AddNode addNode;
-    ViewerNode receiveNode;
     // Start is called before the first frame update
     void Start()
     {
-        //nodeGraph = GraphSerialization.JsonToGraph("{\"$id\":\"1\",\"nodes\":[{\"$id\":\"2\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-704.917,\"yPos\":-88.11426,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":false,\"inputs\":[],\"outputs\":[{\"$id\":\"3\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"IntWrapper: 0\"}],\"constants\":[{\"$id\":\"4\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":0}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"5\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-622.7563,\"yPos\":77.39801,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":false,\"inputs\":[],\"outputs\":[{\"$id\":\"6\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"IntWrapper: 0\"}],\"constants\":[{\"$id\":\"7\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":0}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"8\",\"$type\":\"AddNode, Assembly-CSharp\",\"xPos\":-265.535156,\"yPos\":-140.506836,\"xScale\":250.0,\"yScale\":164.194458,\"expanded\":false,\"inputs\":[{\"$id\":\"9\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"0\"},{\"$id\":\"10\",\"index\":1,\"connectedPort\":null,\"portDisc\":\"element 2\"}],\"outputs\":[{\"$id\":\"11\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"output\"}],\"constants\":null,\"constantsDisc\":null,\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"Add Node\"},{\"$id\":\"12\",\"$type\":\"ViewerNode, Assembly-CSharp\",\"data\":14,\"xPos\":367.938477,\"yPos\":146.460938,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":true,\"inputs\":[{\"$id\":\"13\",\"index\":0,\"connectedPort\":{\"$id\":\"14\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"IntWrapper: 14\"},\"portDisc\":\"DefaultDisc\"}],\"outputs\":[],\"constants\":null,\"constantsDisc\":null,\"viewableData\":[14],\"viewableDisc\":[\"data:\"],\"nodeDisc\":\"Viewer node\"},{\"$id\":\"15\",\"$type\":\"IntConstant, Assembly-CSharp\",\"xPos\":-170.275085,\"yPos\":133.362488,\"xScale\":250.0,\"yScale\":122.5,\"expanded\":true,\"inputs\":[],\"outputs\":[{\"$ref\":\"14\"}],\"constants\":[{\"$id\":\"16\",\"$type\":\"nodeSys2.IntData, Assembly-CSharp\",\"num\":14}],\"constantsDisc\":[\"IntConstant\"],\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"IntConstant\"},{\"$id\":\"17\",\"$type\":\"AddNode, Assembly-CSharp\",\"xPos\":331.025818,\"yPos\":-95.25922,\"xScale\":250.0,\"yScale\":164.194458,\"expanded\":false,\"inputs\":[{\"$id\":\"18\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"element 1\"},{\"$id\":\"19\",\"index\":1,\"connectedPort\":null,\"portDisc\":\"element 2\"}],\"outputs\":[{\"$id\":\"20\",\"index\":0,\"connectedPort\":null,\"portDisc\":\"output\"}],\"constants\":null,\"constantsDisc\":null,\"viewableData\":null,\"viewableDisc\":null,\"nodeDisc\":\"Add Node\"}]}");
-        //nodeGraph = new Graph();
-        //numNode0 = new IntConstant();
-        //numNode1 = new IntConstant();
-        //addNode = new AddNode();
-        //receiveNode = new ViewerNode();
-        //addNode.inputs[0].Connect(numNode0.outputs[0]);
-        //addNode.inputs[1].Connect(numNode1.outputs[0]);
-        //addNode.inputs[1].Disconnect();
-        //receiveNode.inputs[0].Connect(addNode.outputs[0]);
-        //nodeGraph.nodes.Add(numNode0);
-        //nodeGraph.nodes.Add(numNode1);
-        //nodeGraph.nodes.Add(addNode);
-        //nodeGraph.nodes.Add(receiveNode);
-        //nodeGraph.nodes.Add(new IntConstant());
-        //nodeGraph.nodes.Add(new AddNode());
-        //Debug.Log(GraphSerialization.GraphToJson(nodeGraph));
+
 
         //UpdateGUI();
         //graph = new Graph();
@@ -164,14 +145,14 @@ public class GUIGraph : MonoBehaviour
         for (int i = 0; i < nodeGraph.nodes.Count; i++)
         {
             //go through all of each nodes input ports
-            for (int j = 0; j < nodeGraph.nodes[i].inputs.Length; j++)
+            for (int j = 0; j < nodeGraph.nodes[i].inputs.Count; j++)
             {
                 //check if the port has a connection
-                if (nodeGraph.nodes[i].inputs[j].IsConnected())
+                if (nodeGraph.nodes[i].inputs[j].dataPort.IsConnected())
                 {
                     //if it does store the reference to the port and it's connection
-                    inPort = nodeGraph.nodes[i].inputs[j];
-                    outPort = nodeGraph.nodes[i].inputs[j].connectedPort;
+                    inPort = nodeGraph.nodes[i].inputs[j].dataPort;
+                    outPort = nodeGraph.nodes[i].inputs[j].dataPort.connectedPort;
                     //save the reference to the GUIPortHolders
                     GUIPortHolder portHolder1 = findGUI(inPort).GetComponent<GUIPortHolder>();
                     inPortGO = portHolder1.Port;
@@ -253,11 +234,11 @@ public class GUIGraph : MonoBehaviour
 
         for (int i = 0; i < nodeGraph.nodes.Count; i++)
         {
-            for (int j = 0; j < nodeGraph.nodes[i].inputs.Length; j++)
+            for (int j = 0; j < nodeGraph.nodes[i].inputs.Count; j++)
             {
-                if (!PortExistsInNodeGraph(nodeGraph.nodes[i].inputs[j].connectedPort))
+                if (!PortExistsInNodeGraph(nodeGraph.nodes[i].inputs[j].dataPort.connectedPort))
                 {
-                    nodeGraph.nodes[i].inputs[j].Disconnect();
+                    nodeGraph.nodes[i].inputs[j].dataPort.Disconnect();
                 }
             }
         }
@@ -268,9 +249,9 @@ public class GUIGraph : MonoBehaviour
         {
             for (int i = 0; i < nodeGraph.nodes.Count; i++)
             {
-                for (int j = 0; j < nodeGraph.nodes[i].outputs.Length; j++)
+                for (int j = 0; j < nodeGraph.nodes[i].outputs.Count; j++)
                 {
-                    if (nodeGraph.nodes[i].outputs[j] == port)
+                    if (nodeGraph.nodes[i].outputs[j].dataPort == port)
                         return true;
                 }
             }

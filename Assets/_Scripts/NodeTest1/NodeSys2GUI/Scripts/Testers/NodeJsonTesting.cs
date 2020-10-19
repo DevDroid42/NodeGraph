@@ -10,38 +10,38 @@ public class NodeJsonTesting : MonoBehaviour
     public Text viewer;
     Graph nodeGraph;
 
-    IntConstant numNode0, numNode1;
-    AddNode addNode;
-    ViewerNode receiveNode;
+    ///IntConstant numNode0, numNode1;
+    //AddNode addNode;
+    //ViewerNode receiveNode;
     // Start is called before the first frame update
     void Start()
     {
 
-        nodeGraph = new Graph();
-        numNode0 = new IntConstant();
-        numNode1 = new IntConstant();
-        addNode = new AddNode();
-        receiveNode = new ViewerNode();
-        addNode.inputs[0].Connect(numNode0.outputs[0]);
-        addNode.inputs[1].Connect(numNode1.outputs[0]);
-        receiveNode.inputs[0].Connect(addNode.outputs[0]);
-        nodeGraph.nodes.Add(numNode0);
-        nodeGraph.nodes.Add(numNode1);
-        nodeGraph.nodes.Add(addNode);
-        nodeGraph.nodes.Add(receiveNode);
-        Debug.Log(GraphSerialization.GraphToJson(nodeGraph));
+        //nodeGraph = new Graph();
+        //numNode0 = new IntConstant();
+        //numNode1 = new IntConstant();
+        //addNode = new AddNode();
+        //receiveNode = new ViewerNode();
+        //addNode.inputs[0].Connect(numNode0.outputs[0]);
+        //addNode.inputs[1].Connect(numNode1.outputs[0]);
+        //receiveNode.inputs[0].Connect(addNode.outputs[0]);
+        //nodeGraph.nodes.Add(numNode0);
+        //nodeGraph.nodes.Add(numNode1);
+        //nodeGraph.nodes.Add(addNode);
+        //nodeGraph.nodes.Add(receiveNode);
+        //Debug.Log(GraphSerialization.GraphToJson(nodeGraph));
     }
 
     public void NumNode0(string data)
     {
-        ((IntConstant)(nodeGraph.nodes[0])).constants[0] = new IntData(int.Parse(data));
-        nodeGraph.InitGraph();
+        //((IntConstant)(nodeGraph.nodes[0])).constants[0] = new IntData(int.Parse(data));
+        //nodeGraph.InitGraph();
     }
 
     public void NumNode1(string data)
     {
-        ((IntConstant)(nodeGraph.nodes[1])).constants[0] = new IntData(int.Parse(data));
-        nodeGraph.InitGraph();
+        //((IntConstant)(nodeGraph.nodes[1])).constants[0] = new IntData(int.Parse(data));
+        //nodeGraph.InitGraph();
     }
 
     string json = "";

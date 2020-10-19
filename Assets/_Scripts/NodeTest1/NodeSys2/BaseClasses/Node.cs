@@ -17,69 +17,107 @@ namespace nodeSys2
         public float xScale = 250, yScale = 10;
         public bool expanded = false;
 
-        public Port[] inputs;
-        public Port[] outputs;        
+        public List<Property> inputs = new List<Property>();
+        public List<Property> outputs = new List<Property>();
+        //public Port[] inputs;
+        //public Port[] outputs;        
         //these are constants that will be set before runtime. Examples are colors, numbers, ip adresses, ect
-        public object[] constants;
-        public string[] constantsDisc;
+        //public object[] constants;
+        //public string[] constantsDisc;
         //this is data to be used for debugging. It will contain things such as connection status
-        public object[] viewableData;
-        public string[] viewableDisc;
+        //public object[] viewableData;
+        //public string[] viewableDisc;
 
 
         //the node discription for identification in JSON and GUI 
         [JsonProperty] protected string nodeDisc;
 
-        [JsonIgnore]public bool MarkedForDeletion = false;
-
-        //assigns indexes to all of the ports and links the input ports to the handle method
-        public void InitPorts(int inputCount, int outputCount)
-        {
-            inputs = new Port[inputCount];
-            outputs = new Port[outputCount];
-
-            InitPorts();
-        }   
+        [JsonIgnore]public bool MarkedForDeletion = false;       
         
-        //used to instantiate constants and viewable object arrays to specified lengths
-        //also instantiates Disc string arrays
-        protected void SetupConstantsViewables(int constantsSize, int viewableSize)
-        {
-            constants = new object[constantsSize];
-            constantsDisc = new string[constantsSize];
-            viewableData = new object[viewableSize];
-            viewableDisc = new string[viewableSize];
-        }
-
-        protected void SetConstant(int index, object data, string discription)
-        {
-            constants[index] = data;
-            constantsDisc[index] = discription;
-        }
-
-        protected void SetViewable(int index, object data, string discription)
-        {
-            viewableData[index] = data;
-            viewableDisc[index] = discription;
-        }
-
         public void InitPorts()
         {
-            for (int i = 0; i < inputs.Length; i++)
+            for (int i = 0; i < inputs.Count; i++)
             {
-                if (inputs[i] == null)
-                    inputs[i] = new Port(i);
-                //we remove the handle first. If there is no handle already attached then it does nothing.
-                //If there is then it prevents dupicates
-                inputs[i].portDel -= Handle;
-                inputs[i].portDel += Handle;
+                inputs[i].Setup();
             }
+            for (int i = 0; i < outputs.Count; i++)
+            {
+                outputs[i].Setup();
+            }
+        }
 
-            for (int i = 0; i < outputs.Length; i++)
+        //creates a property and adds it to the list. Also returns the created property to optionally be used for caching
+        public Property CreateInputProperty(string ID, bool connectable)
+        {
+            Property tempRef = new Property(ID, true, connectable);
+            inputs.Add(tempRef);
+            return tempRef;            
+        }
+
+        public Property CreateOutputProperty(string ID)
+        {
+            Property tempRef = new Property(ID, false, true);
+            outputs.Add(tempRef);
+            return tempRef;
+        }
+
+        //does a lookup based on the ID and returns a property 
+        public Property GetInputProperty(string ID)
+        {
+            return GetProperty(ID, inputs);
+        }
+        public Property GetOutputProperty(string ID)
+        {
+            return GetProperty(ID, outputs);
+        }
+
+        //generic property lookup
+        private Property GetProperty(string ID, List<Property> list)
+        {
+
+            for (int i = 0; i < list.Count; i++)
             {
-                if (outputs[i] == null)
-                    outputs[i] = new Port(i);
+                if (list[i].ID == ID)
+                {
+                    return list[i];
+                }
             }
+            Debug.LogError("Could not find a property of ID: " + ID + " : in list");
+            return null;
+        }
+
+        public void RemoveInputProperty(string ID)
+        {
+            RemoveProperty(ID, inputs);
+        }
+
+        public void RemoveOutputProperty(string ID)
+        {
+            RemoveProperty(ID, outputs);
+        }
+
+        //generic property lookup
+        private void RemoveProperty(string ID, List<Property> list)
+        {            
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].ID == ID)
+                {
+                    list.RemoveAt(i);
+                    return; 
+                }
+            }
+            Debug.LogError("Could not find a property of ID: " + ID + " : in list");            
+        }
+
+        public void RemoveInputContaining(string ID)
+        {
+            inputs.RemoveAll(prop => prop.ID.Contains(ID));
+        }
+
+        public void RemoveOutputContaining(string ID)
+        {
+            outputs.RemoveAll(prop => prop.ID.Contains(ID));
         }
 
         public void CleanUp()
@@ -108,7 +146,7 @@ namespace nodeSys2
 
         //the main meathod that handles data. The index specifies the port from which the node is receiving data and the
         //object contains that data that needs to be pattern matched in order to use
-        public virtual void Handle(int index, object data)
+        public virtual void Handle()
         {
 
         }

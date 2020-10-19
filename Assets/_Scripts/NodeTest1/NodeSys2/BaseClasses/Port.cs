@@ -7,9 +7,7 @@ namespace nodeSys2
 {
     public class Port
     {
-        //the index will be used to identify the data source when proccesing in nodes        
-        [JsonProperty] private int index;
-        public delegate void PortDelagate(int index, object data);
+        public delegate void PortDelagate(object data);
 
         //this delagate is used to invoke method calls in nodes as well as other connected ports
         [JsonIgnore]
@@ -29,9 +27,9 @@ namespace nodeSys2
             return connected;
         }
 
-        public Port(int index)
+        public Port()
         {
-            this.index = index;
+            
         }
 
         //Connects another ports output to this ports input. Ports can only have one input source but can 
@@ -39,7 +37,7 @@ namespace nodeSys2
         public void Connect(Port port)
         {
             if (!connected)
-            {
+            {               
                 port.portDel += Handle;
                 connected = true;
                 connectedPort = port;
@@ -75,17 +73,17 @@ namespace nodeSys2
         {
             if (portDel != null)
             {
-                portDel.Invoke(index, data);
+                portDel.Invoke(data);
             }
         }
 
         //this method is invoked from another connected port delagate. It then takes the data from that 
         //delagate and invokes it's own delagate attaching it's index to be used for processing in nodes
-        private void Handle(int OtherIndex, object data)
+        private void Handle(object data)
         {
             if (portDel != null)
             {
-                portDel.Invoke(index, data);
+                portDel.Invoke(data);
             }
         }
     }
