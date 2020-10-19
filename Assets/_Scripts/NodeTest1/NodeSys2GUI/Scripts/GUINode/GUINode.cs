@@ -19,7 +19,7 @@ public class GUINode : MonoBehaviour
     public GameObject[] outputPorts;
 
     public List<GameObject> NodeDataList = new List<GameObject>();
-    public Transform editorContent;
+    public EditorManager editorManager;
     public RectTransform editor;
     public GameObject openButton;
     public GameObject closeButton;
@@ -119,8 +119,7 @@ public class GUINode : MonoBehaviour
             for (int i = 0; i < properties.Count; i++)
             {
                 if (properties[i].connectable)
-                {
-                    index++;
+                {                    
                     GameObject port = Instantiate(basePort, portHolder);
                     RectTransform rt = port.GetComponent<RectTransform>();
                     position = -index * (rt.rect.height - 2) - 15;
@@ -132,6 +131,7 @@ public class GUINode : MonoBehaviour
                     guiPort.GUIGraphRef = GUIGraphRef;
                     guiPort.GUINodeRef = this;
                     guiPort.inputPort = isInput;
+                    index++;
                 }
             }
                         
@@ -183,8 +183,9 @@ public class GUINode : MonoBehaviour
 
     private void SetupNodeData()
     {
+        editorManager.SetupEditors(nodeRef.inputs);
         /** //To be moved to new class
-        float offset = 0;
+                float offset = 0;
         if (nodeRef.constants != null)
         {
             Debug.Log(nodeTitle.text + " is setting up. Has " + nodeRef.constants.Length + "constants");
@@ -242,6 +243,7 @@ public class GUINode : MonoBehaviour
             RectTransform rt1 = editorContent.GetComponent<RectTransform>();
             rt1.sizeDelta = new Vector2(rt1.sizeDelta.x, offset);
         }
+
 
         **/
     }

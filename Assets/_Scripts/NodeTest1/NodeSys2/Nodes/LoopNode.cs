@@ -4,7 +4,7 @@ using nodeSys2;
 public class LoopNode : Node
 {
     FloatData loopNum = new FloatData(0);    
-    public LoopNode()
+    public LoopNode(bool x)
     {
         /**
         nodeDisc = "Loop Node";

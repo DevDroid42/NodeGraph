@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using nodeSys2;
 using System;
 
-public class TxtEditor : MonoBehaviour
+public class TxtEditor : EditorBase
 {
     public IntData intData;
     public StringData stringData;
@@ -48,5 +48,29 @@ public class TxtEditor : MonoBehaviour
     public void EditFloat(string num)
     {
         floatData.num = float.Parse(num);
+    }
+
+    public override void Setup(Property prop)
+    {
+        base.Setup(prop);
+        UpdateDisc(prop.disc);
+        UpdateField(prop.GetData().ToString());
+        switch (prop.GetData())
+        {
+            case FloatData num:
+                {
+                    floatData = num;                    
+                    break;
+                }
+            case StringData str:
+                {
+                    stringData = str;                    
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
     }
 }

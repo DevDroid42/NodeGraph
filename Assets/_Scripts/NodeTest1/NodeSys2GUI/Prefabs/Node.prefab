@@ -176,7 +176,7 @@ MonoBehaviour:
   outputPortHolder: {fileID: 6519188589033213024}
   outputPorts: []
   NodeDataList: []
-  editorContent: {fileID: 865325846465158904}
+  editorManager: {fileID: 4523374899437449301}
   editor: {fileID: 865325846777180539}
   openButton: {fileID: 6944182881361747857}
   closeButton: {fileID: 8301186154456231801}
@@ -431,6 +431,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 865325846465158904}
+  - component: {fileID: 4523374899437449301}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -457,6 +458,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.00089487474}
   m_SizeDelta: {x: 0, y: 1}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &4523374899437449301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865325846465158905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16896ab0949d5b24a8a0f0403d44b081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatEditor: {fileID: 4946532723949765582, guid: 15ccc7996f17ccb4ba822f7810e00315,
+    type: 3}
+  StringEditor: {fileID: 1344306848129804104, guid: 1aa25e2cb554e094b9191388a6d5469b,
+    type: 3}
+  EnumEditor: {fileID: 0}
 --- !u!1 &865325846526826371
 GameObject:
   m_ObjectHideFlags: 0

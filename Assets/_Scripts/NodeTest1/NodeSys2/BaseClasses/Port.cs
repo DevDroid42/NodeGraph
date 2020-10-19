@@ -7,11 +7,17 @@ namespace nodeSys2
 {
     public class Port
     {
+        //used for sending data between ports and properties
         public delegate void PortDelagate(object data);
 
         //this delagate is used to invoke method calls in nodes as well as other connected ports
         [JsonIgnore]
         public PortDelagate portDel;
+
+        //used to notify node when data has arrived
+        public delegate void NodeDelagate();
+        [JsonIgnore]
+        public NodeDelagate nodeDel;
 
         //used to save the reference to the port that last connected
         [JsonProperty(IsReference = true)]
@@ -85,6 +91,7 @@ namespace nodeSys2
             {
                 portDel.Invoke(data);
             }
+            nodeDel.Invoke();
         }
     }
 }

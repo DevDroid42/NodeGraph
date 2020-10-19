@@ -4,7 +4,7 @@ using UnityEngine;
 public class ViewerNode : Node
 {
     public object data = new object();
-    public ViewerNode()
+    public ViewerNode(bool x)
     {
 
     }

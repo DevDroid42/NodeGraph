@@ -17,10 +17,6 @@ public class GUIGraph : MonoBehaviour
     public float LineZOffset;
     public Transform lineRendererParent;
     public List<GameObject> guiNodes = new List<GameObject>();
-    public EditorNameLink[] editorTypes;
-    public EditorNameLink[] viewerTypes;
-    public static Dictionary<string, GameObject> editors = new Dictionary<string, GameObject>();
-    public static Dictionary<string, GameObject> viewers = new Dictionary<string, GameObject>();
     public static UnityEvent updateGraphGUI;
     [Header("Colors")]
     public Color DefaultColor;
@@ -36,14 +32,6 @@ public class GUIGraph : MonoBehaviour
 
     private void Awake()
     {
-        for (int i = 0; i < editorTypes.Length; i++)
-        {
-            editors.Add(editorTypes[i].name, editorTypes[i].editor);
-        }
-        for (int i = 0; i < viewerTypes.Length; i++)
-        {
-            viewers.Add(viewerTypes[i].name, viewerTypes[i].editor);
-        }
         if (updateGraphGUI == null)
         {
             updateGraphGUI = new UnityEvent();

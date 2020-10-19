@@ -32,13 +32,20 @@ namespace nodeSys2
         //the node discription for identification in JSON and GUI 
         [JsonProperty] protected string nodeDisc;
 
-        [JsonIgnore]public bool MarkedForDeletion = false;       
+        [JsonIgnore]public bool MarkedForDeletion = false;
+
+        public Node()
+        {
+
+        }
         
         public void InitPorts()
         {
             for (int i = 0; i < inputs.Count; i++)
             {
                 inputs[i].Setup();
+                inputs[i].dataPort.nodeDel -= Handle;
+                inputs[i].dataPort.nodeDel += Handle;
             }
             for (int i = 0; i < outputs.Count; i++)
             {
@@ -47,18 +54,38 @@ namespace nodeSys2
         }
 
         //creates a property and adds it to the list. Also returns the created property to optionally be used for caching
-        public Property CreateInputProperty(string ID, bool connectable)
+        public Property CreateInputProperty(string ID, bool connectable, object defaultData)
         {
-            Property tempRef = new Property(ID, true, connectable);
-            inputs.Add(tempRef);
-            return tempRef;            
+            //===============DUPLICATE CHECKING MIGHT BE BUSTED================================
+            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+            //this is done both to prevent accidental duplicates and duplicates from the constructor running on deserialization.
+            if (inputs.TrueForAll(prop => prop.ID != ID))
+            {
+                Property tempRef = new Property(ID, true, connectable, defaultData);
+                inputs.Add(tempRef);
+                return tempRef;
+            }
+            else
+            {
+                Debug.Log("Duplicate property found, proably serialization. Returning old ");
+                return inputs.FindAll(prop => prop.ID == ID)[0];
+            }
         }
 
         public Property CreateOutputProperty(string ID)
         {
-            Property tempRef = new Property(ID, false, true);
-            outputs.Add(tempRef);
-            return tempRef;
+            if (outputs.TrueForAll(prop => prop.ID != ID))
+            {
+                Property tempRef = new Property(ID, false, true, null);
+                outputs.Add(tempRef);
+                return tempRef;
+            }
+            else
+            {
+                Debug.Log("Duplicate property found, proably serialization. Returning old ");
+                return outputs.FindAll(prop => prop.ID == ID)[0];
+            }
         }
 
         //does a lookup based on the ID and returns a property 

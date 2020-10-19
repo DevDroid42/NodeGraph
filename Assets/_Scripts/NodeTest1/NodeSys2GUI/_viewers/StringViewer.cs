@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StringViewer : MonoBehaviour
+public class StringViewer : EditorBase
 {
     public object dataObj;
     public Text disc, data;
@@ -20,5 +20,11 @@ public class StringViewer : MonoBehaviour
         {
             data.text = dataObj.ToString();
         }        
+    }
+
+    public override void Setup(Property prop)
+    {
+        disc.text = prop.disc;
+        dataObj = prop.GetData();
     }
 }
