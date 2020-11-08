@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using nodeSys2;
 public class StringViewer : EditorBase
 {
     public object dataObj;

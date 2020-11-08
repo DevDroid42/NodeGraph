@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using nodeSys2;
 
 public class GenericEditor : MonoBehaviour
 {
