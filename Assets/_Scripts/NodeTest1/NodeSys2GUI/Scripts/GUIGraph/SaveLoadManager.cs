@@ -90,7 +90,7 @@ public class SaveLoadManager : MonoBehaviour
     {
         if (json != "")
         {
-            guiGraph.setGraph(json);
+            guiGraph.SetGraph(json);
         }
         else
         {

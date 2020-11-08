@@ -57,6 +57,18 @@ public class Property
         this.data = data;
     }
 
+    public void Invoke(object data)
+    {
+        if (isInput)
+        {
+            Debug.LogWarning("Attempted to invoke on an input property. This won't do anything as input ports don't send data anywhere.");
+        }
+        else
+        {
+            dataPort.Invoke(data);
+        }
+    }
+
     public object GetData()
     {
         if (isInput)
@@ -68,5 +80,19 @@ public class Property
             Debug.Log("Attempted to get data from output property");
             return new object();
         }
+    }
+
+    public bool TryGetDataType<T>(ref T reference)
+    {
+        if(data is T)
+        {
+            reference = (T)data;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 }

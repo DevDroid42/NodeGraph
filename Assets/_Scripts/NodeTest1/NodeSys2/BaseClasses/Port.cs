@@ -67,6 +67,8 @@ namespace nodeSys2
         {
             if (connected)
             {
+                //invoke null to clear out references back to data
+                connectedPort.portDel.Invoke(new object());
                 connectedPort.portDel -= Handle;
                 connectedPort = null;
                 connected = false;

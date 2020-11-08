@@ -60,7 +60,7 @@ public class GUIGraph : MonoBehaviour
         ActionPreformed();
     }
 
-    public void setGraph(string _graphJSON)
+    public void SetGraph(string _graphJSON)
     {
         nodeGraph = GraphSerialization.JsonToGraph(_graphJSON);
         UpdateGUI();

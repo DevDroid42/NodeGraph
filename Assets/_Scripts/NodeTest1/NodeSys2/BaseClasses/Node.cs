@@ -19,14 +19,6 @@ namespace nodeSys2
 
         public List<Property> inputs = new List<Property>();
         public List<Property> outputs = new List<Property>();
-        //public Port[] inputs;
-        //public Port[] outputs;        
-        //these are constants that will be set before runtime. Examples are colors, numbers, ip adresses, ect
-        //public object[] constants;
-        //public string[] constantsDisc;
-        //this is data to be used for debugging. It will contain things such as connection status
-        //public object[] viewableData;
-        //public string[] viewableDisc;
 
 
         //the node discription for identification in JSON and GUI 

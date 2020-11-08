@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using nodeSys2;
+using Newtonsoft.Json;
+
 public class FloatConstant : Node
 {
-    Property constant, output;
+    public Property constant, output;
     public FloatConstant(bool x)
     {
         nodeDisc = "Float Constant";
@@ -15,6 +17,6 @@ public class FloatConstant : Node
 
     public override void Init()
     {
-        output.dataPort.Invoke(constant.GetData());
+        output.Invoke(constant.GetData());
     }
 }

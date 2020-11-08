@@ -1,22 +1,46 @@
 ﻿using nodeSys2;
 using System;
 using UnityEngine;
+//using UnityEngine;
 
 public class AddNode : Node
 {
 
-    Property num1, num2;
+    public Property num1, num2, output;
     //the constructor needs to have a paramater so that the deserializer can use the default one
     public AddNode(bool x)
     {
         base.nodeDisc = "Add Node";
         num1 = base.CreateInputProperty("Num1", true, new FloatData(0));
         num2 = base.CreateInputProperty("Num2", true, new FloatData(0));
+        output = base.CreateOutputProperty("output");
     }
 
+    public override void Init()
+    {
+        base.Init();
+    }
+
+    //these are numbers that live processing will be done on
+    private float float1, float2;
     public override void Handle()
     {
-        Debug.Log("Received data" + num1.GetData().ToString());
+        ProcessData();
+        output.Invoke(new FloatData(float1 + float2));
+    }
+
+    private void ProcessData()
+    {
+        FloatData f = null;
+        if (num1.TryGetDataType(ref f))
+        {
+            float1 = f.num;
+        }
+
+        if (num2.TryGetDataType(ref f))
+        {
+            float2 = f.num;
+        }
     }
 
 }
