@@ -474,6 +474,11 @@ MonoBehaviour:
     type: 3}
   StringEditor: {fileID: 1344306848129804104, guid: 1aa25e2cb554e094b9191388a6d5469b,
     type: 3}
+  StringViewer: {fileID: 6997310064355548421, guid: 8d9c780f1cfd8464ab52cd76d17a06e7,
+    type: 3}
+  ColorEditor: {fileID: 1920621691030201379, guid: 1aa99c0cde6b12447924b4fc531b71e0,
+    type: 3}
+  VectorEditor: {fileID: 0}
   EnumEditor: {fileID: 0}
 --- !u!1 &865325846526826371
 GameObject:

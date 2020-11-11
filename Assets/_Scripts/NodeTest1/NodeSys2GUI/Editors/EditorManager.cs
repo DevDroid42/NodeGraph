@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using nodeSys2;
+using System;
 
 public class EditorManager : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class EditorManager : MonoBehaviour
     
     public GameObject floatEditor;
     public GameObject StringEditor;
+    public GameObject StringViewer;
+    public GameObject ColorEditor;
+    public GameObject VectorEditor;
     public GameObject EnumEditor;
 
     float offset = 0;
@@ -20,11 +24,30 @@ public class EditorManager : MonoBehaviour
         {
             switch (props[i].GetData())
             {
-                case FloatData num:
+                case EvaluableFloat num:
                     {
                         SetupEditor(Instantiate(floatEditor, transform), props[i]);                        
                         break;
                     }
+                case EvaluableColorVec clrVec:
+                    {
+                        if(clrVec.displayMode == EvaluableColorVec.DisplayMode.Color)
+                        {                            
+                            SetupEditor(Instantiate(ColorEditor, transform), props[i]);
+                        }
+                        else
+                        {
+                            throw new NotImplementedException();
+                            SetupEditor(Instantiate(floatEditor, transform), props[i]);
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        SetupEditor(Instantiate(StringViewer, transform), props[i]);
+                        break;
+                    }
+                    
             }
         }
     }

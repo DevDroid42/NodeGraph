@@ -16,7 +16,7 @@
     }
 
     //to be used for vector transformations in subclasses
-    protected ColorVec transformVector(ColorVec vector)
+    protected ColorVec TransformVector(ColorVec vector)
     {
         //NOT IMPLEMENTED
         return new ColorVec(0,0,0,0);

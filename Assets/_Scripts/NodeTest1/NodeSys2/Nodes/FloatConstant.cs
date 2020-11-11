@@ -10,7 +10,7 @@ public class FloatConstant : Node
     public FloatConstant(bool x)
     {
         nodeDisc = "Float Constant";
-        constant = CreateInputProperty("const", false, new FloatData(0));
+        constant = CreateInputProperty("const", false, new EvaluableFloat(0));
         constant.interactable = true;
         output = CreateOutputProperty("numOut");
     }

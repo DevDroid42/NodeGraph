@@ -11,8 +11,8 @@ public class AddNode : Node
     public AddNode(bool x)
     {
         base.nodeDisc = "Add Node";
-        num1 = base.CreateInputProperty("Num1", true, new FloatData(0));
-        num2 = base.CreateInputProperty("Num2", true, new FloatData(0));
+        num1 = base.CreateInputProperty("Num1", true, new EvaluableFloat(0));
+        num2 = base.CreateInputProperty("Num2", true, new EvaluableFloat(0));
         output = base.CreateOutputProperty("output");
     }
 
@@ -26,20 +26,20 @@ public class AddNode : Node
     public override void Handle()
     {
         ProcessData();
-        output.Invoke(new FloatData(float1 + float2));
+        output.Invoke(new EvaluableFloat(float1 + float2));
     }
 
     private void ProcessData()
     {
-        FloatData f = null;
+        Evaluable f = null;
         if (num1.TryGetDataType(ref f))
         {
-            float1 = f.num;
+            float1 = f.EvaluateValue(0,0,0,0);
         }
 
         if (num2.TryGetDataType(ref f))
         {
-            float2 = f.num;
+            float2 = f.EvaluateValue(0,0,0,0);
         }
     }
 

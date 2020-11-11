@@ -84,6 +84,11 @@ namespace nodeSys2
             }
         }
 
+        public void SetData(object data)
+        {
+            this.data = data;
+        }
+
         public bool TryGetDataType<T>(ref T reference)
         {
             if (data is T)
