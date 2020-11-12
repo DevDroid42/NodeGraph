@@ -13,6 +13,7 @@ public class ColorEditor : EditorBase
     //Color button will display color and interactability will depend on the buttons interactable flag. 
     //when button is clicked will open up color editor menu. 
     private ColorVec colorVecRef;
+    private Property prop;
     private void Start()
     {
         if (PickerHolder == null)
@@ -27,6 +28,18 @@ public class ColorEditor : EditorBase
 
     public void Update()
     {
+        switch (prop.GetData())
+        {
+            case EvaluableColorVec colorVec:
+                {
+                    colorVecRef = colorVec.GetColorVec();
+                    break;
+                }
+
+            default:
+                Debug.LogWarning("Invalid data assigned to color editor, Can not display type of:" + prop.GetData().GetType().Name);
+                break;
+        }
         button.image.color = new Color(colorVecRef.rx, colorVecRef.gy, colorVecRef.bz, colorVecRef.aw);
     }
 
@@ -39,16 +52,6 @@ public class ColorEditor : EditorBase
     {
         base.Setup(prop);
         disc.text = prop.disc;
-        switch (prop.GetData())
-        {
-            case EvaluableColorVec colorVec:
-                {
-                    colorVecRef = colorVec.GetColorVec();
-                    break;
-                }
-
-            default:
-                break;
-        }
+        this.prop = prop;
     }
 }
