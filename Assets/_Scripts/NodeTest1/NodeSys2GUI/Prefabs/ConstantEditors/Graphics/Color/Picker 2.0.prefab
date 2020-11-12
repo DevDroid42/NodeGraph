@@ -3274,9 +3274,9 @@ RectTransform:
   m_Father: {fileID: 224077522108235048}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 108, y: -221.26001}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 108, y: 0}
   m_SizeDelta: {x: 216, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &114457949733588484
@@ -5130,6 +5130,7 @@ GameObject:
   - component: {fileID: 114036039765377976}
   - component: {fileID: 114901563279858126}
   - component: {fileID: 114650760055890134}
+  - component: {fileID: 2912052063486461049}
   m_Layer: 5
   m_Name: Picker 2.0
   m_TagString: Untagged
@@ -5157,9 +5158,9 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 24, y: -8}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -108, y: 192.63}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &222379758795596252
@@ -5213,7 +5214,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2912052063486461049}
+        m_MethodName: SetColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hsvSlidersOn: 1
   hsvSliders:
   - {fileID: 1858270569380330}
@@ -5294,6 +5306,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &2912052063486461049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690214001722854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ac938438670c1b48aaf107292ac7239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1703786369183640
 GameObject:
   m_ObjectHideFlags: 0
@@ -6839,9 +6863,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1690214001722854}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2912052063486461049}
+        m_MethodName: Destroy
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

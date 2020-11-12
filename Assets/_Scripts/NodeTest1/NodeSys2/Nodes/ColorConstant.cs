@@ -5,7 +5,7 @@ public class ColorConstant : Node
     //internal color used for manual color setting
     public Property red, green, blue, alpha, internalColor, outputColor;
     public Property[] floatInputs = new Property[4];
-    
+
     public ColorConstant(bool x)
     {
         base.nodeDisc = "Color Constant";
@@ -23,7 +23,7 @@ public class ColorConstant : Node
 
         for (int i = 0; i < floatInputs.Length; i++)
         {
-            floatInputs[i].interactable = false;
+            floatInputs[i].visible = false;
         }
     }
 
@@ -36,29 +36,29 @@ public class ColorConstant : Node
         internalColor.interactable = true;
         //when data comes in this will be set to "color(Driven)" so reset it here on run
         internalColor.disc = "Color";
-        
+
         outputColor.Invoke(internalColor.GetData());
     }
-    
+
     public override void Handle()
     {
         EvaluableColorVec proccesedColor = new EvaluableColorVec(ProcessData());
         internalColor.SetData(proccesedColor);
-        internalColor.interactable = false;        
+        internalColor.interactable = false;
         internalColor.disc = "Color(driven)";
         outputColor.Invoke(internalColor.GetData());
     }
 
 
     private ColorVec ProcessData()
-    {        
+    {
         Evaluable c = null;
         float[] floatBuffer = new float[floatInputs.Length];
         for (int i = 0; i < floatInputs.Length; i++)
         {
             if (floatInputs[i].TryGetDataType(ref c))
             {
-                floatBuffer[i] = c.EvaluateValue(0,0,0,0);
+                floatBuffer[i] = c.EvaluateValue(0, 0, 0, 0);
             }
             else
             {

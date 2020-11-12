@@ -23,6 +23,8 @@ namespace nodeSys2
         public string disc;
         //Determines i this property has a port
         public bool connectable;
+        //determines if the property has an editor assigned to it
+        public bool visible;
         //determines if editor is read only. Same as setting a viewable vs constant in old system
         public bool interactable;
         //will determine the rect transform height
@@ -33,6 +35,7 @@ namespace nodeSys2
 
         public Property(string ID, bool isInput, bool connectable, object DefaultData)
         {
+            visible = true;
             dataPort = new Port();
             dataPort.portDisc = ID;
             data = DefaultData;

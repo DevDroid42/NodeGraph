@@ -22,32 +22,35 @@ public class EditorManager : MonoBehaviour
     {
         for (int i = 0; i < props.Count; i++)
         {
-            switch (props[i].GetData())
+            if (props[i].visible)
             {
-                case EvaluableFloat num:
-                    {
-                        SetupEditor(Instantiate(floatEditor, transform), props[i]);                        
-                        break;
-                    }
-                case EvaluableColorVec clrVec:
-                    {
-                        if(clrVec.displayMode == EvaluableColorVec.DisplayMode.Color)
-                        {                            
-                            SetupEditor(Instantiate(ColorEditor, transform), props[i]);
-                        }
-                        else
+                switch (props[i].GetData())
+                {
+                    case EvaluableFloat num:
                         {
-                            throw new NotImplementedException();
                             SetupEditor(Instantiate(floatEditor, transform), props[i]);
+                            break;
                         }
-                        break;
-                    }
-                default:
-                    {
-                        SetupEditor(Instantiate(StringViewer, transform), props[i]);
-                        break;
-                    }
-                    
+                    case EvaluableColorVec clrVec:
+                        {
+                            if (clrVec.displayMode == EvaluableColorVec.DisplayMode.Color)
+                            {
+                                SetupEditor(Instantiate(ColorEditor, transform), props[i]);
+                            }
+                            else
+                            {
+                                throw new NotImplementedException();
+                                SetupEditor(Instantiate(floatEditor, transform), props[i]);
+                            }
+                            break;
+                        }
+                    default:
+                        {
+                            SetupEditor(Instantiate(StringViewer, transform), props[i]);
+                            break;
+                        }
+
+                }
             }
         }
     }

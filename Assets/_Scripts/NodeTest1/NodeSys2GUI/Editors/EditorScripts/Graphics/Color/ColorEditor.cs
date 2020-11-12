@@ -8,11 +8,21 @@ public class ColorEditor : EditorBase
 {
     public Button button;
     public Text disc;
+    public GameObject PickerPrefab;
+    public static Transform PickerHolder;
     //Color button will display color and interactability will depend on the buttons interactable flag. 
     //when button is clicked will open up color editor menu. 
     private ColorVec colorVecRef;
     private void Start()
     {
+        if (PickerHolder == null)
+        {
+            PickerHolder = GameObject.Find("PopupHolder").transform;
+        }
+        if(PickerHolder == null)
+        {
+            Debug.LogWarning("Could not find PopupHolder GameObject. Make sure the scene has an object of this name for popups");
+        }
     }
 
     public void Update()
@@ -20,12 +30,9 @@ public class ColorEditor : EditorBase
         button.image.color = new Color(colorVecRef.rx, colorVecRef.gy, colorVecRef.bz, colorVecRef.aw);
     }
 
-    public void SetColor(Color color)
+    public void OpenPicker()
     {
-        colorVecRef.aw = color.a;
-        colorVecRef.rx = color.r;
-        colorVecRef.gy = color.g;
-        colorVecRef.bz = color.b;
+        Instantiate(PickerPrefab, PickerHolder).GetComponent<PickerScript>().Setup(colorVecRef);
     }
 
     public override void Setup(Property prop)
