@@ -1,6 +1,9 @@
 ﻿
+using Newtonsoft.Json;
+
 public class EvaluableFloat : Evaluable
 {
+    [JsonProperty]
     private float num;
 
     public EvaluableFloat(float num)

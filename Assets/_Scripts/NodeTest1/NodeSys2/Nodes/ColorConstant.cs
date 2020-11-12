@@ -37,7 +37,7 @@ public class ColorConstant : Node
         //when data comes in this will be set to "color(Driven)" so reset it here on run
         internalColor.disc = "Color";
 
-        outputColor.Invoke(internalColor.GetData());
+        outputColor.Invoke(((Evaluable)(internalColor.GetData())).GetCopy());
     }
 
     public override void Handle()
@@ -46,7 +46,7 @@ public class ColorConstant : Node
         internalColor.SetData(proccesedColor);
         internalColor.interactable = false;
         internalColor.disc = "Color(driven)";
-        outputColor.Invoke(internalColor.GetData());
+        outputColor.Invoke(((Evaluable)(internalColor.GetData())).GetCopy());
     }
 
 

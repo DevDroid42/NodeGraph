@@ -3,47 +3,72 @@ using nodeSys2;
 
 public class LoopNode : Node
 {
-    FloatData loopNum = new FloatData(0);    
+    public Property minP, maxP, rateP, output, startP;
+    private float start, min, max, rate, current;
     public LoopNode(bool x)
     {
-        /**
-        nodeDisc = "Loop Node";
-        //3 constants 1 viewables
-        base.SetupConstantsViewables(3,1);
-        //value to loop back to when passing max
-        SetConstant(0, new IntData(0), "min");
-        //point to loop back to min
-        SetConstant(1, new IntData(1), "max");
-        //how much to add per second
-        SetConstant(2, new FloatData(0.1f), "RatePerSecond");
-        InitPorts(0, 1);
-        **/
+        nodeDisc = "Loop";
+
+        startP = CreateInputProperty("Start", true, new EvaluableFloat(0));
+        startP.interactable = true;
+        minP = CreateInputProperty("min", true, new EvaluableFloat(0));
+        minP.interactable = true;
+        maxP = CreateInputProperty("Max", true, new EvaluableFloat(1));
+        maxP.interactable = true;
+        rateP = CreateInputProperty("rate", true, new EvaluableFloat(0.1f));
+        rateP.interactable = true;
+        output = CreateOutputProperty("output");
     }
 
     public override void Init()
-    {      
-        /**
-        //let user see the current number. This needs to be run here because 
-        //references to primitive data types aren't serialized. 
-        SetViewable(0, loopNum, "CurrentOutput");
-
-        //removing does nothing if it's not already assigned so remove first incase it's already there to prevent dulplicates
+    {
+        processData();
         frameDelagate -= Frame;
         frameDelagate += Frame;
-        **/
+        current = start;
+    }
+
+    public override void Handle()
+    {
+        processData();
     }
 
     public override void Frame(float deltaTime)
     {
-        /**
-        loopNum.num += ((FloatData)constants[2]).num * Time.deltaTime;
-        if(loopNum.num > ((IntData)constants[1]).num)
+        current += rate * deltaTime;
+        if(current < min)
         {
-            loopNum.num = ((IntData)constants[0]).num;
+            current = max;
+        }else if(current > max)
+        {
+            current = min;
         }
-        outputs[0].Invoke(loopNum);
-        **/
+        output.Invoke(new EvaluableFloat(current));
+        output.disc = "output: " + current;
     }
+
+    private void processData()
+    {
+        Evaluable data = new Evaluable();
+        if (minP.TryGetDataType(ref data))
+        {
+            min = data.EvaluateValue(0, 0, 0, 0);
+        }
+        if (maxP.TryGetDataType(ref data))
+        {
+            max = data.EvaluateValue(0, 0, 0, 0);
+        }
+        if (rateP.TryGetDataType(ref data))
+        {
+            rate = data.EvaluateValue(0, 0, 0, 0);
+        }
+        if (startP.TryGetDataType(ref data))
+        {
+            start = data.EvaluateValue(0, 0, 0, 0);
+        }
+    }
+
+
 
 
 }

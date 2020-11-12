@@ -24,6 +24,7 @@ public class PickerScript : MonoBehaviour
 
     public void Destroy()
     {
+        GUIGraph.updateGraphGUI.Invoke();
         Destroy(gameObject);
     }
 }

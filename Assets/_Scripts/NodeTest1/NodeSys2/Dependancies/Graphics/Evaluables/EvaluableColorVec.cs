@@ -38,4 +38,9 @@ public class EvaluableColorVec : Evaluable
     {
         return (float)colorVec;
     }
+
+    public override Evaluable GetCopy()
+    {
+        return new EvaluableColorVec(new ColorVec(colorVec.rx, colorVec.gy, colorVec.bz, colorVec.aw));
+    }
 }

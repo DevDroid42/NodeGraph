@@ -15,6 +15,13 @@
         return 0;
     }
 
+    //used to get copy of Evaluable object so references arn't being passed between nodes. Reference passing would entangle
+    //node states and create problems
+    public virtual Evaluable GetCopy()
+    {
+        return new Evaluable();
+    }
+
     //to be used for vector transformations in subclasses
     protected ColorVec TransformVector(ColorVec vector)
     {

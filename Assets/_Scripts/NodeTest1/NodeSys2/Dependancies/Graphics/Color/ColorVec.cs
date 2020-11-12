@@ -39,7 +39,7 @@ public class ColorVec
         this.gy = G;
         this.bz = B;
         this.aw = A;
-    }
+    }   
 
     public override string ToString()
     {
