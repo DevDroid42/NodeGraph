@@ -44,6 +44,11 @@ public class EditorManager : MonoBehaviour
                             }
                             break;
                         }
+                    case Enum _enum:
+                        {
+                            SetupEditor(Instantiate(EnumEditor, transform), props[i]);
+                            break;
+                        }
                     default:
                         {
                             SetupEditor(Instantiate(StringViewer, transform), props[i]);

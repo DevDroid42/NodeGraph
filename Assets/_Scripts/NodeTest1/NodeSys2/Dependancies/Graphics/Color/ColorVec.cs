@@ -61,6 +61,11 @@ public class ColorVec
 
 public class ColorOperations
 {
+    public enum ColorSpace
+    {
+        RGB, HSV
+    }
+
     public static ColorVec ClampColor(ColorVec c)
     {
         c.rx = Clamp(c.rx, 0, 1);

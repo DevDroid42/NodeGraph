@@ -24,6 +24,7 @@ public class EnumSelector : MonoBehaviour
     public EnumSelectedEvent selectionMade;
 
     public bool maskable = false;
+    public bool OpenOnSetup = false;
 
     Type EnumType;
     private object _enum;
@@ -88,7 +89,10 @@ public class EnumSelector : MonoBehaviour
         {
             Debug.LogError("Invalid data type. Not an enum");
         }
-        //CreateDropDown();
+        if (OpenOnSetup)
+        {
+            CreateDropDown();
+        }
     }
 
     public void OpenMenu()

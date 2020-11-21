@@ -37,7 +37,13 @@ namespace nodeSys2
         //=====NOTE TO SELF====== type objects are problematic across threads - https://docs.microsoft.com/en-us/dotnet/api/system.type?view=net-5.0
         [JsonProperty] private Type gateType;
 
-        public Property(string ID, bool isInput, bool connectable, object DefaultData)
+        [JsonConstructor]
+        public Property()
+        {
+
+        }
+
+        public Property(string ID, bool isInput, bool connectable, object DefaultData, bool interactable = false)
         {
             visible = true;
             dataPort = new Port();
@@ -76,8 +82,8 @@ namespace nodeSys2
             }
             else
             {
-                Debug.LogWarning("Invalid data type received at property: " + ID + "\t Expected type of " 
-                    + gateType.Name + "Instead got: " + data.GetType().Name);
+                Debug.LogWarning("Invalid data type received at property: " + ID + "\t Expected type of: (" 
+                    + gateType.Name + ") Instead got: (" + data.GetType().Name + ")");
             }
         }
         private bool isa(object data, Type type)
@@ -113,6 +119,13 @@ namespace nodeSys2
         public void SetData(object data)
         {
             this.data = data;
+        }
+
+        //will auto dissconnect if connected and make the port not connectable
+        public void Disconnectable()
+        {
+            dataPort.Disconnect();
+            connectable = false;
         }
 
         public bool TryGetDataType<T>(ref T reference)

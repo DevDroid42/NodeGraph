@@ -66,7 +66,7 @@ public class SaveLoadManager : MonoBehaviour
     {
         string path = StandaloneFileBrowser.SaveFilePanel("Save File", "", "", "Json");
         File.WriteAllText(path, guiGraph.GetGraphJson());
-        Debug.Log("Creating new save at: ");
+        Debug.Log("Creating new save at: " + path);
         currentPath = path;
         globalData.AddRecentlyOpened(currentPath);
         SaveGlobalData();

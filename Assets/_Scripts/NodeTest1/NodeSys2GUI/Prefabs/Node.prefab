@@ -479,7 +479,8 @@ MonoBehaviour:
   ColorEditor: {fileID: 1920621691030201379, guid: 1aa99c0cde6b12447924b4fc531b71e0,
     type: 3}
   VectorEditor: {fileID: 0}
-  EnumEditor: {fileID: 0}
+  EnumEditor: {fileID: 1273196483138462273, guid: 1cc69ed747c5266409396117195fc99f,
+    type: 3}
 --- !u!1 &865325846526826371
 GameObject:
   m_ObjectHideFlags: 0
