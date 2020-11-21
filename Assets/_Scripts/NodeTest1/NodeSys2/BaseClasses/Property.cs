@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using Newtonsoft.Json;
 
 namespace nodeSys2
@@ -32,6 +33,9 @@ namespace nodeSys2
         //this port will be shown if the connectable flag is set to true.
         //Something important to note: The index of this port will be used when routing the data back to this property
         public Port dataPort;
+        //this is the type that gates input. Data types that are not his type or a sublclass of said type will be regected from input
+        //=====NOTE TO SELF====== type objects are problematic across threads - https://docs.microsoft.com/en-us/dotnet/api/system.type?view=net-5.0
+        [JsonProperty] private Type gateType;
 
         public Property(string ID, bool isInput, bool connectable, object DefaultData)
         {
@@ -44,6 +48,13 @@ namespace nodeSys2
             this.connectable = connectable;
             this.ID = ID;
             this.disc = ID;
+            //by default allow all data types into the node
+            gateType = typeof(object);
+        } 
+
+        public Property(string ID, bool isInput, bool connectable, object DefaultData, Type type) : this(ID, isInput, connectable, DefaultData)
+        {
+            gateType = type;
         }
 
         //delagates can't be serialized so they need to be re-assigned here
@@ -59,7 +70,19 @@ namespace nodeSys2
 
         public void Handle(object data)
         {
-            this.data = data;
+            if (isa(data, gateType))
+            {
+                this.data = data;
+            }
+            else
+            {
+                Debug.LogWarning("Invalid data type received at property: " + ID + "\t Expected type of " 
+                    + gateType.Name + "Instead got: " + data.GetType().Name);
+            }
+        }
+        private bool isa(object data, Type type)
+        {
+            return data.GetType() == type || data.GetType().IsSubclassOf(type);
         }
 
         public void Invoke(object data)

@@ -17,6 +17,6 @@ public class FloatConstant : Node
 
     public override void Init()
     {
-        output.Invoke(constant.GetData());
+        output.Invoke(((Evaluable)constant.GetData()).GetCopy());
     }
 }

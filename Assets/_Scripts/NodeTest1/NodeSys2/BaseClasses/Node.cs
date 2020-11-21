@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,6 +56,21 @@ namespace nodeSys2
             if (inputs.TrueForAll(prop => prop.ID != ID))
             {
                 Property tempRef = new Property(ID, true, connectable, defaultData);
+                inputs.Add(tempRef);
+                return tempRef;
+            }
+            else
+            {
+                Debug.Log("Duplicate property found, proably serialization. Returning old ");
+                return inputs.FindAll(prop => prop.ID == ID)[0];
+            }
+        }
+
+        public Property CreateInputProperty(string ID, bool connectable, object defaultData, Type type)
+        {
+            if (inputs.TrueForAll(prop => prop.ID != ID))
+            {
+                Property tempRef = new Property(ID, true, connectable, defaultData, type);
                 inputs.Add(tempRef);
                 return tempRef;
             }

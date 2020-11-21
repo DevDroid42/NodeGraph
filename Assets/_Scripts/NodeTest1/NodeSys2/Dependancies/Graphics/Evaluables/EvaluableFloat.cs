@@ -26,6 +26,11 @@ public class EvaluableFloat : Evaluable
         return num;
     }
 
+    public override Evaluable GetCopy()
+    {
+        return new EvaluableFloat(num);
+    }
+
     public override string ToString()
     {
         return "eFloat: " + num;
