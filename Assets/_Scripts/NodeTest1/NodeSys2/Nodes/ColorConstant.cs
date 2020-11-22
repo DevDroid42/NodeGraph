@@ -1,5 +1,6 @@
 ﻿using nodeSys2;
 using System;
+using UnityEngine;
 
 public class ColorConstant : Node
 {
@@ -34,26 +35,32 @@ public class ColorConstant : Node
     public override void Init()
     {
         base.Init();
+        //Enums are seralized as strings. On Deserialization the object type will be a string. Check for this case and replace it with 
+        //the appropriate enum Type
+        if(colorMode.GetData().GetType() == typeof(string))
+        {
+            colorMode.SetData(Enum.Parse(typeof(ColorOperations.ColorSpace), (string)colorMode.GetData()));
+        }
         if (((ColorOperations.ColorSpace)colorMode.GetData()) == ColorOperations.ColorSpace.RGB)
         {
             rgb = true;
-            floatInputs[0].disc = "Red";
-            floatInputs[1].disc = "Green";
-            floatInputs[2].disc = "Blue";
+            floatInputs[0].Disc = "Red";
+            floatInputs[1].Disc = "Green";
+            floatInputs[2].Disc = "Blue";
         }
         else
         {
             rgb = false;
-            floatInputs[0].disc = "Hue";
-            floatInputs[1].disc = "Saturation";
-            floatInputs[2].disc = "Value";
+            floatInputs[0].Disc = "Hue";
+            floatInputs[1].Disc = "Saturation";
+            floatInputs[2].Disc = "Value";
         }
         //at start set all float inputs to the internal color. This internal color is a node constant. If data is received from the 
         //the float inputs the internal color will be set to non-interactable and will be used for visualization only. 
         //if all inputs are dissconnected this flag will ensure that users can edit the color 
         internalColor.interactable = true;
         //when data comes in this will be set to "color(Driven)" so reset it here on run
-        internalColor.disc = "Color";
+        internalColor.Disc = "Color";
 
         outputColor.Invoke(((Evaluable)(internalColor.GetData())).GetCopy());
     }
@@ -63,7 +70,7 @@ public class ColorConstant : Node
         EvaluableColorVec proccesedColor = new EvaluableColorVec(ProcessData());
         internalColor.SetData(proccesedColor);
         internalColor.interactable = false;
-        internalColor.disc = "Color(driven)";
+        internalColor.Disc = "Color(driven)";
         outputColor.Invoke(((Evaluable)(internalColor.GetData())).GetCopy());
     }
 

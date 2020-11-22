@@ -1,4 +1,6 @@
 ﻿
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 
 public class ColorVec
@@ -61,6 +63,7 @@ public class ColorVec
 
 public class ColorOperations
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ColorSpace
     {
         RGB, HSV
@@ -143,6 +146,7 @@ public class ColorOperations
     /// </summary>
     public static ColorVec HsvToRgb(float h, float S, float V)
     {
+        h *= 360;
         // ######################################################################
         // T. Nathan Mundhenk
         // mundhenk@usc.edu

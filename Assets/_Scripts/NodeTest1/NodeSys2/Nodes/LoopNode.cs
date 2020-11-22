@@ -44,7 +44,7 @@ public class LoopNode : Node
             current = min;
         }
         output.Invoke(new EvaluableFloat(current));
-        output.disc = "output: " + current;
+        output.Disc = "output: " + current;
     }
 
     private void processData()

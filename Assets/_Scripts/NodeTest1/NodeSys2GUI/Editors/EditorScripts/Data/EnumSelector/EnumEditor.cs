@@ -47,12 +47,13 @@ public class EnumEditor : EditorBase
     {
         if (propCache.GetData().GetType().IsEnum) {
             propCache.SetData(Enum.Parse(propCache.GetData().GetType(), enumStrings[selection]));
+            //GUIGraph.updateGraphGUI.Invoke();
             Debug.Log("TEST datatype" + propCache.GetData().GetType().Name + "\t data: " + propCache.GetData());            
         }
         else
         {
             Debug.LogWarning("A property has an ivalid data type of "+ propCache.GetType() +" it's data type " +
-                "was likely changes during runtime at some point");
+                "was likely changes during runtime at some point as the setup method passed");
         }
     }
 

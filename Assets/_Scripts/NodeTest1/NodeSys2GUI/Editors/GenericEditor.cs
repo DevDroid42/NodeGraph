@@ -33,7 +33,7 @@ public class GenericEditor : MonoBehaviour
     {
         if (propCache != null)
         {
-            propertyDisc.text = propCache.disc;
+            propertyDisc.text = propCache.Disc;
         }
     }
 }

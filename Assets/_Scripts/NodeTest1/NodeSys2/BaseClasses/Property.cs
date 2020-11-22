@@ -21,7 +21,7 @@ namespace nodeSys2
         //Determines whether the port is input or output
         public bool isInput;
         //data discription. This will be used for port and editor discriptions. If not provided it will fallback to the ID
-        public string disc;
+        [JsonProperty]private string disc;
         //Determines i this property has a port
         public bool connectable;
         //determines if the property has an editor assigned to it
@@ -36,6 +36,20 @@ namespace nodeSys2
         //this is the type that gates input. Data types that are not his type or a sublclass of said type will be regected from input
         //=====NOTE TO SELF====== type objects are problematic across threads - https://docs.microsoft.com/en-us/dotnet/api/system.type?view=net-5.0
         [JsonProperty] private Type gateType;
+
+        public string Disc
+        {
+            get => disc;
+            set
+            {
+                //
+                if (dataPort != null)
+                {
+                    dataPort.portDisc = disc;
+                }
+                disc = value;
+            }
+        }
 
         [JsonConstructor]
         public Property()
@@ -56,7 +70,7 @@ namespace nodeSys2
             this.disc = ID;
             //by default allow all data types into the node
             gateType = typeof(object);
-        } 
+        }
 
         public Property(string ID, bool isInput, bool connectable, object DefaultData, Type type) : this(ID, isInput, connectable, DefaultData)
         {
@@ -82,7 +96,7 @@ namespace nodeSys2
             }
             else
             {
-                Debug.LogWarning("Invalid data type received at property: " + ID + "\t Expected type of: (" 
+                Debug.LogWarning("Invalid data type received at property: " + ID + "\t Expected type of: ("
                     + gateType.Name + ") Instead got: (" + data.GetType().Name + ")");
             }
         }
