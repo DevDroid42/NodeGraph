@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using nodeSys2;
 public class StringViewer : EditorBase
 {
-    public object dataObj;
-    public Text disc, data;
+    public Property propCache;
+    public Text data;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,15 +16,14 @@ public class StringViewer : EditorBase
     // Update is called once per frame
     void Update()
     {
-        if(dataObj != null)
+        if(propCache != null && propCache.GetData() != null)
         {
-            data.text = dataObj.ToString();
+            data.text = propCache.GetData().ToString();
         }        
     }
 
     public override void Setup(Property prop)
     {
-        disc.text = prop.disc;
-        dataObj = prop.GetData();
+        propCache = prop;
     }
 }

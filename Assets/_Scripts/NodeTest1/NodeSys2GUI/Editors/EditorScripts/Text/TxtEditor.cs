@@ -11,18 +11,10 @@ public class TxtEditor : EditorBase
     public StringData stringData;
     public EvaluableFloat floatData;
     public InputField inputField;
-    public Text discText;
-    public string disc;
     // Start is called before the first frame update
     void Start()
     {
 
-    }
-
-    public void UpdateDisc(string disc)
-    {
-        this.disc = disc;
-        discText.text = disc;
     }
 
     public void UpdateField(string data)
@@ -56,7 +48,6 @@ public class TxtEditor : EditorBase
     public override void Setup(Property prop)
     {
         base.Setup(prop);
-        UpdateDisc(prop.disc);
         UpdateField(prop.GetData().ToString());
         switch (prop.GetData())
         {

@@ -119,7 +119,8 @@ public class GUINode : MonoBehaviour
             for (int i = 0; i < properties.Count; i++)
             {
                 if (properties[i].connectable)
-                {                    
+                {
+                    properties[i].interactable = !properties[i].IsConnected();
                     GameObject port = Instantiate(basePort, portHolder);
                     RectTransform rt = port.GetComponent<RectTransform>();
                     position = -index * (rt.rect.height - 2) - 15;

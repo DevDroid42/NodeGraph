@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class ColorEditor : EditorBase
 {
     public Button button;
-    public Text disc;
     public GameObject PickerPrefab;
     public static Transform PickerHolder;
     //Color button will display color and interactability will depend on the buttons interactable flag. 
@@ -50,8 +49,7 @@ public class ColorEditor : EditorBase
 
     public override void Setup(Property prop)
     {
-        base.Setup(prop);
-        disc.text = prop.disc;
+        base.Setup(prop);        
         this.prop = prop;
     }
 }

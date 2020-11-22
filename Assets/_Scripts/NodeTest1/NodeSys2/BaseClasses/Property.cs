@@ -43,7 +43,7 @@ namespace nodeSys2
 
         }
 
-        public Property(string ID, bool isInput, bool connectable, object DefaultData, bool interactable = false)
+        public Property(string ID, bool isInput, bool connectable, object DefaultData)
         {
             visible = true;
             dataPort = new Port();
@@ -126,6 +126,11 @@ namespace nodeSys2
         {
             dataPort.Disconnect();
             connectable = false;
+        }
+
+        public bool IsConnected()
+        {
+            return dataPort.IsConnected();
         }
 
         public bool TryGetDataType<T>(ref T reference)
