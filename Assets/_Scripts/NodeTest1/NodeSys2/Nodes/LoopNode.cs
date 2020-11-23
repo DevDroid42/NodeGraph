@@ -15,7 +15,7 @@ public class LoopNode : Node
         minP.interactable = true;
         maxP = CreateInputProperty("Max", true, new EvaluableFloat(1), typeof(Evaluable));
         maxP.interactable = true;
-        rateP = CreateInputProperty("rate", true, new EvaluableFloat(0.1f), typeof(Evaluable));
+        rateP = CreateInputProperty("rate", true, new EvaluableFloat(1f), typeof(Evaluable));
         rateP.interactable = true;
         output = CreateOutputProperty("output");
     }

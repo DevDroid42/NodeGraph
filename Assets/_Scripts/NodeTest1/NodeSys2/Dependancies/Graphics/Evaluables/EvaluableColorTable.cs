@@ -22,7 +22,7 @@ public class EvaluableColorTable : Evaluable
     public ClippingMode clipType = ClippingMode.tile;
 
     public EvaluableColorTable(int keyAmt)
-    {        
+    {
         for (int i = 0; i < keyAmt; i++)
         {
             ColorVec color = new ColorVec();
@@ -51,8 +51,6 @@ public class EvaluableColorTable : Evaluable
         {
             case 1:
                 return keys[0];
-            case 2:
-                
             default:
                 return normalInterpolate();
         }
@@ -61,6 +59,8 @@ public class EvaluableColorTable : Evaluable
         {
             // ((light I'm at)/last light)) x (Number of keys)
             // casted to int = lowest key
+
+            /*
             if (x == 1)
             {
                 x = 0.99999f;
@@ -69,18 +69,20 @@ public class EvaluableColorTable : Evaluable
             {
                 x = 0.00001f;
             }
-            //remap x 
-            float mapping1 = 1.0f / keys.Count;
-            float mapping2 = (keys.Count - 1.0f) / keys.Count;
-            x = x * (mapping2 - mapping1) + mapping1;
+            */
 
-            int keyIndex1 = (int)(keys.Count * x);
+            //remap x 
+            float mapping1 = 1.0f / (keys.Count - 1);
+            float mapping2 = (keys.Count - 2.0f) / keys.Count;
+            //x = x * (mapping2 - mapping1) + mapping1;
+
+            int keyIndex1 = (int)((keys.Count - 1) * x);
             ColorVec clr1 = keys[keyIndex1];
-            int keyIndex2 = (int)(keys.Count * x + 1);
+            int keyIndex2 = (int)((keys.Count - 1) * x + 1);
             ColorVec clr2 = keys[keyIndex2];
 
-            float keyPercent1 = (float)keyIndex1 / keys.Count;
-            float keyPercent2 = (float)keyIndex2 / keys.Count;
+            float keyPercent1 = (float)keyIndex1 / (keys.Count - 1);
+            float keyPercent2 = (float)keyIndex2 / (keys.Count - 1);
 
             float g = (x - keyPercent1) / (keyPercent2 - keyPercent1);
             switch (interType)
@@ -104,9 +106,9 @@ public class EvaluableColorTable : Evaluable
                     return new ColorVec(0, 0, 255);
             }
         }
+
+
     }
-
-
 
     public override ColorVec EvaluateColor(float x, float y, float z, float w)
     {
@@ -159,14 +161,24 @@ public class EvaluableColorTable : Evaluable
 
     public override float EvaluateValue(float x, float y, float z, float w)
     {
-        return (float)EvaluateColor(x,0,0,0);
+        return (float)EvaluateColor(x, 0, 0, 0);
+    }
+
+    public override Evaluable GetCopy()
+    {
+        EvaluableColorTable temp = new EvaluableColorTable(GetkeyAmt());
+        for (int i = 0; i < temp.GetkeyAmt(); i++)
+        {
+            temp.SetKey(i, keys[i].GetCopy());
+        }
+        return temp;
     }
 
     public static implicit operator EvaluableColorTable(ColorVec c)
     {
         EvaluableColorTable table = new EvaluableColorTable(1);
-        table.keys[0] = new ColorVec(c.rx,c.gy,c.bz,c.aw);
-        return table;        
+        table.keys[0] = new ColorVec(c.rx, c.gy, c.bz, c.aw);
+        return table;
     }
 
 }

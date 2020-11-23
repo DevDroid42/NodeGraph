@@ -41,7 +41,17 @@ public class ColorVec
         this.gy = G;
         this.bz = B;
         this.aw = A;
-    }   
+    }
+
+    public ColorVec GetCopy()
+    {
+        ColorVec temp = new ColorVec();
+        temp.rx = rx;
+        temp.bz = bz;
+        temp.gy = gy;
+        temp.aw = aw;
+        return temp;
+    }
 
     public override string ToString()
     {

@@ -99,7 +99,7 @@ public class GUINode : MonoBehaviour
         //get the amount if connectable input properties exist. 
         for (int i = 0; i < nodeRef.inputs.Count; i++)
         {
-            if (nodeRef.inputs[i].connectable)
+            if (nodeRef.inputs[i].GetConnectable())
             {
                 connectableCount++;
             }
@@ -118,7 +118,7 @@ public class GUINode : MonoBehaviour
             int index = 0;
             for (int i = 0; i < properties.Count; i++)
             {
-                if (properties[i].connectable)
+                if (properties[i].GetConnectable())
                 {
                     properties[i].interactable = !properties[i].IsConnected();
                     GameObject port = Instantiate(basePort, portHolder);

@@ -14,6 +14,7 @@ public class EditorManager : MonoBehaviour
     public GameObject StringEditor;
     public GameObject StringViewer;
     public GameObject ColorEditor;
+    public GameObject ColorTableEditor;
     public GameObject VectorEditor;
     public GameObject EnumEditor;
 
@@ -42,6 +43,11 @@ public class EditorManager : MonoBehaviour
                                 throw new NotImplementedException();
                                 SetupEditor(Instantiate(floatEditor, transform), props[i]);
                             }
+                            break;
+                        }
+                    case EvaluableColorTable table:
+                        {
+                            SetupEditor(Instantiate(ColorTableEditor, transform), props[i]);
                             break;
                         }
                     case Enum _enum:

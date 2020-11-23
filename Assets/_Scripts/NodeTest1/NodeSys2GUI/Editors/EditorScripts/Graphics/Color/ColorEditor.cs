@@ -29,9 +29,9 @@ public class ColorEditor : EditorBase
     {
         switch (prop.GetData())
         {
-            case EvaluableColorVec colorVec:
+            case Evaluable data:
                 {
-                    colorVecRef = colorVec.GetColorVec();
+                    colorVecRef = data.EvaluateColor(0,0,0,0);
                     break;
                 }
 

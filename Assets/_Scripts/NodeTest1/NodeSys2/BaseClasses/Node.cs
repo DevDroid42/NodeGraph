@@ -96,63 +96,29 @@ namespace nodeSys2
             }
         }
 
-        //does a lookup based on the ID and returns a property 
-        public Property GetInputProperty(string ID)
+        //removes property from list by reference. Returns true if reference was found and removed, false otherwise
+        //also sets input reference to null
+        public bool RemoveProperty(Property prop)
         {
-            return GetProperty(ID, inputs);
-        }
-        public Property GetOutputProperty(string ID)
-        {
-            return GetProperty(ID, outputs);
-        }
-
-        //generic property lookup
-        private Property GetProperty(string ID, List<Property> list)
-        {
-
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < inputs.Count; i++)
             {
-                if (list[i].ID == ID)
+                if(inputs[i] == prop)
                 {
-                    return list[i];
+                    inputs[i].SetConnectable(false);
+                    inputs.RemoveAt(i);                    
+                    return true;
                 }
             }
-            Debug.LogError("Could not find a property of ID: " + ID + " : in list");
-            return null;
-        }
-
-        public void RemoveInputProperty(string ID)
-        {
-            RemoveProperty(ID, inputs);
-        }
-
-        public void RemoveOutputProperty(string ID)
-        {
-            RemoveProperty(ID, outputs);
-        }
-
-        //generic property lookup
-        private void RemoveProperty(string ID, List<Property> list)
-        {            
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < outputs.Count; i++)
             {
-                if (list[i].ID == ID)
+                if (outputs[i] == prop)
                 {
-                    list.RemoveAt(i);
-                    return; 
+                    outputs[i].SetConnectable(false);
+                    outputs.RemoveAt(i);                    
+                    return true;
                 }
             }
-            Debug.LogError("Could not find a property of ID: " + ID + " : in list");            
-        }
-
-        public void RemoveInputContaining(string ID)
-        {
-            inputs.RemoveAll(prop => prop.ID.Contains(ID));
-        }
-
-        public void RemoveOutputContaining(string ID)
-        {
-            outputs.RemoveAll(prop => prop.ID.Contains(ID));
+            return false;
         }
 
         public void CleanUp()

@@ -22,8 +22,8 @@ namespace nodeSys2
         public bool isInput;
         //data discription. This will be used for port and editor discriptions. If not provided it will fallback to the ID
         [JsonProperty]private string disc;
-        //Determines i this property has a port
-        public bool connectable;
+        //Determines if this property has a port
+        [JsonProperty]private bool connectable;
         //determines if the property has an editor assigned to it
         public bool visible;
         //determines if editor is read only. Same as setting a viewable vs constant in old system
@@ -136,10 +136,22 @@ namespace nodeSys2
         }
 
         //will auto dissconnect if connected and make the port not connectable
-        public void Disconnectable()
+        public void SetConnectable(bool _connectable)
         {
-            dataPort.Disconnect();
-            connectable = false;
+            if (_connectable)
+            {
+                connectable = true;
+            }
+            else
+            {
+                dataPort.Disconnect();
+                connectable = false;
+            }
+        }
+
+        public bool GetConnectable()
+        {
+            return connectable;
         }
 
         public bool IsConnected()

@@ -49,6 +49,7 @@ public class LedUDP : Node
     {
         if (ProccessData())
         {
+            //udp.Update(ledCount, colorData);
             //byte[] message = GenWARLS(ledCount, colorData);
             //udpClient.Send(message, message.Length);
         }
@@ -98,7 +99,6 @@ public class NonMonoUDP
         udpClient.Close();
     }
 
-    // Update is called once per frame
     public void Update(int ledCount, Evaluable data)
     {
         byte[] message = GenWARLS(ledCount, data);

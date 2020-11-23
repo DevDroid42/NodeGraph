@@ -12,7 +12,7 @@ public class TextureTesting : MonoBehaviour
     void Start()
     {
         img = GetComponent<Image>();
-        testTable = new EvaluableColorTable(60);
+        testTable = new EvaluableColorTable(3);
         int keyAmt = testTable.GetkeyAmt();
         for (int i = 0; i < keyAmt; i++)
         {
@@ -24,7 +24,7 @@ public class TextureTesting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        offset += 0.1f * Time.deltaTime;
+        //offset += 0.1f * Time.deltaTime;
         Texture2D tex = new Texture2D(100, 1, TextureFormat.ARGB32, false);
         for (int i = 0; i < tex.width; i++)
         {

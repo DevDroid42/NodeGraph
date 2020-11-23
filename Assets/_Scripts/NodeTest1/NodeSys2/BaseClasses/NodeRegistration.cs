@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class NodeRegistration
 {
-    public enum NodeTypes {floatConst, add, Viewer, loop, ColorConst, LED}
+    public enum NodeTypes {floatConst, add, Viewer, loop, ColorConst, ColorTable, LED}
 
     public static Node GetNode(NodeTypes type)
     {
@@ -21,6 +21,8 @@ public class NodeRegistration
                 return new ColorConstant(true);
             case NodeTypes.LED:
                 return new LedUDP(true);
+            case NodeTypes.ColorTable:
+                return new ColorTableNode(true);
             default:
                 return null;
 
