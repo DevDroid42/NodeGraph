@@ -1,6 +1,9 @@
 ﻿public class Evaluable
 {
-    Evaluable offset;
+    //offset applied pre-scaling
+    Evaluable localOffset;
+    //offset applied post-scaling
+    Evaluable globalOffset;
     Evaluable scale;
     Evaluable rot;
     Evaluable pivot;
@@ -13,6 +16,21 @@
     public virtual float EvaluateValue(float x, float y, float z, float w)
     {
         return 0;
+    }
+
+    //used to get the resolution of the Evaluable data type.
+    public virtual ColorVec GetResolution()
+    {
+        return 0;
+    }
+
+    public virtual void SetTransform(Evaluable localOffset, Evaluable globalOffset, Evaluable scale, Evaluable rot, Evaluable pivot)
+    {
+        this.localOffset = localOffset;
+        this.globalOffset = globalOffset;
+        this.scale = scale;
+        this.rot = rot;
+        this.pivot = pivot;
     }
 
     //used to get copy of Evaluable object so references arn't being passed between nodes. Reference passing would entangle

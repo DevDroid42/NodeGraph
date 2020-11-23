@@ -7,16 +7,16 @@ public class TextureTesting : MonoBehaviour
 {
     Image img;
 
-    ColorTable testTable;
+    EvaluableColorTable testTable;
     // Start is called before the first frame update
     void Start()
     {
         img = GetComponent<Image>();
-        testTable = new ColorTable(60);
+        testTable = new EvaluableColorTable(60);
         int keyAmt = testTable.GetkeyAmt();
         for (int i = 0; i < keyAmt; i++)
         {
-            testTable.SetKey(i, ColorOperations.HsvToRgb(i * (360f / keyAmt), 1, 1));
+            testTable.SetKey(i, ColorOperations.HsvToRgb(i * (1f / keyAmt), 1, 1));
         }
     }
 

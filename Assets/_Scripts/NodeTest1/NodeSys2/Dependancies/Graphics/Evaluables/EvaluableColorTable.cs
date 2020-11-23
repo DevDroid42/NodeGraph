@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColorTable : Evaluable
+public class EvaluableColorTable : Evaluable
 {
     [JsonProperty]
     private List<ColorVec> keys = new List<ColorVec>();
@@ -21,7 +21,7 @@ public class ColorTable : Evaluable
     }
     public ClippingMode clipType = ClippingMode.tile;
 
-    public ColorTable(int keyAmt)
+    public EvaluableColorTable(int keyAmt)
     {        
         for (int i = 0; i < keyAmt; i++)
         {
@@ -162,9 +162,9 @@ public class ColorTable : Evaluable
         return (float)EvaluateColor(x,0,0,0);
     }
 
-    public static implicit operator ColorTable(ColorVec c)
+    public static implicit operator EvaluableColorTable(ColorVec c)
     {
-        ColorTable table = new ColorTable(1);
+        EvaluableColorTable table = new EvaluableColorTable(1);
         table.keys[0] = new ColorVec(c.rx,c.gy,c.bz,c.aw);
         return table;        
     }
