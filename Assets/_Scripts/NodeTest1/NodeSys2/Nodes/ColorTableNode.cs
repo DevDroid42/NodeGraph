@@ -88,7 +88,7 @@ public class ColorTableNode : Node
         ((EvaluableColorTable)colorTable.GetData()).interType = (EvaluableColorTable.InterpolationType)interpolationType.GetData();
         if (clippingType.GetData().GetType() == typeof(string))
         {
-            clippingType.SetData(Enum.Parse(typeof(EvaluableColorTable.ClippingMode), (string)interpolationType.GetData()));
+            clippingType.SetData(Enum.Parse(typeof(EvaluableColorTable.ClippingMode), (string)clippingType.GetData()));
         }
         ((EvaluableColorTable)colorTable.GetData()).clipType = (EvaluableColorTable.ClippingMode)clippingType.GetData();
     }
