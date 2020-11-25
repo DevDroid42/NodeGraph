@@ -48,7 +48,7 @@ public class EnumEditor : EditorBase
         if (propCache.GetData().GetType().IsEnum) {
             propCache.SetData(Enum.Parse(propCache.GetData().GetType(), enumStrings[selection]));
             //GUIGraph.updateGraphGUI.Invoke();
-            Debug.Log("TEST datatype" + propCache.GetData().GetType().Name + "\t data: " + propCache.GetData());            
+            //Debug.Log("TEST datatype" + propCache.GetData().GetType().Name + "\t data: " + propCache.GetData());            
         }
         else
         {

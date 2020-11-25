@@ -1,5 +1,6 @@
 ﻿
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,12 +10,14 @@ public class EvaluableColorTable : Evaluable
     private List<ColorVec> keys = new List<ColorVec>();
     //brightness mutliplier. 
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum InterpolationType
     {
         linear, closest
     }
     public InterpolationType interType = InterpolationType.linear;
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ClippingMode
     {
         tile, mirror, extend, clip
@@ -60,7 +63,7 @@ public class EvaluableColorTable : Evaluable
             // ((light I'm at)/last light)) x (Number of keys)
             // casted to int = lowest key
 
-            /*
+            
             if (x == 1)
             {
                 x = 0.99999f;
@@ -69,7 +72,7 @@ public class EvaluableColorTable : Evaluable
             {
                 x = 0.00001f;
             }
-            */
+            
 
             //remap x 
             float mapping1 = 1.0f / (keys.Count - 1);
@@ -112,6 +115,7 @@ public class EvaluableColorTable : Evaluable
 
     public override ColorVec EvaluateColor(float x, float y, float z, float w)
     {
+        x = Translate(x);
         switch (clipType)
         {
             case ClippingMode.tile:
@@ -161,7 +165,21 @@ public class EvaluableColorTable : Evaluable
 
     public override float EvaluateValue(float x, float y, float z, float w)
     {
+        x = Translate(x);
         return (float)EvaluateColor(x, 0, 0, 0);
+    }
+
+    private float Translate(float x)
+    {
+        if(scale.rx == 0)
+        {
+            return 0.0001f;
+        }
+        x -= globalOffset.rx;        
+        float pivotVal = pivot.rx;        
+        x = (x - pivotVal) * 1/scale.rx + pivotVal;
+        x -= localOffset.rx;
+        return x;
     }
 
     public override Evaluable GetCopy()
@@ -171,6 +189,13 @@ public class EvaluableColorTable : Evaluable
         {
             temp.SetKey(i, keys[i].GetCopy());
         }
+        temp.clipType = clipType;
+        temp.interType = interType;
+        temp.localOffset = localOffset.GetCopy();
+        temp.globalOffset= globalOffset.GetCopy();
+        temp.scale = scale.GetCopy();
+        temp.rot = rot.GetCopy();
+        temp.pivot = pivot.GetCopy();
         return temp;
     }
 

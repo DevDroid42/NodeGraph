@@ -1,12 +1,12 @@
 ﻿public class Evaluable
 {
     //offset applied pre-scaling
-    Evaluable localOffset;
+    public ColorVec localOffset = 0;
     //offset applied post-scaling
-    Evaluable globalOffset;
-    Evaluable scale;
-    Evaluable rot;
-    Evaluable pivot;
+    public ColorVec globalOffset = 0;
+    public ColorVec scale = 1;
+    public ColorVec rot = 0;
+    public ColorVec pivot = 0;    
 
     public virtual ColorVec EvaluateColor(float x, float y, float z, float w)
     {
@@ -20,17 +20,8 @@
 
     //used to get the resolution of the Evaluable data type.
     public virtual ColorVec GetResolution()
-    {
+    { 
         return 0;
-    }
-
-    public virtual void SetTransform(Evaluable localOffset, Evaluable globalOffset, Evaluable scale, Evaluable rot, Evaluable pivot)
-    {
-        this.localOffset = localOffset;
-        this.globalOffset = globalOffset;
-        this.scale = scale;
-        this.rot = rot;
-        this.pivot = pivot;
     }
 
     //used to get copy of Evaluable object so references arn't being passed between nodes. Reference passing would entangle
@@ -44,6 +35,6 @@
     protected ColorVec TransformVector(ColorVec vector)
     {
         //NOT IMPLEMENTED
-        return new ColorVec(0,0,0,0);
+        return new ColorVec(0, 0, 0, 0);
     }
 }

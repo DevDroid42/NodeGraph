@@ -14,11 +14,6 @@ public class EvaluableColorVec : Evaluable
     }
     public DisplayMode displayMode = DisplayMode.Color;
 
-    public ColorVec GetColorVec()
-    {
-        return colorVec;
-    }
-
     public EvaluableColorVec(ColorVec colorVec)
     {
         this.colorVec = colorVec;

@@ -25,8 +25,7 @@ public class ColorTableNode : Node
 
     public override void Init()
     {
-        base.Init();
-        ProccessEnums();
+        base.Init();        
         int setRes = (int)((Evaluable)resolution.GetData()).EvaluateValue(0, 0, 0, 0);
         //if the set resoltion is different than the current one resize the list by either removing excess data
         //or adding new data
@@ -54,6 +53,7 @@ public class ColorTableNode : Node
             }
         }
         SetColors();
+        ProccessEnums();
         output.Invoke(((Evaluable)colorTable.GetData()).GetCopy());
     }
 
@@ -66,16 +66,17 @@ public class ColorTableNode : Node
     private void SetColors()
     {
         EvaluableColorTable table = (EvaluableColorTable)(colorTable.GetData());
+        
         if (colors.Count != table.GetkeyAmt())
         {
             Debug.Log("Reseting colorTable Resolution from: " + table.GetkeyAmt() + " to: " + colors.Count);
             colorTable.SetData(new EvaluableColorTable(colors.Count));
-            table = (EvaluableColorTable)(colorTable.GetData());
+            table = (EvaluableColorTable)(colorTable.GetData());            
         }
         for (int i = 0; i < colors.Count; i++)
         {
             table.SetKey(i, ((Evaluable)colors[i].GetData()).EvaluateColor(0, 0, 0, 0));
-        }
+        }        
     }
 
     private void ProccessEnums()
@@ -84,9 +85,11 @@ public class ColorTableNode : Node
         {
             interpolationType.SetData(Enum.Parse(typeof(EvaluableColorTable.InterpolationType), (string)interpolationType.GetData()));
         }
+        ((EvaluableColorTable)colorTable.GetData()).interType = (EvaluableColorTable.InterpolationType)interpolationType.GetData();
         if (clippingType.GetData().GetType() == typeof(string))
         {
             clippingType.SetData(Enum.Parse(typeof(EvaluableColorTable.ClippingMode), (string)interpolationType.GetData()));
         }
+        ((EvaluableColorTable)colorTable.GetData()).clipType = (EvaluableColorTable.ClippingMode)clippingType.GetData();
     }
 }
