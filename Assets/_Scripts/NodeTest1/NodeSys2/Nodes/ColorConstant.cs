@@ -110,8 +110,10 @@ public class ColorConstant : Node
     {
         EvaluableColorVec proccesedColor = new EvaluableColorVec(ProcessData());
         internalColor.SetData(proccesedColor);
-        //internalColor.interactable = false;
-        //internalColor.Disc = "Color";
+        internalColorDupe = ((Evaluable)internalColor.GetData()).EvaluateColor(0, 0, 0, 0).GetCopy();
+        ProcessColorChanges();
+        internalColor.interactable = false;
+        internalColor.Disc = "Color (Driven)";
         outputColor.Invoke(((Evaluable)(internalColor.GetData())).GetCopy());
     }
 
