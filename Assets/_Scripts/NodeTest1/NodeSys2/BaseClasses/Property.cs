@@ -112,7 +112,7 @@ namespace nodeSys2
                 Debug.LogWarning("Attempted to invoke on an input property. This won't do anything as input ports don't send data anywhere.");
             }
             else
-            {
+            {                
                 dataPort.Invoke(data);
             }
         }

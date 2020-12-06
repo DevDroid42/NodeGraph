@@ -53,6 +53,11 @@ public class ColorVec
         return temp;
     }
 
+    public bool Equals(ColorVec other)
+    {
+        return rx == other.rx && gy == other.gy && bz == other.bz && aw == other.aw;
+    }
+
     public override string ToString()
     {
         return "\tRx:" + rx + "\tGy:" + gy + "\tBz:" + bz + "\tAw:" + aw;

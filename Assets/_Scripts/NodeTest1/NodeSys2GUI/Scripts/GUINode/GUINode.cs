@@ -11,18 +11,14 @@ public class GUINode : MonoBehaviour
     public Node nodeRef;
     public Text nodeTitle;
 
-    //reference to port prefab
-    public GameObject basePort;
-    public Transform inputPortHolder;
-    public GameObject[] inputPorts;
-    public Transform outputPortHolder;
+    public GameObject NonConnectablePortBase;
+    //reference to port prefab    
+    public GameObject ConnectablePortBase;
+    public Transform PropHolder;
+    public GameObject[] inputPorts;    
     public GameObject[] outputPorts;
-
-    public List<GameObject> NodeDataList = new List<GameObject>();
+   
     public EditorManager editorManager;
-    public RectTransform editor;
-    public GameObject openButton;
-    public GameObject closeButton;
 
     public Vector2 minSize;
 
@@ -59,9 +55,8 @@ public class GUINode : MonoBehaviour
         nodeRef = node;
         transform.localPosition = new Vector3(nodeRef.xPos, nodeRef.yPos, 0f);           
         nodeTitle.text = nodeRef.GetName();
-        SetupPorts();
+        SetupProperties();
         SetupNodeData();
-        SetupEditor();
         SetupScale();
     }
 
@@ -91,7 +86,7 @@ public class GUINode : MonoBehaviour
         rect.sizeDelta = size;
     }
 
-    private void SetupPorts()
+    private void SetupProperties()
     {
         float minHeight = 0;
 
@@ -109,9 +104,9 @@ public class GUINode : MonoBehaviour
         //all output ports are connectable 
         outputPorts = new GameObject[nodeRef.outputs.Count];
 
-        createPorts(nodeRef.inputs, inputPorts, inputPortHolder, true);
-        createPorts(nodeRef.outputs, outputPorts, outputPortHolder, false);
-        
+        createPorts(nodeRef.outputs, outputPorts, PropHolder, false);
+        createPorts(nodeRef.inputs, inputPorts, PropHolder, true);
+
         void createPorts(List<Property> properties, GameObject[] gameObjects, Transform portHolder, bool isInput)
         {
             float position = 0;
@@ -121,18 +116,32 @@ public class GUINode : MonoBehaviour
                 if (properties[i].GetConnectable())
                 {
                     properties[i].interactable = !properties[i].IsConnected();
-                    GameObject port = Instantiate(basePort, portHolder);
+                    GameObject port = Instantiate(ConnectablePortBase, portHolder);
                     RectTransform rt = port.GetComponent<RectTransform>();
                     position = -index * (rt.rect.height - 2) - 15;
                     //rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, position, rt.rect.height);
-                    rt.anchoredPosition = new Vector2(0.5f, position);
+                    
                     gameObjects[index] = port;
                     GUIPort guiPort = gameObjects[index].GetComponentInChildren<GUIPort>();
                     guiPort.portRef = properties[i].dataPort;
                     guiPort.GUIGraphRef = GUIGraphRef;
                     guiPort.GUINodeRef = this;
                     guiPort.inputPort = isInput;
+                    if (properties[i].isInput)
+                    {
+                        editorManager.SetupEditor(properties[i], port.transform.GetChild(0));
+                    }
+                    else
+                    {
+                        port.transform.GetChild(1).gameObject.SetActive(true);
+                        Destroy(port.transform.GetChild(0).gameObject);                        
+                    }
                     index++;
+                }
+                else
+                {
+                    GameObject holder = Instantiate(NonConnectablePortBase, portHolder);
+                    editorManager.SetupEditor(properties[i], holder.transform.GetChild(0));
                 }
             }
                         
@@ -149,103 +158,8 @@ public class GUINode : MonoBehaviour
         minSize =  new Vector2(20, minHeight);
     }
 
-    private void SetupEditor()
-    {
-        if (nodeRef.expanded)
-        {
-            SetEditorOpen();
-        }
-        else
-        {
-            SetEditorClosed();
-        }
-    }
-
-    public void SetExpanded(bool state)
-    {
-        nodeRef.expanded = state;
-    }
-
-    private void SetEditorOpen()
-    {
-        openButton.SetActive(false);
-        closeButton.SetActive(true);
-        editor.anchorMax = new Vector2(1f, 1f);
-        editor.anchorMin = new Vector2(0f, 0f);
-    }
-
-    private void SetEditorClosed()
-    {
-        openButton.SetActive(true);
-        closeButton.SetActive(false);
-        editor.anchorMax = new Vector2(1f, 1f);
-        editor.anchorMin = new Vector2(0f, 1f);
-    }
-
     private void SetupNodeData()
     {
-        editorManager.SetupEditors(nodeRef.inputs);
-        /** //To be moved to new class
-                float offset = 0;
-        if (nodeRef.constants != null)
-        {
-            Debug.Log(nodeTitle.text + " is setting up. Has " + nodeRef.constants.Length + "constants");
-            for (int i = 0; i < nodeRef.constants.Length; i++)
-            {
-                GameObject editorPrefab;
-                switch (nodeRef.constants[i])
-                {
-                    case IntData intData:
-                        //get the prefab from the dictionary
-                        GUIGraph.editors.TryGetValue("int", out editorPrefab);
-                        //instantiate the prefab
-                        GameObject intEditorGameObject = Instantiate(editorPrefab, editorContent);
-                        //get the rect trransform for positioning
-                        RectTransform rt = intEditorGameObject.GetComponent<RectTransform>();
-                        rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, offset, rt.rect.height);
-                        //advance the offset for the next component
-                        offset += rt.rect.height + 5;
-                        //set the references in the editors script
-                        TxtEditor intEdit = intEditorGameObject.GetComponent<TxtEditor>();
-                        intEdit.intData = intData;
-                        intEdit.UpdateDisc(nodeRef.constantsDisc[i]);
-                        intEdit.UpdateField(intData.ToString());
-                        //add it to the list of all editors and viewers
-                        NodeDataList.Add(intEditorGameObject);
-
-                        break;
-                    default:
-                        Debug.Log("constants array in node " + nodeRef.GetName() + " contains an unsupported data type at index:" + i);
-                        break;
-                }
-            }
-        }
-        if (nodeRef.viewableData != null)
-        {
-            for (int i = 0; i < nodeRef.viewableData.Length; i++)
-            {
-                GameObject viewerPrefab;
-                switch (nodeRef.viewableData[i])
-                {
-                    default:
-                        Debug.Log("status array in node " + nodeRef.GetName() + " contains an unsupported data type at index:" + i
-                            + "\n defaulting to string");
-                        GUIGraph.viewers.TryGetValue("string", out viewerPrefab);
-                        GameObject stringViewerObject = Instantiate(viewerPrefab, editorContent);
-                        RectTransform rt = stringViewerObject.GetComponent<RectTransform>();
-                        rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, offset, rt.rect.height);
-                        offset += rt.rect.height + 5;
-                        StringViewer sv = stringViewerObject.GetComponent<StringViewer>();
-                        sv.disc.text = nodeRef.viewableDisc[i];
-                        sv.dataObj = nodeRef.viewableData[i];
-                        break;
-                }
-            }
-            RectTransform rt1 = editorContent.GetComponent<RectTransform>();
-            rt1.sizeDelta = new Vector2(rt1.sizeDelta.x, offset);
-        }
-
-
-        **/
+        //editorManager.SetupEditor(nodeRef.inputs);
     }
 }

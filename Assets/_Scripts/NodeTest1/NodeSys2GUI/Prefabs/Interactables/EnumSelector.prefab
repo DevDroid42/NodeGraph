@@ -1422,7 +1422,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 355438195452295772}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.81333333
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1522,7 +1522,7 @@ MonoBehaviour:
   _panelItems: []
   _prunedPanelItems: []
   _scrollBarWidth: 20
-  _itemsToDisplay: 3
+  _itemsToDisplay: 6
   SelectFirstItemOnStart: 0
   _ChangeInputTextColorBasedOnMatchingItems: 1
   ValidSelectionTextColor: {r: 0, g: 1, b: 0, a: 1}
@@ -2022,6 +2022,7 @@ MonoBehaviour:
   normalTemplate: {fileID: 355438195544261513}
   searchableTemplate: {fileID: 355438195191785143}
   maskable: 1
+  OpenOnSetup: 0
 --- !u!1 &355438195566886392
 GameObject:
   m_ObjectHideFlags: 0
