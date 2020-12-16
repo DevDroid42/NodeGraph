@@ -58,7 +58,10 @@ public class ColorTableEditor : EditorBase
     private void OnDestroy()
     {
         Destroy(tex);
-        Destroy(img.sprite);
+        if (img.sprite != null)
+        {
+            Destroy(img.sprite);
+        }
     }
 
 }
