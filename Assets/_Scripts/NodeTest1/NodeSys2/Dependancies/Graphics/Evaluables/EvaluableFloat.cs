@@ -33,6 +33,6 @@ public class EvaluableFloat : Evaluable
 
     public override string ToString()
     {
-        return "eFloat: " + num;
+        return num.ToString();
     }
 }

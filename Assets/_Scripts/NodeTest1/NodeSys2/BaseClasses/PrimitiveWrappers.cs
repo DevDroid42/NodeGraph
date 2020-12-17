@@ -42,7 +42,7 @@ namespace nodeSys2
 
         public override string ToString()
         {
-            return "StringWrapper: " + txt;
+            return txt;
         }
     }
 }

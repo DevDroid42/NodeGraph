@@ -8,11 +8,13 @@ public class EvaluableColorVec : Evaluable
     protected ColorVec colorVec;
 
     //used for GUI display. Makes no difference to runtime processing. 
-    public enum DisplayMode
+    //IDEA don't use this in editor manager, instead use in editor script. use this to choose which editor
+    //will open by default but allow user to switch with button
+    public enum DefaultDisplayMode
     {
         Color, Vector2, Vector3, Vector4
     }
-    public DisplayMode displayMode = DisplayMode.Color;
+    public DefaultDisplayMode displayMode = DefaultDisplayMode.Color;
 
     public EvaluableColorVec(ColorVec colorVec)
     {

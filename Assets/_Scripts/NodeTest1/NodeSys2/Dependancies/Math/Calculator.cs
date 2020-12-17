@@ -9,14 +9,14 @@ public class Calculator
     public float x = 0, y = 0, z = 0, w = 0;
     public float[] variables;
     private ExpressionEvaluator evaluator;
-    private string expresion = "";
-    private bool debug = true;
+    private string expression = "";
+    private bool debug = false;
 
     public Calculator(int inputCount, string expression = "")
     {
         if (inputCount > 99)
         {
-            Debug.LogWarning("Error, cannon use over 99 variables in an caculator object. Defaulting to 99");
+            Debug.LogWarning("Error, cannot use over 99 variables in an caculator object. Defaulting to 99");
             inputCount = 99;
         }
         variables = new float[inputCount];
@@ -25,17 +25,34 @@ public class Calculator
             variables[i] = 0;
         }
         evaluator = new ExpressionEvaluator();
+        this.expression = expression;
     }
 
     public void setExpression(string expresion)
     {
-        this.expresion = expresion;
+        this.expression = expresion;
+    }
+
+    public string GetExpression()
+    {
+        return expression;
     }
 
     public float Evaluate()
     {
-        string subedExpression = SubVariables(expresion);
+        string subedExpression = SubVariables(expression);
         return float.Parse(evaluator.Evaluate(subedExpression));
+    }
+
+    public float Evaluate(float x, float y, float z, float w)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
+        string subedExpression = SubVariables(expression);
+        string evaluated = evaluator.Evaluate(subedExpression);
+        return float.Parse(evaluated);
     }
 
     private string SubVariables(string expresion)
@@ -46,22 +63,22 @@ public class Calculator
         if (expresion.Contains("x"))
         {
             int index = expresion.IndexOf("x");
-            return SubVariables(evaluator.sub(expresion, x.ToString(), index, index + 1));
+            return SubVariables(evaluator.Sub(expresion, x.ToString(), index, index + 1));
         }
         else if (expresion.Contains("y"))
         {
             int index = expresion.IndexOf("y");
-            return SubVariables(evaluator.sub(expresion, y.ToString(), index, index + 1));
+            return SubVariables(evaluator.Sub(expresion, y.ToString(), index, index + 1));
         }
         else if (expresion.Contains("z"))
         {
             int index = expresion.IndexOf("z");
-            return SubVariables(evaluator.sub(expresion, z.ToString(), index, index + 1));
+            return SubVariables(evaluator.Sub(expresion, z.ToString(), index, index + 1));
         }
         else if (expresion.Contains("w"))
         {
             int index = expresion.IndexOf("w");
-            return SubVariables(evaluator.sub(expresion, w.ToString(), index, index + 1));
+            return SubVariables(evaluator.Sub(expresion, w.ToString(), index, index + 1));
         }
         else if (expresion.Contains("v"))
         {
@@ -82,7 +99,7 @@ public class Calculator
                 Debug.Log("Variable number " + varIndex + " Is not registered. Defaulting to 0");
                 return 0.ToString();
             }
-            return SubVariables(evaluator.sub(expresion, variables[varIndex].ToString(), index, index + varIndex.ToString().Length + 1));
+            return SubVariables(evaluator.Sub(expresion, variables[varIndex].ToString(), index, index + varIndex.ToString().Length + 1));
         }
         else
         {
@@ -96,7 +113,7 @@ public class Calculator
         int lower = index, upper = 0;
         for (int i = index + 1; i < expression.Length; i++)
         {
-            if (!evaluator.isNumber(expression[i]))
+            if (!evaluator.IsNumber(expression[i]))
             {
                 upper = i - 1;
                 break;

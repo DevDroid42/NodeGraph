@@ -31,8 +31,8 @@ public class EditorManager : MonoBehaviour
                         break;
                     }
                 case EvaluableColorVec clrVec:
-                    {
-                        if (clrVec.displayMode == EvaluableColorVec.DisplayMode.Color)
+                    {                        
+                        if (clrVec.displayMode == EvaluableColorVec.DefaultDisplayMode.Color)
                         {
                             SetupEditor(Instantiate(ColorEditor, EditorHolder), props);
                         }
@@ -51,6 +51,16 @@ public class EditorManager : MonoBehaviour
                 case Enum _enum:
                     {
                         SetupEditor(Instantiate(EnumEditor, EditorHolder), props);
+                        break;
+                    }
+                case StringData str:
+                    {
+                        SetupEditor(Instantiate(StringEditor, EditorHolder), props);
+                        break;
+                    }
+                case EvaluableCustomEquation _:
+                    {
+                        SetupEditor(Instantiate(ColorTableEditor, EditorHolder), props);
                         break;
                     }
                 default:

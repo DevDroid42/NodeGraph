@@ -41,7 +41,10 @@ public class TxtEditor : EditorBase
     {
         if (num.Length > 0)
         {
-            floatData.SetNum(float.Parse(num));
+            if (float.TryParse(num, out float data))
+            {
+                floatData.SetNum(data);
+            }            
         }
     }
 

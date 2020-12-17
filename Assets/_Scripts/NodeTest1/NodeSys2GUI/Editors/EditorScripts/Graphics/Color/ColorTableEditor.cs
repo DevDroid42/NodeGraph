@@ -10,7 +10,7 @@ public class ColorTableEditor : EditorBase
     Property propCache;
     Image img;
     Texture2D tex;
-    public int resolution = 256;
+    public int resolution = 128;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +23,7 @@ public class ColorTableEditor : EditorBase
     {
         switch (propCache.GetData())
         {
-            case EvaluableColorTable testTable:
+            case Evaluable testTable:
                 {
                     if(img.sprite != null)
                     {
@@ -58,9 +58,12 @@ public class ColorTableEditor : EditorBase
     private void OnDestroy()
     {
         Destroy(tex);
-        if (img.sprite != null)
+        if (img != null)
         {
-            Destroy(img.sprite);
+            if (img.sprite != null)
+            {
+                Destroy(img.sprite);
+            }
         }
     }
 

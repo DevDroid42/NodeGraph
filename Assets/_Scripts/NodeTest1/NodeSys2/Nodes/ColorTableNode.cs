@@ -25,7 +25,15 @@ public class ColorTableNode : Node
 
     public override void Init()
     {
-        base.Init();        
+        base.Init();
+        ProcessRes();
+        SetColors();
+        ProccessEnums();
+        output.Invoke(((Evaluable)colorTable.GetData()).GetCopy());
+    }
+
+    private void ProcessRes()
+    {
         int setRes = (int)((Evaluable)resolution.GetData()).EvaluateValue(0, 0, 0, 0);
         //if the set resoltion is different than the current one resize the list by either removing excess data
         //or adding new data
@@ -52,9 +60,6 @@ public class ColorTableNode : Node
                 }
             }
         }
-        SetColors();
-        ProccessEnums();
-        output.Invoke(((Evaluable)colorTable.GetData()).GetCopy());
     }
 
     public override void Handle()

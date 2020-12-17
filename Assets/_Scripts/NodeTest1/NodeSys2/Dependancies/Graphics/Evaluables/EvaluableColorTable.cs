@@ -171,13 +171,13 @@ public class EvaluableColorTable : Evaluable
 
     private float Translate(float x)
     {
-        if(scale.rx == 0)
+        if (scale.rx == 0)
         {
             return 0.0001f;
         }
-        x -= globalOffset.rx;        
-        float pivotVal = pivot.rx;        
-        x = (x - pivotVal) * 1/scale.rx + pivotVal;
+        x -= globalOffset.rx;
+        float pivotVal = pivot.rx;
+        x = (x - pivotVal) * 1 / scale.rx + pivotVal;
         x -= localOffset.rx;
         return x;
     }
