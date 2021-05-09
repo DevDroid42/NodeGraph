@@ -8,7 +8,7 @@ using System;
 //(headers) and are parsed into variables in this class
 public class NetworkMessage
 {
-    public enum DataType { Text, Value, ValueArray, ColorArray };
+    public enum DataType { Value, ValueArray, ColorArray, Text};
     //the dataType this message holds
     public DataType dataType = new DataType();
     //the ip this message was sent from

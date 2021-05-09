@@ -32,7 +32,7 @@ public class NodeNetReceive
         List<NetworkMessage> messages = netThreadObj.GetMessages();
         foreach (NetworkMessage message in messages)
         {
-            Debug.Log(message);
+            //Debug.Log(message);
             if (Node.nodeNetDelagate != null)
             {
                 Node.nodeNetDelagate.Invoke(message);
@@ -94,7 +94,7 @@ public class NodeNetReceiveThreaded
     {
         lock (msgLock)
         {
-            List<NetworkMessage> messages = GetMessageQueueCopy();
+            List<NetworkMessage> messages = GetMessageQueueCopy();            
             messageQueue.Clear();
             return messages;
         }

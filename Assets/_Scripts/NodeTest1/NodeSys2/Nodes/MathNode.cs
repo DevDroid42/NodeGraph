@@ -48,10 +48,7 @@ public class MathNode : Node
 
     private void InsantiateEquation()
     {
-        if (equation == null)
-        {
-            equation = new EvaluableCustomEquation(setRes, ((StringData)expression.GetData()).txt, false);
-        }
+        equation = new EvaluableCustomEquation(setRes, ((StringData)expression.GetData()).txt, false);
     }
 
     private void ValueOutput()
@@ -67,6 +64,7 @@ public class MathNode : Node
             }
             catch (Exception e)
             {
+                Debug.LogError(e.ToString());
                 status.SetData(new Message("Syntax Error"));
                 value = 0;
             }
@@ -76,7 +74,6 @@ public class MathNode : Node
 
     private void ProcessRes()
     {
-
         //if the set resoltion is different than the current one resize the list by either removing excess data
         //or adding new data
         if (variables.Count != setRes)
