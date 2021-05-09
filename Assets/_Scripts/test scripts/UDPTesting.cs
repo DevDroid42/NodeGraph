@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class UDPTesting : MonoBehaviour
 {
-    public GradientAudioSync ColorMap;
+    public GradientAudioSyncTwo ColorMap;
     public string ip = "4.3.2.1";
+    public int ledCount;
     public int port = 21324;
     byte[] message = { 1, 2, 0, 0, 255, 255, 1, 255, 0, 0};
     private UdpClient udpClient;
@@ -60,7 +61,7 @@ public class UDPTesting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        byte[] message = GenWARLS(100, ColorMap.gradient);
+        byte[] message = GenWARLS(ledCount, ColorMap.gradient);
         udpClient.Send(message, message.Length);
     }
 

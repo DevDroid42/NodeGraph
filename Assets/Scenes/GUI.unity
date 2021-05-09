@@ -631,7 +631,7 @@ PrefabInstance:
     - target: {fileID: 865325845636846420, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -373.06
+      value: -373.06006
       objectReference: {fileID: 0}
     - target: {fileID: 865325845636846420, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
@@ -771,12 +771,12 @@ PrefabInstance:
     - target: {fileID: 2356433120748328278, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2356433120748328278, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2356433120748328278, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
@@ -881,12 +881,17 @@ PrefabInstance:
     - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
       propertyPath: onEndDrag.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
       propertyPath: OnDelete.m_PersistentCalls.m_Calls.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onDrag.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
@@ -901,7 +906,7 @@ PrefabInstance:
     - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
       propertyPath: onDrag.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MakeConnections
+      value: SaveTransform
       objectReference: {fileID: 0}
     - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
@@ -957,6 +962,46 @@ PrefabInstance:
         type: 3}
       propertyPath: OnDelete.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onDrag.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onDrag.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onDrag.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 156401592}
+    - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onEndDrag.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 699167037}
+    - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onEndDrag.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: MakeConnections
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onEndDrag.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onEndDrag.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763552184636446459, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: onEndDrag.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6444033307507403989, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
@@ -2109,7 +2154,7 @@ PrefabInstance:
     - target: {fileID: 355438195293011493, guid: 8524b549aded35b4faa28f04f238ec0a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00001335144
+      value: 0.000009536743
       objectReference: {fileID: 0}
     - target: {fileID: 355438195452295772, guid: 8524b549aded35b4faa28f04f238ec0a,
         type: 3}
@@ -2119,6 +2164,11 @@ PrefabInstance:
     - target: {fileID: 355438195452295772, guid: 8524b549aded35b4faa28f04f238ec0a,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 355438195452295772, guid: 8524b549aded35b4faa28f04f238ec0a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 355438195551717072, guid: 8524b549aded35b4faa28f04f238ec0a,

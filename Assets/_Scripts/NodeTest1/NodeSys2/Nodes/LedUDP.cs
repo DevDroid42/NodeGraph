@@ -13,7 +13,7 @@ public class LedUDP : Node
     public LedUDP(bool x)
     {
         nodeDisc = "LED Node";
-        ipProp = CreateInputProperty("IP:", false, new StringData("4.3.2.1"));
+        ipProp = CreateInputProperty("IP:", false, new StringData("192.168.0.49"));
         ipProp.interactable = true;
         ledCountProp = CreateInputProperty("Led Count", false, new EvaluableFloat(0));
         ledCountProp.interactable = true;
@@ -41,7 +41,7 @@ public class LedUDP : Node
 
     public override void Frame(float deltaTime)
     {
-        udp.Update(ledCount, colorData);
+        udp.Send(ledCount, colorData);
     }
 
     private Evaluable colorData = new Evaluable();
@@ -71,13 +71,14 @@ public class LedUDP : Node
 
 public class NonMonoUDP
 {
-    public string ip = "4.3.2.1";
+    public string ip = "192.168.0.49";
     public int port = 21324;
     private UdpClient udpClient;
 
     // Start is called before the first frame update
     public NonMonoUDP(string ip, int port)
     {
+        this.ip = ip;
         udpClient = new UdpClient(port);
         InitConnection();
     }
@@ -99,7 +100,7 @@ public class NonMonoUDP
         udpClient.Close();
     }
 
-    public void Update(int ledCount, Evaluable data)
+    public void Send(int ledCount, Evaluable data)
     {
         byte[] message = GenWARLS(ledCount, data);
         udpClient.Send(message, message.Length);
