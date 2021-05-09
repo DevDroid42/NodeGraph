@@ -10,18 +10,15 @@ using System.Threading;
 
 public class NodeNetReceive
 {
-    List<string> activeConnections = new List<string>();
-    List<NetworkMessage> messages;
     NodeNetReceiveThreaded netThreadObj;
-    Thread NetworkThread;
 
     public NodeNetReceive()
     {
         Node.frameDelagate -= Frame;
         Node.frameDelagate += Frame;
         netThreadObj = new NodeNetReceiveThreaded();
-        Thread networkReceive = new Thread(netThreadObj.StartLoop);
-        networkReceive.Start();
+        Thread networkReceiveThread = new Thread(netThreadObj.StartLoop);
+        networkReceiveThread.Start();
     }
 
     public void Shutdown()
@@ -29,10 +26,18 @@ public class NodeNetReceive
         netThreadObj.Stop();
     }
 
-    float time = 0;
+
     private void Frame(float delta)
     {
-
+        List<NetworkMessage> messages = netThreadObj.GetMessages();
+        foreach (NetworkMessage message in messages)
+        {
+            Debug.Log(message);
+            if (Node.nodeNetDelagate != null)
+            {
+                Node.nodeNetDelagate.Invoke(message);
+            }
+        }
     }
 }
 
@@ -40,7 +45,7 @@ public class NodeNetReceive
 //be the most receint received from the header. All messages received in this manner are not garanteed to be processed
 public class NodeNetReceiveThreaded
 {
-    private object msgLock;
+    private object msgLock = new object();
     //messages that have yet to be processed. All messages are the most recent version received of the header type
     private List<NetworkMessage> messageQueue = new List<NetworkMessage>();
     private bool run = true;
@@ -55,13 +60,16 @@ public class NodeNetReceiveThreaded
         {
             // Blocks until a message returns on this socket from a remote host.
             byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
-
             lock (msgLock)
-            { 
+            {
                 NetworkMessage receivedMsg = new NetworkMessage(receiveBytes, RemoteIpEndPoint.Address.ToString());
+                if (messageQueue.Count == 0)
+                {
+                    messageQueue.Add(receivedMsg);
+                }
                 for (int i = 0; i < messageQueue.Count; i++)
                 {
-                    if(receivedMsg.CompareHeader(messageQueue[i]))
+                    if (receivedMsg.CompareHeader(messageQueue[i]))
                     {
                         messageQueue[i].UpdateDataBytes(receiveBytes);
                     }
@@ -94,7 +102,7 @@ public class NodeNetReceiveThreaded
     private List<NetworkMessage> GetMessageQueueCopy()
     {
         List<NetworkMessage> messages = new List<NetworkMessage>();
-        for (int i = 0; i < messageQueue.Capacity; i++)
+        for (int i = 0; i < messageQueue.Count; i++)
         {
             messages.Add(messageQueue[i].GetCopy());
         }

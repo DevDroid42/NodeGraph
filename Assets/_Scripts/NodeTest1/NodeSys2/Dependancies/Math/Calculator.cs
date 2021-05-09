@@ -59,51 +59,59 @@ public class Calculator
     {
         if (debug)
             Debug.Log("Substituting Variables: " + expresion);
-
-        if (expresion.Contains("x"))
+        //=========== lazy null reference fix=======
+        //expression is null sometimes. I suspect it's not throwing errors because of a try catch
+        if (expresion != null)
         {
-            int index = expresion.IndexOf("x");
-            return SubVariables(evaluator.Sub(expresion, x.ToString(), index, index + 1));
-        }
-        else if (expresion.Contains("y"))
-        {
-            int index = expresion.IndexOf("y");
-            return SubVariables(evaluator.Sub(expresion, y.ToString(), index, index + 1));
-        }
-        else if (expresion.Contains("z"))
-        {
-            int index = expresion.IndexOf("z");
-            return SubVariables(evaluator.Sub(expresion, z.ToString(), index, index + 1));
-        }
-        else if (expresion.Contains("w"))
-        {
-            int index = expresion.IndexOf("w");
-            return SubVariables(evaluator.Sub(expresion, w.ToString(), index, index + 1));
-        }
-        else if (expresion.Contains("v"))
-        {
-            int index = expresion.IndexOf("v");
-            int varIndex = GetNumberAfterIndex(expresion, index);
-            if(varIndex < 0)
+            if (expresion.Contains("x"))
             {
-                Debug.Log("Cannot have negative variable indexes. Defaulting to 0");
-                return 0.ToString();
+                int index = expresion.IndexOf("x");
+                return SubVariables(evaluator.Sub(expresion, x.ToString(), index, index + 1));
             }
-            if(variables.Length == 0)
+            else if (expresion.Contains("y"))
             {
-                Debug.Log("No Variables are registered but an equation is trying to access variable: " + varIndex + " Defaulting to 0");
-                return 0.ToString();
+                int index = expresion.IndexOf("y");
+                return SubVariables(evaluator.Sub(expresion, y.ToString(), index, index + 1));
             }
-            if(varIndex > variables.Length)
+            else if (expresion.Contains("z"))
             {
-                Debug.Log("Variable number " + varIndex + " Is not registered. Defaulting to 0");
-                return 0.ToString();
+                int index = expresion.IndexOf("z");
+                return SubVariables(evaluator.Sub(expresion, z.ToString(), index, index + 1));
             }
-            return SubVariables(evaluator.Sub(expresion, variables[varIndex].ToString(), index, index + varIndex.ToString().Length + 1));
+            else if (expresion.Contains("w"))
+            {
+                int index = expresion.IndexOf("w");
+                return SubVariables(evaluator.Sub(expresion, w.ToString(), index, index + 1));
+            }
+            else if (expresion.Contains("v"))
+            {
+                int index = expresion.IndexOf("v");
+                int varIndex = GetNumberAfterIndex(expresion, index);
+                if (varIndex < 0)
+                {
+                    Debug.Log("Cannot have negative variable indexes. Defaulting to 0");
+                    return 0.ToString();
+                }
+                if (variables.Length == 0)
+                {
+                    Debug.Log("No Variables are registered but an equation is trying to access variable: " + varIndex + " Defaulting to 0");
+                    return 0.ToString();
+                }
+                if (varIndex > variables.Length)
+                {
+                    Debug.Log("Variable number " + varIndex + " Is not registered. Defaulting to 0");
+                    return 0.ToString();
+                }
+                return SubVariables(evaluator.Sub(expresion, variables[varIndex].ToString(), index, index + varIndex.ToString().Length + 1));
+            }
+            else
+            {
+                return expresion;
+            }
         }
         else
         {
-            return expresion;
+            return "0";
         }
 
     }

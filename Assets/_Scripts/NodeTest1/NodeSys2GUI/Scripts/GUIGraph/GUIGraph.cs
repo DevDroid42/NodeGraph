@@ -271,6 +271,11 @@ public class GUIGraph : MonoBehaviour
             Node.frameDelagate.Invoke(Time.deltaTime);
         }
     }
+
+    private void OnApplicationQuit()
+    {
+        nodeGraph.StopGraph();
+    }
 }
 
 [Serializable]

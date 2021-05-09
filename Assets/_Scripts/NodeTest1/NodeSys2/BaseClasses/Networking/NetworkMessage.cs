@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
+using System;
 
 //stores data along with data descriptors. The descriptors make up the start of packets
 //(headers) and are parsed into variables in this class
 public class NetworkMessage
 {
-    public enum DataType { Value, ValueArray, ColorArray };
+    public enum DataType { Text, Value, ValueArray, ColorArray };
     //the dataType this message holds
     public DataType dataType = new DataType();
     //the ip this message was sent from
@@ -19,33 +20,34 @@ public class NetworkMessage
 
     private int headerLength;
 
-    public NetworkMessage(byte[] data, string ip)
+    public NetworkMessage(byte[] packet, string ip)
     {
-        if (data.Length < 7)
+        if (packet.Length < 7)
         {
-            Debug.LogWarning("Invalid data received. Less than 7 bytes in packet: Byte amount was:" + data.Length);
+            Debug.LogWarning("Invalid data received. Less than 7 bytes in packet: Byte amount was:" + packet.Length);
         }
         else
         {
             this.ip = ip;
-            dataType = (DataType)data[0];
+            dataType = (DataType)packet[0];
 
             //determine length of ID
-            byte IDlength = data[1];
+            byte IDlength = packet[1];
             //create byte array for id
             byte[] byteID = new byte[IDlength];
-            if (IDlength > data.Length - 2)
+            if (IDlength > packet.Length - 2)
             {
-                Debug.LogError("Invalid Data ID length. ID length was: " + IDlength + " message length was: " + data.Length);
-            }
-            ID = "";
+                Debug.LogError("Invalid Data ID length. ID length was: " + IDlength + " message length was: " + packet.Length);
+            }           
             for (int i = 0; i < byteID.Length; i++)
             {
-                ID += byteID[i + 2];
+                byteID[i] = packet[i + 2];
             }
+            ID = Encoding.ASCII.GetString(byteID);
+
             //the length of header data (datatype and ID).
-            headerLength = data.Length - (2 + IDlength);
-            UpdateDataBytes(data);
+            headerLength = (2 + IDlength);
+            UpdateDataBytes(packet);
         }
     }
 
@@ -55,12 +57,12 @@ public class NetworkMessage
     }
 
     //updates the bytes that represent the raw datatype given a full packet of data
-    public void UpdateDataBytes(byte[] data)
+    public void UpdateDataBytes(byte[] packet)
     {
-        this.data = new byte[headerLength];
-        for (int i = 0; i < data.Length - headerLength; i++)
+        data = new byte[packet.Length - headerLength];
+        for (int i = 0; i < data.Length; i++)
         {
-            this.data[i] = data[i + headerLength];
+            data[i] = packet[i + headerLength];
         }
     }
 
@@ -84,5 +86,10 @@ public class NetworkMessage
             nt.data[i] = data[i];
         }
         return nt;
+    }
+
+    public override string ToString()
+    { 
+        return "Network Message: dataType:[" + dataType.ToString() + "] ID:[" + ID + "] data:\n" + BitConverter.ToString(data);
     }
 }

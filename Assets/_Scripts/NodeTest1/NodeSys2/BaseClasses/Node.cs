@@ -8,10 +8,15 @@ namespace nodeSys2
 {
     public class Node
     {
+        public delegate void NetworkDelagate(NetworkMessage message);
         public delegate void FloatDelagate(float num);
         [JsonIgnore]
         //Frame delagate is a delage that belongs to all nodes. It is called each frame by whatever host is currently running the graph. 
         public static FloatDelagate frameDelagate;
+
+        [JsonIgnore]
+        //Frame delagate is a delage that belongs to all nodes. It is called each frame by whatever host is currently running the graph. 
+        public static NetworkDelagate nodeNetDelagate;
 
         //GUI info
         public float xPos, yPos;
@@ -141,6 +146,13 @@ namespace nodeSys2
         //called on every "frame" if running in unity these frames are called each unity frame. 
         //If running standalone then a main class will invoke on a while loop. In order for this to work Base.Init must be called at some point to register the node
         public virtual void Frame(float deltaTime)
+        {
+
+        }
+
+        //gets registered with the network receive delagate. This will be called each time data from the network is received. It's up to each node to 
+        //decide if they want to use the data or not
+        public virtual void ReceiveData(NetworkMessage message)
         {
 
         }
