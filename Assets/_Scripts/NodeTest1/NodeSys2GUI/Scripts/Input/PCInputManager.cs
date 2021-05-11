@@ -13,7 +13,7 @@ public class PCInputManager : MonoBehaviour
             GlobalInputDelagates.InvokeScroll(scroll);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftShift)) && Input.GetKeyDown(KeyCode.A))
         {
             GlobalInputDelagates.InvokeOpenMenu();
         }

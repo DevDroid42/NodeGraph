@@ -27,21 +27,21 @@ public class netReceiveNode : Node
     }
 
     public override void ReceiveData(NetworkMessage message)
-    {        
-        //to string will convert to the int representations of the enum
-        switch (dataType.GetData().ToString())
+    {
+        if (message.ID == ((StringData)ID.GetData()).txt && message.dataType == (NetworkMessage.DataType)dataType.GetData())
         {
-            case "0"://Value
-            case "Value":
-                output.Invoke(new EvaluableFloat(ByteConverter.GetInt(message.data)));
-                break;
-            default:
-                Debug.LogWarning("Invalid data type received with ID of " + message.ID);
-                break;
-        }
-        if (message.ID == ((StringData)ID.GetData()).txt)
-        {
-            //Debug.Log("Message ID match found: " + message);
+            //string value = dataType.GetData().ToString();
+            switch ((NetworkMessage.DataType)dataType.GetData())
+            {
+                case NetworkMessage.DataType.Value:
+                    output.Invoke(new EvaluableFloat(ByteConverter.GetInt(message.data)));
+                    break;
+                default:
+                    Debug.LogWarning("Invalid data type received with ID of " + message.ID);
+                    break;
+            }
+
+
         }
 
     }

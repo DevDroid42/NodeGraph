@@ -11,6 +11,8 @@ using System.Threading;
 public class NodeNetReceive
 {
     NodeNetReceiveThreaded netThreadObj;
+    //List of addresses to send keep alive messages to.
+    private List<string> activeAdresses;
 
     public NodeNetReceive()
     {
@@ -62,20 +64,33 @@ public class NodeNetReceiveThreaded
             byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
             lock (msgLock)
             {
-                NetworkMessage receivedMsg = new NetworkMessage(receiveBytes, RemoteIpEndPoint.Address.ToString());
-                if (messageQueue.Count == 0)
+                bool messageReceived = true;
+                NetworkMessage receivedMsg = null;
+                //if there is an error parsing don't add to queue
+                try
                 {
-                    messageQueue.Add(receivedMsg);
+                    receivedMsg = new NetworkMessage(receiveBytes, RemoteIpEndPoint.Address.ToString());
+                }catch(Exception e)
+                {
+                    Debug.LogWarning("Error Receiving NetworkMessage:" + e);
+                    messageReceived = false;
                 }
-                for (int i = 0; i < messageQueue.Count; i++)
+                if (messageReceived)
                 {
-                    if (receivedMsg.CompareHeader(messageQueue[i]))
-                    {
-                        messageQueue[i].UpdateDataBytes(receiveBytes);
-                    }
-                    else
+                    if (messageQueue.Count == 0)
                     {
                         messageQueue.Add(receivedMsg);
+                    }
+                    for (int i = 0; i < messageQueue.Count; i++)
+                    {
+                        if (receivedMsg.CompareHeader(messageQueue[i]))
+                        {
+                            messageQueue[i].UpdateDataBytes(receiveBytes);
+                        }
+                        else
+                        {
+                            messageQueue.Add(receivedMsg);
+                        }
                     }
                 }
             }
