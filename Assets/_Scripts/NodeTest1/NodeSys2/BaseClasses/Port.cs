@@ -5,19 +5,15 @@ using UnityEngine;
 
 namespace nodeSys2
 {
+    //the purpose of the port class is 
     public class Port
     {
         //used for sending data between ports and properties
-        public delegate void PortDelagate(object data);
+        private delegate void PortDelagate(object data);
 
-        //this delagate is used to invoke method calls in nodes as well as other connected ports
+        //this delagate is used to pass data between ports
         [JsonIgnore]
-        public PortDelagate portDel;
-
-        //used to notify node when data has arrived
-        public delegate void NodeDelagate();
-        [JsonIgnore]
-        public NodeDelagate nodeDel;
+        private PortDelagate portDel;
 
         //used to save the reference to the port that last connected
         [JsonProperty(IsReference = true)]
@@ -28,14 +24,28 @@ namespace nodeSys2
         //used to track if there an existing connection to prevent multiple connections to the same port                
         private bool connected = false;
 
+        //the reference to the property that this port is atatched to
+        private Property property;
+
         public bool IsConnected()
         {
             return connected;
         }
 
-        public Port()
+        public void SetupRefs(Property property)
         {
-            
+            this.property = property;
+        }
+
+        [JsonConstructor]
+        private Port()
+        {
+
+        }
+
+        public Port(Property property)
+        {
+            this.property = property;
         }
 
         //Connects another ports output to this ports input. Ports can only have one input source but can 
@@ -85,15 +95,11 @@ namespace nodeSys2
             }
         }
 
-        //this method is invoked from another connected port delagate. It then takes the data from that 
-        //delagate and invokes it's own delagate attaching it's index to be used for processing in nodes
+        //this method is invoked from another connected port delagate. This means data was received on an input port.
+        //we should send this data to the ports property.
         private void Handle(object data)
-        {
-            if (portDel != null)
-            {
-                portDel.Invoke(data);
-            }
-            nodeDel.Invoke();
+        {         
+            property.Handle(data);
         }
     }
 }

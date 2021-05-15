@@ -31,8 +31,9 @@ namespace nodeSys2
         //will determine the rect transform height
         public float height;
         //this port will be shown if the connectable flag is set to true.
-        //Something important to note: The index of this port will be used when routing the data back to this property
         public Port dataPort;
+        //a reference to the node this property is a part of
+        private Node node;        
         //this is the type that gates input. Data types that are not his type or a sublclass of said type will be regected from input
         //=====NOTE TO SELF====== type objects are problematic across threads - https://docs.microsoft.com/en-us/dotnet/api/system.type?view=net-5.0
         [JsonProperty] private Type gateType;
@@ -42,7 +43,7 @@ namespace nodeSys2
             get => disc;
             set
             {
-                //
+                
                 if (dataPort != null)
                 {
                     dataPort.portDisc = disc;
@@ -51,42 +52,40 @@ namespace nodeSys2
             }
         }
 
+        public void SetupRefs(Node node)
+        {
+            this.node = node;
+            dataPort.SetupRefs(this);
+        }
+       
         [JsonConstructor]
-        public Property()
+        private Property()
         {
 
         }
 
         public Property(Node nodeRef, string ID, bool isInput, bool connectable, object DefaultData, Type type)
         {
+            node = nodeRef;
             visible = true;
-            dataPort = new Port();
+            dataPort = new Port(this);
             dataPort.portDisc = ID;
             data = DefaultData;
             this.isInput = isInput;
             //NOTE: all output properties should be connectable
             this.connectable = connectable;
             this.ID = ID;
-            this.disc = ID;
+            disc = ID;
             gateType = type;
         }
 
-        //delagates can't be serialized so they need to be re-assigned here
-        public void Setup()
-        {
-            if (isInput)
-            {
-                //remove first because if it's not already there it doesn't do anything. 
-                dataPort.portDel -= Handle;
-                dataPort.portDel += Handle;
-            }
-        }
-
+        //this is called by the the data port object this property holds when it receives data
         public void Handle(object data)
         {
             if (Isa(data, gateType))
             {
                 this.data = data;
+                node.Handle();
             }
             else
             {
@@ -155,9 +154,9 @@ namespace nodeSys2
 
         public bool TryGetDataType<T>(ref T reference)
         {
-            if (data is T)
+            if (data is T t)
             {
-                reference = (T)data;
+                reference = t;
                 return true;
             }
             else

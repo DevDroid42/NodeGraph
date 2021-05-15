@@ -7,13 +7,12 @@ namespace nodeSys2
         public static JsonSerializerSettings settings = new JsonSerializerSettings
         {
             PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
             TypeNameHandling = TypeNameHandling.Auto,
         };
 
         public static string GraphToJson(Graph graph)
         {
-
-
             return JsonConvert.SerializeObject(graph, settings);
         }
 

@@ -10,6 +10,7 @@ using UnityEngine.Events;
 public class GUIGraph : MonoBehaviour
 {
     Graph nodeGraph;
+    public Camera cam;
     public Transform NodeParent;
     //reference to node prefab
     public GameObject baseNode;
@@ -263,6 +264,28 @@ public class GUIGraph : MonoBehaviour
         }
     }
 
+    private void CullNodes()
+    {
+        int marginX = cam.pixelWidth / 3;
+        int marginY = cam.pixelHeight / 3;
+        for (int i = 0; i < guiNodes.Count; i++)
+        {
+            Vector3[] corners = new Vector3[4];
+            guiNodes[i].GetComponent<RectTransform>().GetWorldCorners(corners);
+            bool inView = false;
+            for (int j = 0; j < corners.Length; j++)
+            {
+                Vector2 screenPos = cam.WorldToScreenPoint(corners[j]);
+                if (screenPos.x > 0 - marginX && screenPos.y > 0 - marginY && screenPos.x < cam.pixelWidth + marginX && screenPos.y < cam.pixelHeight + marginY)
+                {
+                    inView = true;
+                    break;
+                }
+            }
+            guiNodes[i].SetActive(inView);
+        }
+    }
+
 
     private void Update()
     {
@@ -270,6 +293,7 @@ public class GUIGraph : MonoBehaviour
         {
             Node.frameDelagate.Invoke(Time.deltaTime);
         }
+        CullNodes();
     }
 
     private void OnApplicationQuit()

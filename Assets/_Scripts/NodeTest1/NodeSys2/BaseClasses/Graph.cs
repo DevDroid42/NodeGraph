@@ -19,15 +19,7 @@ namespace nodeSys2
             }
             for (int i = 0; i < nodes.Count; i++)
             {
-                nodes[i].InitPorts();
-                for (int j = 0; j < nodes[i].inputs.Count; j++)
-                {
-                    nodes[i].inputs[j].dataPort.Reconnect();
-                }
-                for (int j = 0; j < nodes[i].outputs.Count; j++)
-                {
-                    nodes[i].outputs[j].dataPort.Reconnect();
-                }
+                nodes[i].InitProperties();                
             }
             for (int i = 0; i < nodes.Count; i++)
             {

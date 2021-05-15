@@ -55,17 +55,18 @@ namespace nodeSys2
 
         }
         
-        public void InitPorts()
+        //ensures that all ports delagates are connected to each other and references to parents are properly set
+        public void InitProperties()
         {
             for (int i = 0; i < inputs.Count; i++)
             {
-                inputs[i].Setup();
-                inputs[i].dataPort.nodeDel -= Handle;
-                inputs[i].dataPort.nodeDel += Handle;
+                inputs[i].SetupRefs(this);
+                inputs[i].dataPort.Reconnect();
             }
             for (int i = 0; i < outputs.Count; i++)
             {
-                outputs[i].Setup();
+                outputs[i].SetupRefs(this);
+                outputs[i].dataPort.Reconnect();
             }
         }
 
