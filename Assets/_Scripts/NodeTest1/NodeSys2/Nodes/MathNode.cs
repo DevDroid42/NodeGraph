@@ -64,7 +64,7 @@ public class MathNode : Node
             }
             catch (Exception e)
             {
-                Debug.LogError(e.ToString());
+                Debug.LogWarning(e.ToString());
                 status.SetData(new Message("Syntax Error"));
                 value = 0;
             }

@@ -31,6 +31,24 @@ namespace nodeSys2
         [JsonProperty] protected string nodeDisc;
 
         [JsonIgnore]public bool MarkedForDeletion = false;
+        //tracks if the handle method has already run this frame
+        [JsonIgnore] private bool hasRan = false;
+
+        //this method is called by input ports before they invoke portdel.
+        public bool Runnable()
+        {
+            //if it's already run then return false
+            if (hasRan)
+            {
+                return false;
+            }
+            else
+            {
+                //if it has yet to run mark as true and return true
+                hasRan = true;
+                return hasRan;
+            }
+        }
 
         public Node()
         {
@@ -60,7 +78,7 @@ namespace nodeSys2
             //this is done both to prevent accidental duplicates and duplicates from the constructor running on deserialization.
             if (inputs.TrueForAll(prop => prop.ID != ID))
             {
-                Property tempRef = new Property(ID, true, connectable, defaultData);
+                Property tempRef = new Property(this, ID, true, connectable, defaultData, typeof(object));
                 inputs.Add(tempRef);
                 return tempRef;
             }
@@ -75,7 +93,7 @@ namespace nodeSys2
         {
             if (inputs.TrueForAll(prop => prop.ID != ID))
             {
-                Property tempRef = new Property(ID, true, connectable, defaultData, type);
+                Property tempRef = new Property(this, ID, true, connectable, defaultData, type);
                 inputs.Add(tempRef);
                 return tempRef;
             }
@@ -90,7 +108,7 @@ namespace nodeSys2
         {
             if (outputs.TrueForAll(prop => prop.ID != ID))
             {
-                Property tempRef = new Property(ID, false, true, null);
+                Property tempRef = new Property(this, ID, false, true, null, typeof(object));
                 outputs.Add(tempRef);
                 return tempRef;
             }

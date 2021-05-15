@@ -15,15 +15,15 @@ namespace nodeSys2
 
         //string identifier for lookups
         public string ID;
-        //data that gets returned
+        //data that gets returned. This needs to be locked for thread safety
         [JsonProperty]
         private object data;
         //Determines whether the port is input or output
         public bool isInput;
         //data discription. This will be used for port and editor discriptions. If not provided it will fallback to the ID
-        [JsonProperty]private string disc;
+        [JsonProperty] private string disc;
         //Determines if this property has a port
-        [JsonProperty]private bool connectable;
+        [JsonProperty] private bool connectable;
         //determines if the property has an editor assigned to it
         public bool visible;
         //determines if editor is read only. Same as setting a viewable vs constant in old system
@@ -57,7 +57,7 @@ namespace nodeSys2
 
         }
 
-        public Property(string ID, bool isInput, bool connectable, object DefaultData)
+        public Property(Node nodeRef, string ID, bool isInput, bool connectable, object DefaultData, Type type)
         {
             visible = true;
             dataPort = new Port();
@@ -68,12 +68,6 @@ namespace nodeSys2
             this.connectable = connectable;
             this.ID = ID;
             this.disc = ID;
-            //by default allow all data types into the node
-            gateType = typeof(object);
-        }
-
-        public Property(string ID, bool isInput, bool connectable, object DefaultData, Type type) : this(ID, isInput, connectable, DefaultData)
-        {
             gateType = type;
         }
 
@@ -90,7 +84,7 @@ namespace nodeSys2
 
         public void Handle(object data)
         {
-            if (isa(data, gateType))
+            if (Isa(data, gateType))
             {
                 this.data = data;
             }
@@ -100,7 +94,7 @@ namespace nodeSys2
                     + gateType.Name + ") Instead got: (" + data.GetType().Name + ")");
             }
         }
-        private bool isa(object data, Type type)
+        private bool Isa(object data, Type type)
         {
             return data.GetType() == type || data.GetType().IsSubclassOf(type);
         }
@@ -112,7 +106,7 @@ namespace nodeSys2
                 Debug.LogWarning("Attempted to invoke on an input property. This won't do anything as input ports don't send data anywhere.");
             }
             else
-            {                
+            {
                 dataPort.Invoke(data);
             }
         }
