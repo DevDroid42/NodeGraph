@@ -88,8 +88,6 @@ public class GUINode : MonoBehaviour
 
     private void SetupProperties()
     {
-        float minHeight = 0;
-
         int connectableCount = 0;
         //get the amount if connectable input properties exist. 
         for (int i = 0; i < nodeRef.inputs.Count; i++)
@@ -108,18 +106,14 @@ public class GUINode : MonoBehaviour
         createPorts(nodeRef.inputs, inputPorts, PropHolder, true);
 
         void createPorts(List<Property> properties, GameObject[] gameObjects, Transform portHolder, bool isInput)
-        {
-            float position = 0;
+        {            
             int index = 0;
             for (int i = 0; i < properties.Count; i++)
             {
                 if (properties[i].GetConnectable())
                 {
                     properties[i].interactable = !properties[i].IsConnected();
-                    GameObject port = Instantiate(ConnectablePortBase, portHolder);
-                    RectTransform rt = port.GetComponent<RectTransform>();
-                    position = -index * (rt.rect.height - 2) - 15;
-                    //rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, position, rt.rect.height);
+                    GameObject port = Instantiate(ConnectablePortBase, portHolder);                    
                     
                     gameObjects[index] = port;
                     GUIPort guiPort = gameObjects[index].GetComponentInChildren<GUIPort>();
@@ -127,13 +121,16 @@ public class GUINode : MonoBehaviour
                     guiPort.GUIGraphRef = GUIGraphRef;
                     guiPort.GUINodeRef = this;
                     guiPort.inputPort = isInput;
+                    //if it is an input setup the editor. However, outputs don't have editors so don't otherwise
                     if (properties[i].isInput)
                     {
                         editorManager.SetupEditor(properties[i], port.transform.GetChild(0));
                     }
                     else
                     {
+                        //this enables the text because that's all outputs have
                         port.transform.GetChild(1).gameObject.SetActive(true);
+                        //This destroys the editor portion of property because it is an output
                         Destroy(port.transform.GetChild(0).gameObject);                        
                     }
                     index++;
@@ -144,18 +141,8 @@ public class GUINode : MonoBehaviour
                     editorManager.SetupEditor(properties[i], holder.transform.GetChild(0));
                 }
             }
-                        
-            //add some padding
-            position -= 45f;
-            position = 0 - position;
-            if(position > minHeight)
-            {
-                //Debug.Log("position: " + position);
-                minHeight = position;
-            }
             
-        }
-        minSize =  new Vector2(20, minHeight);
+        }        
     }
 
     private void SetupNodeData()
