@@ -27,6 +27,18 @@ namespace nodeSys2
             }
         }
 
+        public void UpdateGraph(float deltaTime)
+        {
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                nodes[i].ResetRunnable();
+            }
+            if (Node.frameDelagate != null)
+            {
+                Node.frameDelagate.Invoke(deltaTime);
+            }
+        }
+
         //handles shutting down threads and cleaning up data
         public void StopGraph()
         {

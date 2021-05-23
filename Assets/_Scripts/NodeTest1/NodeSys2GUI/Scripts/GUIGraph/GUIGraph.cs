@@ -289,10 +289,9 @@ public class GUIGraph : MonoBehaviour
 
     private void Update()
     {
-        if (Node.frameDelagate != null)
-        {
-            Node.frameDelagate.Invoke(Time.deltaTime);
-        }
+        //float time = Time.realtimeSinceStartup;
+        nodeGraph.UpdateGraph(Time.deltaTime);
+        //Debug.Log("Compute time: " + (Time.realtimeSinceStartup - time));
         CullNodes();
     }
 

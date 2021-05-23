@@ -50,6 +50,11 @@ namespace nodeSys2
             }
         }
 
+        public void ResetRunnable()
+        {
+            hasRan = false;
+        }
+
         public Node()
         {
 

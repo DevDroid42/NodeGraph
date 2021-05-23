@@ -85,7 +85,10 @@ namespace nodeSys2
             if (Isa(data, gateType))
             {
                 this.data = data;
-                node.Handle();
+                if (node.Runnable())
+                {
+                    node.Handle();
+                }
             }
             else
             {
