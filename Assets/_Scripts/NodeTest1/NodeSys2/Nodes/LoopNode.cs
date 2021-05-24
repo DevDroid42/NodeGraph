@@ -43,8 +43,7 @@ public class LoopNode : Node
         {
             current = min;
         }
-        output.Invoke(new EvaluableFloat(current));
-        output.Disc = "output: " + current;
+        output.Invoke(new EvaluableFloat(current));       
     }
 
     private void processData()
