@@ -15,9 +15,9 @@ public class GUINode : MonoBehaviour
     //reference to port prefab    
     public GameObject ConnectablePortBase;
     public Transform PropHolder;
-    public GameObject[] inputPorts;    
+    public GameObject[] inputPorts;
     public GameObject[] outputPorts;
-   
+
     public EditorManager editorManager;
 
     public Vector2 minSize;
@@ -32,17 +32,17 @@ public class GUINode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(rect.sizeDelta.x < minSize.x)
+        if (rect.sizeDelta.x < minSize.x)
         {
             rect.sizeDelta = new Vector2(minSize.x, rect.sizeDelta.y);
         }
-        if(rect.sizeDelta.y < minSize.y)
+        if (rect.sizeDelta.y < minSize.y)
         {
             rect.sizeDelta = new Vector2(rect.sizeDelta.x, minSize.y);
         }
@@ -53,7 +53,7 @@ public class GUINode : MonoBehaviour
     {
         GUIGraphRef = graphRef;
         nodeRef = node;
-        transform.localPosition = new Vector3(nodeRef.xPos, nodeRef.yPos, 0f);           
+        transform.localPosition = new Vector3(nodeRef.xPos, nodeRef.yPos, 0f);
         nodeTitle.text = nodeRef.GetName();
         SetupProperties();
         SetupNodeData();
@@ -62,20 +62,14 @@ public class GUINode : MonoBehaviour
 
     public void DeleteNode()
     {
-        for (int i = 0; i < nodeRef.inputs.Count; i++)
-        {
-            //this will clear all delagates pointing towards this node to avoid delagates pointing to null function locations
-            nodeRef.inputs[i].dataPort.Disconnect();
-            nodeRef.CleanUp();
-        }
-        nodeRef.MarkedForDeletion = true;
+        nodeRef.Delete();
         GUIGraph.updateGraphGUI.Invoke();
     }
 
     private void SetupScale()
     {
         Vector2 size = new Vector2(minSize.x, minSize.y);
-        if(nodeRef.xScale > minSize.x)
+        if (nodeRef.xScale > minSize.x)
         {
             size.x = nodeRef.xScale;
         }
@@ -106,15 +100,15 @@ public class GUINode : MonoBehaviour
         createPorts(nodeRef.inputs, inputPorts, PropHolder, true);
 
         void createPorts(List<Property> properties, GameObject[] gameObjects, Transform portHolder, bool isInput)
-        {            
+        {
             int index = 0;
             for (int i = 0; i < properties.Count; i++)
             {
                 if (properties[i].GetConnectable())
                 {
                     properties[i].interactable = !properties[i].IsConnected();
-                    GameObject port = Instantiate(ConnectablePortBase, portHolder);                    
-                    
+                    GameObject port = Instantiate(ConnectablePortBase, portHolder);
+
                     gameObjects[index] = port;
                     GUIPort guiPort = gameObjects[index].GetComponentInChildren<GUIPort>();
                     guiPort.portRef = properties[i].dataPort;
@@ -131,7 +125,7 @@ public class GUINode : MonoBehaviour
                         //this enables the text because that's all outputs have
                         port.transform.GetChild(1).gameObject.SetActive(true);
                         //This destroys the editor portion of property because it is an output
-                        Destroy(port.transform.GetChild(0).gameObject);                        
+                        Destroy(port.transform.GetChild(0).gameObject);
                     }
                     index++;
                 }
@@ -141,8 +135,16 @@ public class GUINode : MonoBehaviour
                     editorManager.SetupEditor(properties[i], holder.transform.GetChild(0));
                 }
             }
-            
-        }        
+
+        }
+    }
+
+    public void SetSelected(bool selectionState)
+    {
+        if(nodeRef != null)
+        {
+            nodeRef.selected = selectionState;
+        }
     }
 
     private void SetupNodeData()

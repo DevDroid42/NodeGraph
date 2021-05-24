@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -15,6 +16,10 @@ public class Draggable : MonoBehaviour
      , IPointerEnterHandler
      , IPointerExitHandler
 {
+    [Serializable]
+    public class BoolEvent : UnityEvent<bool>
+    {
+    }
 
     private Image image;
     private Sprite initalSprite;
@@ -25,6 +30,7 @@ public class Draggable : MonoBehaviour
     public Color defaultColor;
     public Color selectedColor;
     public ChildColorSetter childrenColor;
+    public BoolEvent selectionChanged;
     private bool selected = false;
     //list of all other draggable items
     private static List<Draggable> draggables;
@@ -131,7 +137,7 @@ public class Draggable : MonoBehaviour
             }
             else
             {
-                Select();
+                Select();                
             }
 
             dragged = false;
@@ -164,16 +170,18 @@ public class Draggable : MonoBehaviour
         {
             childrenColor.SetColor(selectedColor);
         }
+        selectionChanged.Invoke(selected);
     }
 
     public void Deselect()
-    {
+    {        
         selected = false;
         image.color = defaultColor;
         if (childrenColor != null)
         {
             childrenColor.SetColor(defaultColor);
         }
+        selectionChanged.Invoke(selected);
     }
 
     private void Delete()

@@ -9,7 +9,8 @@ using UnityEngine.Events;
 
 public class GUIGraph : MonoBehaviour
 {
-    Graph nodeGraph;
+    Graph graphRef;
+    GraphCopyPaste graphClipboard;
     public Camera cam;
     public Transform NodeParent;
     //reference to node prefab
@@ -38,7 +39,8 @@ public class GUIGraph : MonoBehaviour
             updateGraphGUI = new UnityEvent();
             updateGraphGUI.AddListener(UpdateGUI);
         }
-        nodeGraph = new Graph();
+        graphClipboard = new GraphCopyPaste();
+        graphRef = new Graph();
         undoRedo = GetComponent<UndoRedo>();
         UpdateGUI();
     }
@@ -55,7 +57,7 @@ public class GUIGraph : MonoBehaviour
 
     public void CreateNewGraph()
     {
-        nodeGraph = new Graph();
+        graphRef = new Graph();
         UpdateGUI();
         undoRedo.ClearHistory();
         ActionPreformed();
@@ -63,7 +65,7 @@ public class GUIGraph : MonoBehaviour
 
     public void SetGraph(string _graphJSON)
     {
-        nodeGraph = GraphSerialization.JsonToGraph(_graphJSON);
+        graphRef = GraphSerialization.JsonToGraph(_graphJSON);
         UpdateGUI();
         undoRedo.ClearHistory();
         ActionPreformed();
@@ -71,29 +73,29 @@ public class GUIGraph : MonoBehaviour
 
     public void SetGraph(Graph graph)
     {
-        nodeGraph = graph;
+        graphRef = graph;
         undoRedo.ClearHistory();
         ActionPreformed();
     }
 
     public void ActionPreformed()
     {
-        GraphChanged.Invoke(GraphSerialization.GraphToJson(nodeGraph));
+        GraphChanged.Invoke(GraphSerialization.GraphToJson(graphRef));
     }
 
     public void PrintJson()
     {
-        Debug.Log(GraphSerialization.GraphToJson(nodeGraph));
+        Debug.Log(GraphSerialization.GraphToJson(graphRef));
     }
 
     public string GetGraphJson()
     {
-        return GraphSerialization.GraphToJson(nodeGraph);
+        return GraphSerialization.GraphToJson(graphRef);
     }
 
     public void AddNode(NodeRegistration.NodeTypes nodeType)
     {
-        nodeGraph.nodes.Add(NodeRegistration.GetNode(nodeType));
+        graphRef.nodes.Add(NodeRegistration.GetNode(nodeType));
         ActionPreformed();
         UpdateGUI();
     }
@@ -101,7 +103,7 @@ public class GUIGraph : MonoBehaviour
     public void UpdateGUI()
     {
         VerifyNodes();
-        nodeGraph.InitGraph();
+        graphRef.InitGraph();
         for (int i = 0; i < guiNodes.Count; i++)
         {
             Destroy(guiNodes[i]);
@@ -109,17 +111,17 @@ public class GUIGraph : MonoBehaviour
         guiNodes.Clear();
 
 
-        for (int i = 0; i < nodeGraph.nodes.Count; i++)
+        for (int i = 0; i < graphRef.nodes.Count; i++)
         {
             GameObject node = Instantiate(baseNode, NodeParent);
             node.SetActive(true);
-            node.GetComponent<GUINode>().SetupNode(nodeGraph.nodes[i], this);
+            node.GetComponent<GUINode>().SetupNode(graphRef.nodes[i], this);
             Draggable draggable = node.GetComponent<Draggable>();
             draggable.defaultColor = DefaultColor;
             draggable.selectedColor = SelectedColor;
             guiNodes.Add(node);
         }
-        MakeConnections();        
+        MakeConnections();
     }
 
     public List<GameObject> lines = new List<GameObject>();
@@ -138,17 +140,17 @@ public class GUIGraph : MonoBehaviour
         Port outPort, inPort;
 
         //go through all nodes
-        for (int i = 0; i < nodeGraph.nodes.Count; i++)
+        for (int i = 0; i < graphRef.nodes.Count; i++)
         {
             //go through all of each nodes input ports
-            for (int j = 0; j < nodeGraph.nodes[i].inputs.Count; j++)
+            for (int j = 0; j < graphRef.nodes[i].inputs.Count; j++)
             {
                 //check if the port has a connection
-                if (nodeGraph.nodes[i].inputs[j].dataPort.IsConnected())
+                if (graphRef.nodes[i].inputs[j].dataPort.IsConnected())
                 {
                     //if it does store the reference to the port and it's connection
-                    inPort = nodeGraph.nodes[i].inputs[j].dataPort;
-                    outPort = nodeGraph.nodes[i].inputs[j].dataPort.connectedPort;
+                    inPort = graphRef.nodes[i].inputs[j].dataPort;
+                    outPort = graphRef.nodes[i].inputs[j].dataPort.connectedPort;
                     //save the reference to the GUIPortHolders
                     GUIPortHolder portHolder1 = findGUI(inPort).GetComponent<GUIPortHolder>();
                     inPortGO = portHolder1.Port;
@@ -226,15 +228,15 @@ public class GUIGraph : MonoBehaviour
     private void VerifyNodes()
     {
 
-        nodeGraph.nodes.RemoveAll(_node => _node.MarkedForDeletion);
+        graphRef.nodes.RemoveAll(_node => _node.MarkedForDeletion);
 
-        for (int i = 0; i < nodeGraph.nodes.Count; i++)
+        for (int i = 0; i < graphRef.nodes.Count; i++)
         {
-            for (int j = 0; j < nodeGraph.nodes[i].inputs.Count; j++)
+            for (int j = 0; j < graphRef.nodes[i].inputs.Count; j++)
             {
-                if (!PortExistsInNodeGraph(nodeGraph.nodes[i].inputs[j].dataPort.connectedPort))
+                if (!PortExistsInNodeGraph(graphRef.nodes[i].inputs[j].dataPort.connectedPort))
                 {
-                    nodeGraph.nodes[i].inputs[j].dataPort.Disconnect();
+                    graphRef.nodes[i].inputs[j].dataPort.Disconnect();
                 }
             }
         }
@@ -243,11 +245,11 @@ public class GUIGraph : MonoBehaviour
         //Check for a reference to the same port in the nodeSys node list. If one exists then the port hasn't been deleted
         bool PortExistsInNodeGraph(Port port)
         {
-            for (int i = 0; i < nodeGraph.nodes.Count; i++)
+            for (int i = 0; i < graphRef.nodes.Count; i++)
             {
-                for (int j = 0; j < nodeGraph.nodes[i].outputs.Count; j++)
+                for (int j = 0; j < graphRef.nodes[i].outputs.Count; j++)
                 {
-                    if (nodeGraph.nodes[i].outputs[j].dataPort == port)
+                    if (graphRef.nodes[i].outputs[j].dataPort == port)
                         return true;
                 }
             }
@@ -259,14 +261,14 @@ public class GUIGraph : MonoBehaviour
     {
         GUINode guiNode = node.GetComponent<GUINode>();
         RectTransform rt = node.GetComponent<RectTransform>();
-        for (int i = 0; i < nodeGraph.nodes.Count; i++)
+        for (int i = 0; i < graphRef.nodes.Count; i++)
         {
-            if (guiNode.nodeRef == nodeGraph.nodes[i])
+            if (guiNode.nodeRef == graphRef.nodes[i])
             {
-                nodeGraph.nodes[i].xPos = rt.localPosition.x;
-                nodeGraph.nodes[i].yPos = rt.localPosition.y;
-                nodeGraph.nodes[i].xScale = rt.sizeDelta.x;
-                nodeGraph.nodes[i].yScale = rt.sizeDelta.y;
+                graphRef.nodes[i].xPos = rt.localPosition.x;
+                graphRef.nodes[i].yPos = rt.localPosition.y;
+                graphRef.nodes[i].xScale = rt.sizeDelta.x;
+                graphRef.nodes[i].yScale = rt.sizeDelta.y;
             }
         }
     }
@@ -297,14 +299,43 @@ public class GUIGraph : MonoBehaviour
     private void Update()
     {
         //float time = Time.realtimeSinceStartup;
-        nodeGraph.UpdateGraph(Time.deltaTime);
+        graphRef.UpdateGraph(Time.deltaTime);
         //Debug.Log("Compute time: " + (Time.realtimeSinceStartup - time));
         CullNodes();
+    }
+    private void Copy()
+    {
+        graphClipboard.Copy(graphRef);
+    }
+
+    private void Cut()
+    {
+        graphClipboard.Cut(graphRef);
+        UpdateGUI();
+    }
+
+    private void Paste()
+    {
+        graphClipboard.Paste(graphRef);
+        UpdateGUI();
     }
 
     private void OnApplicationQuit()
     {
-        nodeGraph.StopGraph();
+        graphRef.StopGraph();
+    }
+    private void OnEnable()
+    {
+        GlobalInputDelagates.Copy += Copy;
+        GlobalInputDelagates.Paste += Paste;
+        GlobalInputDelagates.Cut += Cut;
+    }
+
+    private void OnDisable()
+    {
+        GlobalInputDelagates.Copy -= Copy;
+        GlobalInputDelagates.Paste -= Paste;
+        GlobalInputDelagates.Cut -= Cut;
     }
 }
 

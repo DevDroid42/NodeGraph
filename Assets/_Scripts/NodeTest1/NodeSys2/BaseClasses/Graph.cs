@@ -1,5 +1,6 @@
 ﻿using nodeSys2;
 using System.Collections.Generic;
+using UnityEngine;
 using Newtonsoft.Json;
 
 namespace nodeSys2
@@ -7,7 +8,7 @@ namespace nodeSys2
     public class Graph
     {
 
-        public List<Node> nodes = new List<Node>();
+        public List<Node> nodes = new List<Node>();        
         public static NodeNetReceive nodeNetReceiver;
 
         //to be used after loading from json
@@ -38,6 +39,33 @@ namespace nodeSys2
                 Node.frameDelagate.Invoke(deltaTime);
             }
         }
+
+        //appends nodes from another graph to this graph. Shared references between graphs will not be appended.
+        //should this graph share references to another graph a warning will be printed.
+        public void MergeGraph(Graph otherGraph)
+        {
+            //because we are changing the size of an array while looping it we get the initial count first and only check that
+            //this means we assume the other graph argument does not have any duplicate references in its node list
+            int initalCount = nodes.Count;
+            for (int otherIndex = 0; otherIndex < otherGraph.nodes.Count; otherIndex++)
+            {
+                bool referenceFound = false;
+                for (int thisIndex = 0; thisIndex < initalCount; thisIndex++)
+                {
+                    if(nodes[thisIndex] == otherGraph.nodes[otherIndex])
+                    {
+                        referenceFound = true;
+                        Debug.LogWarning("Duplicate reference found on graph merge. Multiple of discription: " + otherGraph.nodes[otherIndex].nodeDisc);
+                        break;
+                    }
+                }
+                if (!referenceFound)
+                {
+                    nodes.Add(otherGraph.nodes[otherIndex]);
+                }
+            }
+        }
+
 
         //handles shutting down threads and cleaning up data
         public void StopGraph()

@@ -28,7 +28,9 @@ namespace nodeSys2
 
 
         //the node discription for identification in JSON and GUI 
-        [JsonProperty] protected string nodeDisc;
+        [JsonProperty] public string nodeDisc;
+
+        [JsonIgnore] public bool selected = false;
 
         [JsonIgnore]public bool MarkedForDeletion = false;
         //tracks if the handle method has already run this frame
@@ -53,6 +55,17 @@ namespace nodeSys2
         public void ResetRunnable()
         {
             hasRan = false;
+        }
+
+        public void Delete()
+        {
+            for (int i = 0; i < inputs.Count; i++)
+            {
+                //this will clear all delagates pointing towards this node to avoid delagates pointing to null function locations
+                inputs[i].dataPort.Disconnect();
+                CleanUp();
+            }
+            MarkedForDeletion = true;
         }
 
         public Node()

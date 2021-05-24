@@ -62,7 +62,37 @@ public class PCInputManager : MonoBehaviour
         if(Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
         {
             //doing unity's job for them
-            if (!Application.isEditor)
+            if (Application.isEditor)
+            {
+                //this is stupid and unity devs are incompetent
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    GlobalInputDelagates.InvokeUndo();
+                }
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    GlobalInputDelagates.InvokeRedo();
+                }
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    GlobalInputDelagates.InvokeSave();
+                }
+                if (Input.GetKeyDown(KeyCode.End))
+                {
+                    GlobalInputDelagates.InvokeCut();
+                }
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    Debug.Log("Copy");
+                    GlobalInputDelagates.InvokeCopy();
+                }
+                if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    Debug.Log("paste");
+                    GlobalInputDelagates.InvokePaste();
+                }
+            }
+            else
             {
                 if (Input.GetKeyDown(KeyCode.Z))
                 {
@@ -76,22 +106,19 @@ public class PCInputManager : MonoBehaviour
                 {
                     GlobalInputDelagates.InvokeSave();
                 }
-            }
-            else
-            {
-                //this is stupid and unity devs are incompetent
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
-                {                    
-                    GlobalInputDelagates.InvokeUndo();
-                }
-                if (Input.GetKeyDown(KeyCode.RightArrow))
+                if (Input.GetKeyDown(KeyCode.C))
                 {
-                    GlobalInputDelagates.InvokeRedo();
+                    GlobalInputDelagates.InvokeCopy();
                 }
-                if (Input.GetKeyDown(KeyCode.A))
+                if (Input.GetKeyDown(KeyCode.X))
                 {
-                    GlobalInputDelagates.InvokeSave();
+                    GlobalInputDelagates.InvokeCut();
                 }
+                if (Input.GetKeyDown(KeyCode.V))
+                {
+                    GlobalInputDelagates.InvokePaste();
+                }
+
             }
         }
     }

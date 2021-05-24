@@ -20,6 +20,9 @@ public class GlobalInputDelagates
     public static TriggerDel Undo;
     public static TriggerDel Redo;
     public static TriggerDel Save;
+    public static TriggerDel Copy;
+    public static TriggerDel Cut;
+    public static TriggerDel Paste;
 
     public static void InvokeScroll(float val)
     {
@@ -113,6 +116,29 @@ public class GlobalInputDelagates
         if (Save != null)
         {
             Save.Invoke();
+        }
+    }
+
+    public static void InvokeCopy()
+    {
+        if (Copy != null)
+        {
+            Copy.Invoke();
+        }
+    }
+    public static void InvokeCut()
+    {
+        if (Cut != null)
+        {
+            Cut.Invoke();
+        }
+    }
+
+    public static void InvokePaste()
+    {
+        if (Paste != null)
+        {
+            Paste.Invoke();
         }
     }
 
