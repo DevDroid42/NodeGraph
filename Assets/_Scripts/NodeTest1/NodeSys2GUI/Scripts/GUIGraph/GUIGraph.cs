@@ -69,6 +69,13 @@ public class GUIGraph : MonoBehaviour
         ActionPreformed();
     }
 
+    public void SetGraph(Graph graph)
+    {
+        nodeGraph = graph;
+        undoRedo.ClearHistory();
+        ActionPreformed();
+    }
+
     public void ActionPreformed()
     {
         GraphChanged.Invoke(GraphSerialization.GraphToJson(nodeGraph));
@@ -112,7 +119,7 @@ public class GUIGraph : MonoBehaviour
             draggable.selectedColor = SelectedColor;
             guiNodes.Add(node);
         }
-        MakeConnections();
+        MakeConnections();        
     }
 
     public List<GameObject> lines = new List<GameObject>();

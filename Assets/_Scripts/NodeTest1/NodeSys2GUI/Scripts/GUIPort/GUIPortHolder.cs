@@ -14,6 +14,7 @@ public class GUIPortHolder : MonoBehaviour
     void Start()
     {
         SetupPortPos();
+        PortDisc.text = guiPort.portRef.portDisc;
     }
 
     public void SetupPortPos()
@@ -30,8 +31,7 @@ public class GUIPortHolder : MonoBehaviour
         {
             rt.anchorMin = new Vector2(1, 0.5f);
             rt.anchorMax = new Vector2(1, 0.5f);
-        }
-        PortDisc.text = guiPort.portRef.portDisc;
+        }        
     }
 
 
