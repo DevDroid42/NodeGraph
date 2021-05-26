@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class NodeRegistration
 {
-    public enum NodeTypes {floatConst, add, Viewer, loop, ColorConst, ColorTable, Transform , LED, Math, NetReceive}
+    public enum NodeTypes {floatConst, add, Viewer, loop, ColorConst, ColorTable, Transform , LED, Math, NetReceive, GroupInput, GroupOutput, Group}
 
     public static Node GetNode(NodeTypes type)
     {
@@ -29,6 +29,12 @@ public class NodeRegistration
                 return new MathNode(true);
             case NodeTypes.NetReceive:
                 return new netReceiveNode(true);
+            case NodeTypes.GroupInput:
+                return new GroupInputNode(true);
+            case NodeTypes.GroupOutput:
+                return new GroupOutputNode(true);
+            case NodeTypes.Group:
+                return new GroupNode(true);
             default:
                 return null;
 

@@ -12,12 +12,10 @@ public class GraphCopyPaste
     {
         //temporary graph that will only contain selected nodes from 
         Graph graph = new Graph();
-        for (int i = 0; i < copyFromGraph.nodes.Count; i++)
+        List<Node> selectedNodes = copyFromGraph.getSelectedNodes();
+        for (int i = 0; i < selectedNodes.Count; i++)
         {
-            if (copyFromGraph.nodes[i].selected)
-            {
-                graph.nodes.Add(copyFromGraph.nodes[i]);
-            }
+            graph.nodes.Add(selectedNodes[i]);
         }
         Clipboard = GraphSerialization.GraphToJson(graph);
     }
@@ -25,12 +23,10 @@ public class GraphCopyPaste
     public void Cut(Graph cutFromGraph)
     {
         Copy(cutFromGraph);
-        for (int i = 0; i < cutFromGraph.nodes.Count; i++)
+        List<Node> selectedNodes = cutFromGraph.getSelectedNodes();
+        for (int i = 0; i < selectedNodes.Count; i++)
         {
-            if (cutFromGraph.nodes[i].selected)
-            {
-                cutFromGraph.nodes[i].Delete();
-            }
+            selectedNodes[i].Delete();
         }
     }
 

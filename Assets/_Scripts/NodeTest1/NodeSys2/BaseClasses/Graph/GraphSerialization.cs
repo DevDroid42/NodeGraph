@@ -9,10 +9,11 @@ namespace nodeSys2
             PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
             TypeNameHandling = TypeNameHandling.Auto,
+            DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate
         };
 
         public static string GraphToJson(Graph graph)
-        {
+        {            
             return JsonConvert.SerializeObject(graph, settings);
         }
 

@@ -23,6 +23,7 @@ public class GlobalInputDelagates
     public static TriggerDel Copy;
     public static TriggerDel Cut;
     public static TriggerDel Paste;
+    public static TriggerDel Group;
 
     public static void InvokeScroll(float val)
     {
@@ -139,6 +140,14 @@ public class GlobalInputDelagates
         if (Paste != null)
         {
             Paste.Invoke();
+        }
+    }
+
+    public static void InvokeGroup()
+    {
+        if(Group != null)
+        {
+            Group.Invoke();
         }
     }
 

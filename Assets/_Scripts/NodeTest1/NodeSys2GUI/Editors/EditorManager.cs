@@ -72,6 +72,10 @@ public class EditorManager : MonoBehaviour
             }
 
         }
+        else
+        {
+            EditorHolder.parent.gameObject.SetActive(false);
+        }
 
     }
 

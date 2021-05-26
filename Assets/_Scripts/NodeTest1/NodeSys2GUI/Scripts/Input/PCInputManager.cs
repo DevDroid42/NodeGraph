@@ -59,6 +59,11 @@ public class PCInputManager : MonoBehaviour
             GlobalInputDelagates.InvokePan();
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            GlobalInputDelagates.InvokeGroup();
+        }
+
         if(Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
         {
             //doing unity's job for them

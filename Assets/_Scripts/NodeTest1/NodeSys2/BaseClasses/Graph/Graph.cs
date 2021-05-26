@@ -40,6 +40,19 @@ namespace nodeSys2
             }
         }
 
+        public List<Node> getSelectedNodes()
+        {
+            List<Node> selectedNodes = new List<Node>();
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if (nodes[i].selected)
+                {
+                    selectedNodes.Add(nodes[i]);
+                }
+            }
+            return selectedNodes;
+        }
+
         //appends nodes from another graph to this graph. Shared references between graphs will not be appended.
         //should this graph share references to another graph a warning will be printed.
         public void MergeGraph(Graph otherGraph)

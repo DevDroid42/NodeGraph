@@ -24,6 +24,8 @@ public class GUIGraph : MonoBehaviour
     public Color DefaultColor;
     public Color SelectedColor;
 
+    //used for keeping track of graphs when groups are present
+    private List<Graph> openedGraphs = new List<Graph>();
     private UndoRedo undoRedo;
 
     [Serializable]
@@ -48,8 +50,6 @@ public class GUIGraph : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
         //UpdateGUI();
         //graph = new Graph();
         //ActionPreformed();
@@ -58,6 +58,7 @@ public class GUIGraph : MonoBehaviour
     public void CreateNewGraph()
     {
         graphRef = new Graph();
+        openedGraphs.Clear();
         UpdateGUI();
         undoRedo.ClearHistory();
         ActionPreformed();
@@ -72,8 +73,9 @@ public class GUIGraph : MonoBehaviour
     }
 
     public void SetGraph(Graph graph)
-    {
+    {        
         graphRef = graph;
+        UpdateGUI();
         undoRedo.ClearHistory();
         ActionPreformed();
     }
@@ -101,7 +103,7 @@ public class GUIGraph : MonoBehaviour
     }
 
     public void UpdateGUI()
-    {
+    {        
         VerifyNodes();
         graphRef.InitGraph();
         for (int i = 0; i < guiNodes.Count; i++)
@@ -320,6 +322,24 @@ public class GUIGraph : MonoBehaviour
         UpdateGUI();
     }
 
+    //opens selected group node in graph
+    private void OpenCloseGroup()
+    {
+        List<Node> selectedNodes = graphRef.getSelectedNodes();
+        if(selectedNodes.Count == 1)
+        {
+            if(selectedNodes[0] is GroupNode groupNode)
+            {
+                openedGraphs.Add(graphRef);
+                SetGraph(groupNode.graph);
+            }
+        }else if(selectedNodes.Count == 0 && openedGraphs.Count > 0)
+        {
+            SetGraph(openedGraphs[openedGraphs.Count - 1]);
+            openedGraphs.RemoveAt(openedGraphs.Count - 1);
+        }
+    }
+
     private void OnApplicationQuit()
     {
         graphRef.StopGraph();
@@ -329,6 +349,7 @@ public class GUIGraph : MonoBehaviour
         GlobalInputDelagates.Copy += Copy;
         GlobalInputDelagates.Paste += Paste;
         GlobalInputDelagates.Cut += Cut;
+        GlobalInputDelagates.Group += OpenCloseGroup;
     }
 
     private void OnDisable()
@@ -336,6 +357,7 @@ public class GUIGraph : MonoBehaviour
         GlobalInputDelagates.Copy -= Copy;
         GlobalInputDelagates.Paste -= Paste;
         GlobalInputDelagates.Cut -= Cut;
+        GlobalInputDelagates.Group -= OpenCloseGroup;
     }
 }
 
