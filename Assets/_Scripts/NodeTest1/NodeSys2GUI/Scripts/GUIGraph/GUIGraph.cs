@@ -361,18 +361,17 @@ public class GUIGraph : MonoBehaviour
     }
 
     //opens selected group node in graph
-    private void OpenCloseGroup()
+    public void OpenGroup(Node _groupNode)
     {
-        List<Node> selectedNodes = graphRef.getSelectedNodes();
-        if (selectedNodes.Count == 1)
+        if (_groupNode is GroupNode groupNode)
         {
-            if (selectedNodes[0] is GroupNode groupNode)
-            {
-                openedGraphs.Add(graphRef);
-                SetGraph(groupNode.graph);
-            }
+            openedGraphs.Add(graphRef);
+            SetGraph(groupNode.graph);
         }
-        else if (selectedNodes.Count == 0 && openedGraphs.Count > 0)
+    }
+    private void CloseGroup()
+    {
+        if (openedGraphs.Count > 0)
         {
             SetGraph(openedGraphs[openedGraphs.Count - 1]);
             openedGraphs.RemoveAt(openedGraphs.Count - 1);
@@ -389,7 +388,7 @@ public class GUIGraph : MonoBehaviour
         GlobalInputDelagates.Copy += Copy;
         GlobalInputDelagates.Paste += Paste;
         GlobalInputDelagates.Cut += Cut;
-        GlobalInputDelagates.Group += OpenCloseGroup;
+        GlobalInputDelagates.escape += CloseGroup;
     }
 
     private void OnDisable()
@@ -397,7 +396,7 @@ public class GUIGraph : MonoBehaviour
         GlobalInputDelagates.Copy -= Copy;
         GlobalInputDelagates.Paste -= Paste;
         GlobalInputDelagates.Cut -= Cut;
-        GlobalInputDelagates.Group -= OpenCloseGroup;
+        GlobalInputDelagates.escape -= CloseGroup;
     }
 }
 

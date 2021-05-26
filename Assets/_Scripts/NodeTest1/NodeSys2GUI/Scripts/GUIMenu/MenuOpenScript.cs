@@ -9,16 +9,6 @@ public class MenuOpenScript : MonoBehaviour
 
     private bool state = false;
 
-    private void OnEnable()
-    {
-        GlobalInputDelagates.escape += ToggleMenu;
-    }
-
-    private void OnDisable()
-    {
-        GlobalInputDelagates.escape += ToggleMenu;
-    }
-
     public void ToggleMenu()
     {
         state = !state;

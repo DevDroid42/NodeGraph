@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 991714245944141789}
   - component: {fileID: 7612211311326727730}
   - component: {fileID: 2763552184636446459}
+  - component: {fileID: 7460115019356849684}
   - component: {fileID: 3616983801571319748}
   - component: {fileID: 1553126815066110273}
   m_Layer: 5
@@ -185,6 +186,38 @@ MonoBehaviour:
       - m_Target: {fileID: 991714245944141789}
         m_MethodName: SetSelected
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7460115019356849684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865325845636846421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e6d2674972cf544c81d41540ecde676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  SingleClick:
+    m_PersistentCalls:
+      m_Calls: []
+  DoubleClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 991714245944141789}
+        m_MethodName: OpenGroup
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

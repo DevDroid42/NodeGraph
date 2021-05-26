@@ -147,6 +147,11 @@ public class GUINode : MonoBehaviour
         }
     }
 
+    public void OpenGroup()
+    {
+        GUIGraphRef.OpenGroup(nodeRef);
+    }
+
     private void SetupNodeData()
     {
         //editorManager.SetupEditor(nodeRef.inputs);
