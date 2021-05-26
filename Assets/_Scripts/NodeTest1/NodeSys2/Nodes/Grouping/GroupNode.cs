@@ -21,6 +21,9 @@ public class GroupNode : Node
 
     public override void Init()
     {
+        frameDelagate -= Frame;
+        frameDelagate += Frame;
+
         groupOutDelegate = new GroupOutputNode.GroupOutDelegate(GroupOutHandler);
         group = new Group(graph, groupOutDelegate);
         SetupProperties();
@@ -88,6 +91,11 @@ public class GroupNode : Node
             }
         }
 
+    }
+
+    public override void Frame(float deltaTime)
+    {
+        graph.UpdateGraph();
     }
 
 }

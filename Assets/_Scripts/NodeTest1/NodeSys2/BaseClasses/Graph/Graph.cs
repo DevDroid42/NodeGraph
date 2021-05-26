@@ -28,15 +28,11 @@ namespace nodeSys2
             }
         }
 
-        public void UpdateGraph(float deltaTime)
+        public void UpdateGraph()
         {
             for (int i = 0; i < nodes.Count; i++)
             {
                 nodes[i].ResetRunnable();
-            }
-            if (Node.frameDelagate != null)
-            {
-                Node.frameDelagate.Invoke(deltaTime);
             }
         }
 

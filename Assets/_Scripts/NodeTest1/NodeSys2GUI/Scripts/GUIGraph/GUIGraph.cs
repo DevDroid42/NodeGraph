@@ -11,6 +11,7 @@ public class GUIGraph : MonoBehaviour
 {
     Graph graphRef;
     GraphCopyPaste graphClipboard;
+    public GraphDepthIndicator indicator;
     public Camera cam;
     public Transform NodeParent;
     //reference to node prefab
@@ -103,7 +104,8 @@ public class GUIGraph : MonoBehaviour
     }
 
     public void UpdateGUI()
-    {        
+    {
+        indicator.SetIndicator(openedGraphs.Count);
         VerifyNodes();
         graphRef.InitGraph();
         for (int i = 0; i < guiNodes.Count; i++)
@@ -300,8 +302,15 @@ public class GUIGraph : MonoBehaviour
 
     private void Update()
     {
-        //float time = Time.realtimeSinceStartup;
-        graphRef.UpdateGraph(Time.deltaTime);
+        foreach (Graph graph in openedGraphs)
+        {
+            graph.UpdateGraph();
+        }
+        graphRef.UpdateGraph();
+        if (Node.frameDelagate != null)
+        {
+            Node.frameDelagate.Invoke(Time.deltaTime);
+        }
         //Debug.Log("Compute time: " + (Time.realtimeSinceStartup - time));
         CullNodes();
     }
@@ -331,12 +340,13 @@ public class GUIGraph : MonoBehaviour
             if(selectedNodes[0] is GroupNode groupNode)
             {
                 openedGraphs.Add(graphRef);
-                SetGraph(groupNode.graph);
+                SetGraph(groupNode.graph);                
             }
         }else if(selectedNodes.Count == 0 && openedGraphs.Count > 0)
         {
             SetGraph(openedGraphs[openedGraphs.Count - 1]);
             openedGraphs.RemoveAt(openedGraphs.Count - 1);
+            indicator.SetIndicator(openedGraphs.Count);
         }
     }
 
