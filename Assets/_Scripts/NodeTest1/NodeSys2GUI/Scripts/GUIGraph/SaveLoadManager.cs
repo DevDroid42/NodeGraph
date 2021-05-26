@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using nodeSys2;
 using Newtonsoft.Json;
 using SFB;
 using UnityEngine;
@@ -47,6 +48,7 @@ public class SaveLoadManager : MonoBehaviour
         GlobalInputDelagates.Save -= SaveProject;
     }
 
+    //saves last saved root project
     public void SaveProject()
     {
         if (currentPath == "")
@@ -56,20 +58,29 @@ public class SaveLoadManager : MonoBehaviour
         else
         {
             Debug.Log("Overwrite saving at: " + currentPath);
-            File.WriteAllText(currentPath, guiGraph.GetGraphJson());
+            File.WriteAllText(currentPath, guiGraph.GetRootGraphJson());
         }
         globalData.AddRecentlyOpened(currentPath);
         SaveGlobalData();
     }
 
+    //saves root node graph
     public void SaveAs()
     {
         string path = StandaloneFileBrowser.SaveFilePanel("Save File", "", "", "Json");
-        File.WriteAllText(path, guiGraph.GetGraphJson());
+        File.WriteAllText(path, guiGraph.GetRootGraphJson());
         Debug.Log("Creating new save at: " + path);
         currentPath = path;
         globalData.AddRecentlyOpened(currentPath);
         SaveGlobalData();
+    }
+
+    //used to save node groups
+    public void SaveCurrentGraph()
+    {
+        string path = StandaloneFileBrowser.SaveFilePanel("Save File", "", "", "Json");
+        File.WriteAllText(path, guiGraph.GetCurrentJson());
+        Debug.Log("Creating new save at: " + path);        
     }
 
     public void OpenProject()
@@ -86,11 +97,22 @@ public class SaveLoadManager : MonoBehaviour
         SaveGlobalData();
     }
 
+    public void AppendProject()
+    {
+        string[] paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "Json", false);
+        string json = "";
+        if (paths.Length > 0)
+        {
+            json = File.ReadAllText(paths[0]);
+        }
+        guiGraph.AppendGraph(GraphSerialization.JsonToGraph(json));
+    }
+
     private void OpenProject(string json)
     {
         if (json != "")
         {
-            guiGraph.SetGraph(json);
+            guiGraph.SetRootGraph(GraphSerialization.JsonToGraph(json));
         }
         else
         {

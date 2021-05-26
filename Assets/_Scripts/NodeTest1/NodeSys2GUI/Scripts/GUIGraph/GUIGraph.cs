@@ -9,9 +9,9 @@ using UnityEngine.Events;
 
 public class GUIGraph : MonoBehaviour
 {
-    Graph graphRef;
-    GraphCopyPaste graphClipboard;
-    public GraphDepthIndicator indicator;
+    [Serializable]
+    public class IntEvent : UnityEvent<int> { }
+    public IntEvent groupDepthChanged;
     public Camera cam;
     public Transform NodeParent;
     //reference to node prefab
@@ -25,6 +25,9 @@ public class GUIGraph : MonoBehaviour
     public Color DefaultColor;
     public Color SelectedColor;
 
+
+    private Graph graphRef;
+    private GraphCopyPaste graphClipboard;
     //used for keeping track of graphs when groups are present
     private List<Graph> openedGraphs = new List<Graph>();
     private UndoRedo undoRedo;
@@ -58,23 +61,38 @@ public class GUIGraph : MonoBehaviour
 
     public void CreateNewGraph()
     {
-        graphRef = new Graph();
+        SetRootGraph(new Graph());
         openedGraphs.Clear();
         UpdateGUI();
         undoRedo.ClearHistory();
         ActionPreformed();
     }
 
-    public void SetGraph(string _graphJSON)
+    public void SetRootGraph(Graph graph)
     {
-        graphRef = GraphSerialization.JsonToGraph(_graphJSON);
+        //if we are already at root just set the current graph ref to graph
+        if (openedGraphs.Count == 0)
+        {
+            graphRef = graph;
+        }
+        else //otherwise get the root graph and set that
+        {
+            openedGraphs[0] = graph;
+        }
+        openedGraphs.Clear();
         UpdateGUI();
         undoRedo.ClearHistory();
         ActionPreformed();
     }
 
+    //appends nodes from one graph to the current graphRef
+    public void AppendGraph(Graph graph)
+    {
+        graphRef.MergeGraph(graph);
+    }
+
     public void SetGraph(Graph graph)
-    {        
+    {
         graphRef = graph;
         UpdateGUI();
         undoRedo.ClearHistory();
@@ -91,7 +109,18 @@ public class GUIGraph : MonoBehaviour
         Debug.Log(GraphSerialization.GraphToJson(graphRef));
     }
 
-    public string GetGraphJson()
+    public string GetRootGraphJson()
+    {
+        if (openedGraphs.Count == 0)
+        {
+            return GraphSerialization.GraphToJson(graphRef);
+        }
+        else
+        {
+            return GraphSerialization.GraphToJson(openedGraphs[0]);
+        }
+    }
+    public string GetCurrentJson()
     {
         return GraphSerialization.GraphToJson(graphRef);
     }
@@ -105,7 +134,7 @@ public class GUIGraph : MonoBehaviour
 
     public void UpdateGUI()
     {
-        indicator.SetIndicator(openedGraphs.Count);
+        groupDepthChanged.Invoke(openedGraphs.Count);
         VerifyNodes();
         graphRef.InitGraph();
         for (int i = 0; i < guiNodes.Count; i++)
@@ -335,18 +364,19 @@ public class GUIGraph : MonoBehaviour
     private void OpenCloseGroup()
     {
         List<Node> selectedNodes = graphRef.getSelectedNodes();
-        if(selectedNodes.Count == 1)
+        if (selectedNodes.Count == 1)
         {
-            if(selectedNodes[0] is GroupNode groupNode)
+            if (selectedNodes[0] is GroupNode groupNode)
             {
                 openedGraphs.Add(graphRef);
-                SetGraph(groupNode.graph);                
+                SetGraph(groupNode.graph);
             }
-        }else if(selectedNodes.Count == 0 && openedGraphs.Count > 0)
+        }
+        else if (selectedNodes.Count == 0 && openedGraphs.Count > 0)
         {
             SetGraph(openedGraphs[openedGraphs.Count - 1]);
             openedGraphs.RemoveAt(openedGraphs.Count - 1);
-            indicator.SetIndicator(openedGraphs.Count);
+            groupDepthChanged.Invoke(openedGraphs.Count);
         }
     }
 

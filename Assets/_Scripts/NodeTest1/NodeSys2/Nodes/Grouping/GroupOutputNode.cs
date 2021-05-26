@@ -21,7 +21,14 @@ public class GroupOutputNode : Node, INameable
 
     public override void Handle()
     {
-        outDel.Invoke(input.GetData(), getName());
+        if (outDel != null)
+        {
+            outDel.Invoke(input.GetData(), getName());
+        }
+        else
+        {
+            Debug.Log("Group Output node: " + getName() +  " delegate is null");
+        }
     }
 
     public string getName()
