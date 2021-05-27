@@ -44,7 +44,10 @@ public class GroupNode : Node
     {
         foreach (Property prop in groupInputs)
         {
-            group.PublishToGraph(prop.ID , prop.GetData());
+            if (group != null)
+            {
+                group.PublishToGraph(prop.ID, prop.GetData());
+            }
         }
     }
 
