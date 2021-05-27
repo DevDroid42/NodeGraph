@@ -5,6 +5,7 @@ using nodeSys2;
 using Newtonsoft.Json;
 using SFB;
 using UnityEngine;
+using System;
 
 public class SaveLoadManager : MonoBehaviour
 {
@@ -68,8 +69,16 @@ public class SaveLoadManager : MonoBehaviour
     public void SaveAs()
     {
         string path = StandaloneFileBrowser.SaveFilePanel("Save File", "", "", "Json");
-        File.WriteAllText(path, guiGraph.GetRootGraphJson());
-        Debug.Log("Creating new save at: " + path);
+        try
+        {
+            File.WriteAllText(path, guiGraph.GetRootGraphJson());
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Error Writing File: " + e.ToString());
+            return;
+        }
+        Debug.Log("Created new save at: " + path);
         currentPath = path;
         globalData.AddRecentlyOpened(currentPath);
         SaveGlobalData();
@@ -79,17 +88,30 @@ public class SaveLoadManager : MonoBehaviour
     public void SaveCurrentGraph()
     {
         string path = StandaloneFileBrowser.SaveFilePanel("Save File", "", "", "Json");
-        File.WriteAllText(path, guiGraph.GetCurrentJson());
-        Debug.Log("Creating new save at: " + path);        
+        try
+        {
+            File.WriteAllText(path, guiGraph.GetCurrentJson());
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Error Writing File: " + e.ToString());
+            return;
+        }
+        Debug.Log("Created new save at: " + path);
     }
 
     public void OpenProject()
     {
         string[] paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "Json", false);
-        string json = "";
-        if (paths.Length > 0)
+        string json;
+        try
         {
             json = File.ReadAllText(paths[0]);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Error opening File: " + e.ToString());
+            return;
         }
         OpenProject(json);
         currentPath = paths[0];
@@ -100,10 +122,15 @@ public class SaveLoadManager : MonoBehaviour
     public void AppendProject()
     {
         string[] paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "Json", false);
-        string json = "";
-        if (paths.Length > 0)
+        string json;
+        try
         {
             json = File.ReadAllText(paths[0]);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Error Writing File: " + e.ToString());
+            return;
         }
         guiGraph.AppendGraph(GraphSerialization.JsonToGraph(json));
     }

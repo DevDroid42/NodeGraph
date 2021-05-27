@@ -89,6 +89,8 @@ public class GUIGraph : MonoBehaviour
     public void AppendGraph(Graph graph)
     {
         graphRef.MergeGraph(graph);
+        UpdateGUI();
+        ActionPreformed();
     }
 
     public void SetGraph(Graph graph)
