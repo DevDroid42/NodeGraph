@@ -25,10 +25,6 @@ public class GroupOutputNode : Node, INameable
         {
             outDel.Invoke(input.GetData(), getName());
         }
-        else
-        {
-            Debug.Log("Group Output node: " + getName() +  " delegate is null");
-        }
     }
 
     public string getName()

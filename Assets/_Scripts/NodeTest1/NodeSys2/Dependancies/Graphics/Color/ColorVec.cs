@@ -1,6 +1,7 @@
 ﻿
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using UnityEngine;
 using System;
 
 public class ColorVec
@@ -43,6 +44,50 @@ public class ColorVec
         this.aw = A;
     }
 
+    public void SetComponent(int i, float comp)
+    {
+        switch (i)
+        {
+            case 0:
+                rx = comp;
+                break;
+            case 1:
+                gy = comp;
+                break;
+            case 2:
+                bz = comp;
+                break;
+            case 3:
+                aw = comp;
+                break;
+            default:
+                Debug.LogWarning("Invalid vector compoent: " + i);
+                break;
+        }
+    }
+
+    public float getComponent(int i)
+    {
+        switch (i)
+        {
+            case 0:
+                return rx;
+
+            case 1:
+                return gy;
+
+            case 2:
+                return bz;
+
+            case 3:
+                return aw;
+
+            default:
+                Debug.LogWarning("Invalid vector compoent: " + i);
+                return 0;
+        }
+    }
+
     public ColorVec GetCopy()
     {
         ColorVec temp = new ColorVec();
@@ -68,7 +113,7 @@ public class ColorVec
     public static ColorVec operator +(ColorVec color1, ColorVec color2) =>
        ColorOperations.ClampColor(new ColorVec(color1.rx + color2.rx, color1.gy + color2.gy, color1.bz + color2.bz, color1.aw + color2.aw));
 
-    public static ColorVec operator -(ColorVec color1, ColorVec color2) => 
+    public static ColorVec operator -(ColorVec color1, ColorVec color2) =>
         ColorOperations.ClampColor(new ColorVec(color1.rx - color2.rx, color1.gy - color2.gy, color1.bz - color2.bz, color1.aw - color2.aw));
 
 
@@ -145,7 +190,7 @@ public class ColorOperations
 
         // compute v 
         float v = cmax * 100;
-        return new ColorVec(h/255f, s/255f, v/255f);
+        return new ColorVec(h / 255f, s / 255f, v / 255f);
     }
 
     public static ColorVec HsvToRgb(ColorVec hsvData)

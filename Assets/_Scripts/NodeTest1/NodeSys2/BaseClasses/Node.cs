@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace nodeSys2
 {
-    public class Node
+    public abstract class Node
     {
         public delegate void NetworkDelagate(NetworkMessage message);
         public delegate void FloatDelagate(float num);

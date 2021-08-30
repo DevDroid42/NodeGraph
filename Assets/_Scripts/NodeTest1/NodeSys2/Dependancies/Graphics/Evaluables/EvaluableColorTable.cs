@@ -115,7 +115,8 @@ public class EvaluableColorTable : Evaluable
 
     public override ColorVec EvaluateColor(float x, float y, float z, float w)
     {
-        x = Translate(x);
+        //x = Translate(x);
+        x = TransformVector(new ColorVec(x, y, z, w)).rx;
         switch (clipType)
         {
             case ClippingMode.tile:
@@ -165,7 +166,8 @@ public class EvaluableColorTable : Evaluable
 
     public override float EvaluateValue(float x, float y, float z, float w)
     {
-        x = Translate(x);
+        //x = Translate(x);
+        x = TransformVector(new ColorVec(x, y, z, w)).rx;
         return (float)EvaluateColor(x, 0, 0, 0);
     }
 

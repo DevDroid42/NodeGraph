@@ -33,8 +33,20 @@
 
     //to be used for vector transformations in subclasses
     protected ColorVec TransformVector(ColorVec vector)
-    {
-        //NOT IMPLEMENTED
-        return new ColorVec(0, 0, 0, 0);
+    {        
+        for (int i = 0; i < 4; i++)
+        {
+            if (scale.getComponent(i) == 0)
+            {
+                vector.SetComponent(i, 0.00001f);
+                continue;
+            }
+            //transform the vector by the global offset
+            vector.SetComponent(i, vector.getComponent(i) - globalOffset.getComponent(i));
+            float pivotVal = pivot.getComponent(i);
+            vector.SetComponent(i, (vector.getComponent(i) - pivotVal) * 1 / scale.getComponent(i) + pivotVal);
+            vector.SetComponent(i, vector.getComponent(i) - localOffset.getComponent(i));
+        }
+        return vector;
     }
 }
