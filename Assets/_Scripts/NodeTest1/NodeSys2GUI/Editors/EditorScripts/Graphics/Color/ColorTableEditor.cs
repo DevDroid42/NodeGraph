@@ -37,7 +37,7 @@ public class ColorTableEditor : EditorBase
 
                         for (int i = 0; i < tex.width; i++)
                         {
-                            ColorVec col = testTable.EvaluateColor((float)i / tex.width, 0, 0, 0);
+                            ColorVec col = testTable.EvaluateColor((float)i / tex.width);
                             //Debug.Log(col);
                             tex.SetPixel(i, 0, new Color(col.rx, col.gy, col.bz, col.aw));
                         }

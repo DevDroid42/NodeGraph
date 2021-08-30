@@ -31,7 +31,7 @@ public class ColorEditor : EditorBase
         {
             case Evaluable data:
                 {
-                    colorVecRef = data.EvaluateColor(0,0,0,0);
+                    colorVecRef = data.EvaluateColor(0);
                     break;
                 }
 

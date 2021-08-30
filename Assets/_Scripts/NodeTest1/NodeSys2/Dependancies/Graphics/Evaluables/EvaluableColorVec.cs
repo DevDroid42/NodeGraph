@@ -26,12 +26,12 @@ public class EvaluableColorVec : Evaluable
         this.colorVec = colorVec;
     }
 
-    public override ColorVec EvaluateColor(float x, float y, float z, float w)
+    public override ColorVec EvaluateColor(ColorVec vector)
     {
         return colorVec;
     }
 
-    public override float EvaluateValue(float x, float y, float z, float w)
+    public override float EvaluateValue(ColorVec vector)
     {
         return (float)colorVec;
     }

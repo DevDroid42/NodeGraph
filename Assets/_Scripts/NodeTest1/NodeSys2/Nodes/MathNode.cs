@@ -31,7 +31,7 @@ public class MathNode : Node
     public override void Init()
     {
         base.Init();
-        setRes = (int)((Evaluable)variableCount.GetData()).EvaluateValue(0, 0, 0, 0);
+        setRes = (int)((Evaluable)variableCount.GetData()).EvaluateValue(0);
         InsantiateEquation();
         ProcessRes();
         EquationOutput.Invoke(equation.GetCopy());
@@ -55,11 +55,11 @@ public class MathNode : Node
     {
         if (equation.ToString() != "")
         {
-            ColorVec localVector = ((Evaluable)vector.GetData()).EvaluateColor(0, 0, 0, 0);
+            ColorVec localVector = ((Evaluable)vector.GetData()).EvaluateColor(0);
             float value;
             try
             {
-                value = equation.EvaluateValue(localVector.rx, localVector.gy, localVector.bz, localVector.aw);
+                value = equation.EvaluateValue(localVector);
                 status.SetData(new Message("Evaluated: " + value));
             }
             catch (Exception e)

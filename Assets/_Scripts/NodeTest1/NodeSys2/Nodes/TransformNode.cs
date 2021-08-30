@@ -53,18 +53,18 @@ public class TransformNode : Node
         switch (setType)
         {
             case SetType.OverWrite:
-                data.localOffset = ((Evaluable)(localOffset.GetData())).EvaluateColor(0,0,0,0);
-                data.scale = ((Evaluable)(scale.GetData())).EvaluateColor(0,0,0,0);
-                data.pivot = ((Evaluable)(pivot.GetData())).EvaluateColor(0,0,0,0);
-                data.rot = ((Evaluable)(rot.GetData())).EvaluateColor(0,0,0,0);
-                data.globalOffset = ((Evaluable)(globalOffset.GetData())).EvaluateColor(0,0,0,0);
+                data.localOffset = ((Evaluable)(localOffset.GetData())).EvaluateColor(0);
+                data.scale = ((Evaluable)(scale.GetData())).EvaluateColor(0);
+                data.pivot = ((Evaluable)(pivot.GetData())).EvaluateColor(0);
+                data.rot = ((Evaluable)(rot.GetData())).EvaluateColor(0);
+                data.globalOffset = ((Evaluable)(globalOffset.GetData())).EvaluateColor(0);
                 break;
             case SetType.Add:
-                data.localOffset += ((Evaluable)(localOffset.GetData())).EvaluateColor(0,0,0,0);
-                data.scale += ((Evaluable)(scale.GetData())).EvaluateColor(0,0,0,0);
-                data.pivot += ((Evaluable)(pivot.GetData())).EvaluateColor(0, 0, 0, 0);
-                data.rot += ((Evaluable)(rot.GetData())).EvaluateColor(0, 0, 0, 0);
-                data.globalOffset += ((Evaluable)(globalOffset.GetData())).EvaluateColor(0, 0, 0, 0);
+                data.localOffset += ((Evaluable)(localOffset.GetData())).EvaluateColor(0);
+                data.scale += ((Evaluable)(scale.GetData())).EvaluateColor(0);
+                data.pivot += ((Evaluable)(pivot.GetData())).EvaluateColor(0);
+                data.rot += ((Evaluable)(rot.GetData())).EvaluateColor(0);
+                data.globalOffset += ((Evaluable)(globalOffset.GetData())).EvaluateColor(0);
                 break;
             case SetType.Subtract:
                 data.localOffset -= ((Evaluable)(localOffset.GetData())).localOffset;

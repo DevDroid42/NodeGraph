@@ -21,23 +21,23 @@ public class EvaluableCustomEquation : EvaluableEquation
         this.errorChecking = errorChecking;
     }
 
-    public override ColorVec EvaluateColor(float x, float y, float z, float w)
+    public override ColorVec EvaluateColor(ColorVec vector)
     {
-        return EvaluateValue(x, y, z, w);
+        return EvaluateValue(vector);
     }
 
-    public override float EvaluateValue(float x, float y, float z, float w)
+    public override float EvaluateValue(ColorVec vector)
     {
         for (int i = 0; i < variables.Length; i++)
         {
-            calc.variables[i] = variables[i].EvaluateValue(x, y, z, w);
+            calc.variables[i] = variables[i].EvaluateValue(vector);
         }
 
         if (errorChecking)
         {
             try
             {
-                return calc.Evaluate(x, y, z, w);
+                return calc.Evaluate(vector);
             }
             catch (System.Exception e)
             {
@@ -47,7 +47,7 @@ public class EvaluableCustomEquation : EvaluableEquation
         }
         else
         {
-            return calc.Evaluate(x, y, z, w);
+            return calc.Evaluate(vector);
         }
         
     }

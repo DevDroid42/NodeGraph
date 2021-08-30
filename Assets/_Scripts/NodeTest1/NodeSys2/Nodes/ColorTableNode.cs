@@ -34,7 +34,7 @@ public class ColorTableNode : Node
 
     private void ProcessRes()
     {
-        int setRes = (int)((Evaluable)resolution.GetData()).EvaluateValue(0, 0, 0, 0);
+        int setRes = (int)((Evaluable)resolution.GetData()).EvaluateValue(0);
         //if the set resoltion is different than the current one resize the list by either removing excess data
         //or adding new data
         if (colors.Count != setRes)
@@ -80,7 +80,7 @@ public class ColorTableNode : Node
         }
         for (int i = 0; i < colors.Count; i++)
         {
-            table.SetKey(i, ((Evaluable)colors[i].GetData()).EvaluateColor(0, 0, 0, 0));
+            table.SetKey(i, ((Evaluable)colors[i].GetData()).EvaluateColor(0));
         }        
     }
 

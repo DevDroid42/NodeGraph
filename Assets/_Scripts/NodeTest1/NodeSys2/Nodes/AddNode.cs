@@ -34,12 +34,12 @@ public class AddNode : Node
         Evaluable f = null;
         if (num1.TryGetDataType(ref f))
         {
-            float1 = f.EvaluateValue(0,0,0,0);
+            float1 = f.EvaluateValue(0);
         }
 
         if (num2.TryGetDataType(ref f))
         {
-            float2 = f.EvaluateValue(0,0,0,0);
+            float2 = f.EvaluateValue(0);
         }
     }
 

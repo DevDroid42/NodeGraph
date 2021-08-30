@@ -28,7 +28,7 @@ public class TextureTesting : MonoBehaviour
         Texture2D tex = new Texture2D(100, 1, TextureFormat.ARGB32, false);
         for (int i = 0; i < tex.width; i++)
         {
-            ColorVec col = testTable.EvaluateColor((float)i / tex.width + offset, 0, 0, 0);
+            ColorVec col = testTable.EvaluateColor((float)i / tex.width + offset);
             //Debug.Log(col);
             tex.SetPixel(i, 0, new Color(col.rx, col.gy, col.bz, col.aw));
         }

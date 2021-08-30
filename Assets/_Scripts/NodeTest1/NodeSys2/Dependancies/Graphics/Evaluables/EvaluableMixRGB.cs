@@ -28,12 +28,12 @@ public class EvaluableMixRGB : Evaluable
         elements.Add(element);
     }
 
-    public override ColorVec EvaluateColor(float x, float y, float z, float w)
+    public override ColorVec EvaluateColor(ColorVec vector)
     {        
-        return base.EvaluateColor(x, y, z, w);
+        return base.EvaluateColor(vector);
     }
 
-    public override float EvaluateValue(float x, float y, float z, float w)
+    public override float EvaluateValue(ColorVec vector)
     {
         return 0;
     }

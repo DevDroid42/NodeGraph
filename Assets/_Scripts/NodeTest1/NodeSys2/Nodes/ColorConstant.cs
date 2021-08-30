@@ -79,15 +79,15 @@ public class ColorConstant : Node
     private void ProcessColorChanges()
     {
         //if they are equal than the color picker hasn't been used. Set the color to be the floatInputs
-        if (((Evaluable)internalColor.GetData()).EvaluateColor(0, 0, 0, 0).Equals(internalColorDupe))
+        if (((Evaluable)internalColor.GetData()).EvaluateColor(0).Equals(internalColorDupe))
         {
             EvaluableColorVec proccesedColor = new EvaluableColorVec(ProcessData());
             internalColor.SetData(proccesedColor);
-            internalColorDupe = ((Evaluable)internalColor.GetData()).EvaluateColor(0, 0, 0, 0).GetCopy();
+            internalColorDupe = ((Evaluable)internalColor.GetData()).EvaluateColor(0).GetCopy();
         }
         else //the color has been changed by the picker. Chnage the float constants to match the internal color and reset the dupe
         {
-            internalColorDupe = ((Evaluable)internalColor.GetData()).EvaluateColor(0, 0, 0, 0).GetCopy();
+            internalColorDupe = ((Evaluable)internalColor.GetData()).EvaluateColor(0).GetCopy();
             alpha.SetData(new EvaluableFloat(internalColorDupe.aw));
             if (rgb)
             {                
@@ -110,7 +110,7 @@ public class ColorConstant : Node
     {
         EvaluableColorVec proccesedColor = new EvaluableColorVec(ProcessData());
         internalColor.SetData(proccesedColor);
-        internalColorDupe = ((Evaluable)internalColor.GetData()).EvaluateColor(0, 0, 0, 0).GetCopy();
+        internalColorDupe = ((Evaluable)internalColor.GetData()).EvaluateColor(0).GetCopy();
         ProcessColorChanges();
         internalColor.interactable = false;
         internalColor.Disc = "Color (Driven)";
@@ -126,7 +126,7 @@ public class ColorConstant : Node
         {
             if (floatInputs[i].TryGetDataType(ref c))
             {
-                floatBuffer[i] = c.EvaluateValue(0, 0, 0, 0);
+                floatBuffer[i] = c.EvaluateValue(0);
             }
             else
             {

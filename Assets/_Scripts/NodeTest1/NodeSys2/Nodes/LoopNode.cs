@@ -51,19 +51,19 @@ public class LoopNode : Node
         Evaluable data = new Evaluable();
         if (minP.TryGetDataType(ref data))
         {
-            min = data.EvaluateValue(0, 0, 0, 0);
+            min = data.EvaluateValue(0);
         }
         if (maxP.TryGetDataType(ref data))
         {
-            max = data.EvaluateValue(0, 0, 0, 0);
+            max = data.EvaluateValue(0);
         }
         if (rateP.TryGetDataType(ref data))
         {
-            rate = data.EvaluateValue(0, 0, 0, 0);
+            rate = data.EvaluateValue(0);
         }
         if (startP.TryGetDataType(ref data))
         {
-            start = data.EvaluateValue(0, 0, 0, 0);
+            start = data.EvaluateValue(0);
         }
     }
 

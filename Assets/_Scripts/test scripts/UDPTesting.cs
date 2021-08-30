@@ -73,9 +73,9 @@ public class UDPTesting : MonoBehaviour
         for (int i = 0; i < ledCount; i++)
         {
             message[2 + i * 4] = (byte)i;
-            message[3 + i * 4] = (byte)(colorData.EvaluateColor(((float)i / ledCount), 0, 0, 0).rx * 255);
-            message[4 + i * 4] = (byte)(colorData.EvaluateColor(((float)i / ledCount), 0, 0, 0).gy * 255);
-            message[5 + i * 4] = (byte)(colorData.EvaluateColor(((float)i / ledCount), 0, 0, 0).bz * 255);
+            message[3 + i * 4] = (byte)(colorData.EvaluateColor((float)i / ledCount).rx * 255);
+            message[4 + i * 4] = (byte)(colorData.EvaluateColor((float)i / ledCount).gy * 255);
+            message[5 + i * 4] = (byte)(colorData.EvaluateColor((float)i / ledCount).bz * 255);
         }
 
         return message;

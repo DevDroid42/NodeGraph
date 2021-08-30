@@ -8,12 +8,12 @@
     public ColorVec rot = 0;
     public ColorVec pivot = 0;    
 
-    public virtual ColorVec EvaluateColor(float x, float y, float z, float w)
+    public virtual ColorVec EvaluateColor(ColorVec vector)
     {
         return new ColorVec(0);
     }
 
-    public virtual float EvaluateValue(float x, float y, float z, float w)
+    public virtual float EvaluateValue(ColorVec vector)
     {
         return 0;
     }

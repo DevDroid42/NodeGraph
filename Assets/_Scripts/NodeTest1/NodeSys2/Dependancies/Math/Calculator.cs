@@ -44,12 +44,12 @@ public class Calculator
         return float.Parse(evaluator.Evaluate(subedExpression));
     }
 
-    public float Evaluate(float x, float y, float z, float w)
+    public float Evaluate(ColorVec vector)
     {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.w = w;
+        this.x = vector.rx;
+        this.y = vector.gy;
+        this.z = vector.bz;
+        this.w = vector.aw;
         string subedExpression = SubVariables(expression);
         string evaluated = evaluator.Evaluate(subedExpression);
         return float.Parse(evaluated);
