@@ -40,7 +40,7 @@ public class MathNode : Node
     {
         base.Init2();
         ValueOutput();
-        EquationOutput.Invoke(equation.GetCopy());        
+        EquationOutput.Invoke(equation);        
     }
 
     public override void Handle()
@@ -48,7 +48,7 @@ public class MathNode : Node
         InsantiateEquation();
         ValueOutput();
         ProcessRes();
-        EquationOutput.Invoke(equation.GetCopy());
+        EquationOutput.Invoke(equation);
     }
 
     private void InsantiateEquation()
