@@ -44,7 +44,7 @@ public class TransformNode : Node
     {
         base.Handle();
         ManipulateTransform();
-        output.Invoke(((Evaluable)inputData.GetData()).GetCopy());
+        output.Invoke(((Evaluable)inputData.GetData()));
     }
 
     private void ManipulateTransform()

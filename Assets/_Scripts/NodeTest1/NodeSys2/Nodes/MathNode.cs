@@ -33,9 +33,14 @@ public class MathNode : Node
         base.Init();
         setRes = (int)((Evaluable)variableCount.GetData()).EvaluateValue(0);
         InsantiateEquation();
-        ProcessRes();
-        EquationOutput.Invoke(equation.GetCopy());
+        ProcessRes();        
+    }
+
+    public override void Init2()
+    {
+        base.Init2();
         ValueOutput();
+        EquationOutput.Invoke(equation.GetCopy());        
     }
 
     public override void Handle()

@@ -71,9 +71,13 @@ public class ColorConstant : Node
         //if all inputs are dissconnected this flag will ensure that users can edit the color 
         internalColor.interactable = true;
         //when data comes in this will be set to "color(Driven)" so reset it here on run
-        internalColor.Disc = "Color";
+        internalColor.Disc = "Color";        
+    }
 
-        outputColor.Invoke(((Evaluable)(internalColor.GetData())).GetCopy());
+    public override void Init2()
+    {
+        base.Init2();
+        outputColor.Invoke(((Evaluable)(internalColor.GetData())));
     }
 
     private void ProcessColorChanges()

@@ -98,8 +98,15 @@ namespace nodeSys2
         //this method is invoked from another connected port delagate. This means data was received on an input port.
         //we should send this data to the ports property.
         private void Handle(object data)
-        {         
-            property.Handle(data);
+        {
+            if (data is Evaluable d)
+            {
+                property.Handle(d.GetCopy());
+            }
+            else
+            {
+                property.Handle(data);
+            }
         }
     }
 }

@@ -15,8 +15,9 @@ public class FloatConstant : Node
         output = CreateOutputProperty("numOut");
     }
 
-    public override void Init()
+    public override void Init2()
     {
-        output.Invoke(((Evaluable)constant.GetData()).GetCopy());
+        base.Init2();
+        output.Invoke((Evaluable)constant.GetData());
     }
 }

@@ -28,8 +28,13 @@ public class ColorTableNode : Node
         base.Init();
         ProcessRes();
         SetColors();
-        ProccessEnums();
-        output.Invoke(((Evaluable)colorTable.GetData()).GetCopy());
+        ProccessEnums();        
+    }
+
+    public override void Init2()
+    {
+        base.Init2();
+        output.Invoke((Evaluable)colorTable.GetData());
     }
 
     private void ProcessRes()

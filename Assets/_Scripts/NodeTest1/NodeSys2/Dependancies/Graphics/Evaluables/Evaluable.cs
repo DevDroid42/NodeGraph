@@ -1,4 +1,5 @@
-﻿public class Evaluable
+﻿using UnityEngine;
+public class Evaluable
 {
     //offset applied pre-scaling
     public ColorVec localOffset = 0;
@@ -28,6 +29,7 @@
     //node states and create problems
     public virtual Evaluable GetCopy()
     {
+        //Debug.LogWarning("WARNING: Using Default get copy, this should never be run");
         return new Evaluable();
     }
 

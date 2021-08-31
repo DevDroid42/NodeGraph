@@ -173,9 +173,16 @@ namespace nodeSys2
             return nodeDisc;
         }
 
-        //to be called on every node after all nodes are instantiated and connected. Usefull for sending constants down the graph
-        //on startup. 
+        //to be called on every node after all nodes are instantiated and connected. Outputs should never be invoked in init as
+        //it is not garanteed that all nodes downstream are initialized yet
         public virtual void Init()
+        {
+
+        }
+
+        //this init method runs after all nodes have had their init method run. This is useful for sending constants down the graph
+        //as all nodes are garanteed to be initialized. 
+        public virtual void Init2()
         {
 
         }

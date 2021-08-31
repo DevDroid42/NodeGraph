@@ -26,6 +26,10 @@ namespace nodeSys2
             {
                 nodes[i].Init();
             }
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                nodes[i].Init2();
+            }
         }
 
         public void UpdateGraph()

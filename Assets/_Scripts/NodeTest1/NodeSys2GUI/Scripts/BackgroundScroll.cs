@@ -22,7 +22,7 @@ public class BackgroundScroll : MonoBehaviour, IPointerClickHandler
     public UnityEvent OnTranslate;
 
     private void Awake()
-    {        
+    {
         Zoom(0);
     }
 
@@ -43,7 +43,7 @@ public class BackgroundScroll : MonoBehaviour, IPointerClickHandler
     private Vector2 initialCursorPos;
     private Vector3 initialObjectPos;
     private void PanStarted()
-    {        
+    {
         initialObjectPos = transform.position;
         initialCursorPos = RaycastPos();
     }
@@ -66,9 +66,13 @@ public class BackgroundScroll : MonoBehaviour, IPointerClickHandler
 
     void Zoom(float deltaZoom)
     {
+        /*    zoom = new Vector2(
+        transform.localScale.x + deltaZoom * Time.deltaTime * scrollSensitivity * zoom.x
+        , transform.localScale.y + deltaZoom * Time.deltaTime * scrollSensitivity * zoom.x);
+        */
         zoom = new Vector2(
-    transform.localScale.x + deltaZoom * Time.deltaTime * scrollSensitivity * zoom.x
-    , transform.localScale.y + deltaZoom * Time.deltaTime * scrollSensitivity * zoom.x);
+        transform.localScale.x + deltaZoom * 0.01f * scrollSensitivity * zoom.x
+        , transform.localScale.y + deltaZoom * 0.01f * scrollSensitivity * zoom.x);
         if (zoom.x > maxZoom)
         {
             zoom.x = maxZoom;
@@ -93,7 +97,7 @@ public class BackgroundScroll : MonoBehaviour, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            Draggable.DeselectAll();            
+            Draggable.DeselectAll();
         }
     }
 
@@ -109,10 +113,10 @@ public class BackgroundScroll : MonoBehaviour, IPointerClickHandler
         List<RaycastResult> results = new List<RaycastResult>();
 
         //Raycast using the Graphics Raycaster and mouse click position
-        raycaster.Raycast(eventData, results);       
+        raycaster.Raycast(eventData, results);
         //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
-        
-        if(results.Count > 0)
+
+        if (results.Count > 0)
         {
             return results[results.Count - 1].worldPosition;
         }

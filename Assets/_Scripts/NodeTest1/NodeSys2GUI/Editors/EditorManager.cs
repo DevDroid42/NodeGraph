@@ -48,6 +48,11 @@ public class EditorManager : MonoBehaviour
                         SetupEditor(Instantiate(ColorTableEditor, EditorHolder), props);
                         break;
                     }
+                case EvaluableMixRGB table:
+                    {
+                        SetupEditor(Instantiate(ColorTableEditor, EditorHolder), props);
+                        break;
+                    }
                 case Enum _enum:
                     {
                         SetupEditor(Instantiate(EnumEditor, EditorHolder), props);
