@@ -118,7 +118,7 @@ public class ColorConstant : Node
         ProcessColorChanges();
         internalColor.interactable = false;
         internalColor.Disc = "Color (Driven)";
-        outputColor.Invoke(((Evaluable)(internalColor.GetData())).GetCopy());
+        outputColor.Invoke(((Evaluable)(internalColor.GetData())));
     }
 
 

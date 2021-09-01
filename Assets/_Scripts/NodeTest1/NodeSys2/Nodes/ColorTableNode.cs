@@ -70,7 +70,7 @@ public class ColorTableNode : Node
     public override void Handle()
     {
         SetColors();
-        output.Invoke(((Evaluable)colorTable.GetData()).GetCopy());
+        output.Invoke(((Evaluable)colorTable.GetData()));
     }
 
     private void SetColors()

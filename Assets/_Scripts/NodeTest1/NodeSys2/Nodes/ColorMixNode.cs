@@ -76,10 +76,8 @@ public class ColorMixNode : Node
 
     private void ProcessEnums()
     {
-        Debug.Log("Processing enums");
         if (mixType.GetData().GetType() == typeof(string))
-        {
-            Debug.Log(mixType.GetData());
+        {            
             mixType.SetData(Enum.Parse(typeof(EvaluableMixRGB.MixType), (string)mixType.GetData()));
         }
     }

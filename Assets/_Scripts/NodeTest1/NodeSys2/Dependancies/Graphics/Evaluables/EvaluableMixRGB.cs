@@ -47,7 +47,7 @@ public class EvaluableMixRGB : Evaluable
         {
             Clamp(output, low, high);
         }
-        return output;
+        return output.GetCopy();
     }
 
     private ColorVec Add(ColorVec vector)
@@ -57,14 +57,18 @@ public class EvaluableMixRGB : Evaluable
             return elements[0].EvaluateColor(vector);
         }
 
-        ColorVec color = elements[0].EvaluateColor(vector);
+        //ColorVec color = new ColorVec(elements[0].EvaluateColor(vector).rx);
+        ColorVec color = elements[0].EvaluateColor(vector).GetCopy();
+        float fac = factor.EvaluateValue(vector);
         for (int i = 1; i < elements.Count; i++)
         {
+            ColorVec elementColor = elements[i].EvaluateColor(vector);            
             //iterate through rgbw
             for (int j = 0; j < 4; j++)
             {
                 //set color compoent to current component + element * factor
-                color.SetComponent(j, color.getComponent(j) + elements[i].EvaluateColor(vector).getComponent(j) * factor.EvaluateValue(vector));
+                float elementComp = elementColor.getComponent(j);                
+                color.SetComponent(j, color.getComponent(j) + elementComp * fac);
             }
         }
         return color;
@@ -102,9 +106,8 @@ public class EvaluableMixRGB : Evaluable
     }
 
     public override float EvaluateValue(ColorVec vector)
-    {
-        TransformVector(vector);
-        return 0;
+    {        
+        return (float)EvaluateColor(vector);
     }
 
     public override Evaluable GetCopy()

@@ -124,7 +124,7 @@ public class EvaluableColorTable : Evaluable
                 {
                     x = x + 1;
                 }
-                return Interpolate(x);
+                return Interpolate(x).GetCopy();
             case ClippingMode.mirror:
                 int remain = ((int)x) % 2;
                 x = x - (int)x;
@@ -136,7 +136,7 @@ public class EvaluableColorTable : Evaluable
                 {
                     x = -x + 1;
                 }
-                return Interpolate(x);
+                return Interpolate(x).GetCopy();
             case ClippingMode.extend:
                 if (x > 1)
                 {
@@ -146,7 +146,7 @@ public class EvaluableColorTable : Evaluable
                 {
                     return Interpolate(0);
                 }
-                return Interpolate(x);
+                return Interpolate(x).GetCopy();
             case ClippingMode.clip:
                 if (x > 1)
                 {
@@ -156,7 +156,7 @@ public class EvaluableColorTable : Evaluable
                 {
                     return new ColorVec(0, 0, 0, 0);
                 }
-                return Interpolate(x);
+                return Interpolate(x).GetCopy();
             default:
                 Debug.Log("Invalid Clip Type");
                 return new ColorVec(0, 0, 0, 0);
@@ -164,10 +164,8 @@ public class EvaluableColorTable : Evaluable
     }
 
     public override float EvaluateValue(ColorVec vector)
-    {
-        //x = Translate(x);
-        float x = TransformVector(vector).rx;
-        return (float)EvaluateColor(x);
+    {                
+        return (float)EvaluateColor(vector);
     }
 
     private float Translate(float x)

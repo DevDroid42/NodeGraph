@@ -11,7 +11,7 @@ public class ColorEditor : EditorBase
     public static Transform PickerHolder;
     //Color button will display color and interactability will depend on the buttons interactable flag. 
     //when button is clicked will open up color editor menu. 
-    private ColorVec colorVecRef;
+    private EvaluableColorVec colorVecRef;
     private Property prop;
     private void Start()
     {
@@ -29,9 +29,9 @@ public class ColorEditor : EditorBase
     {
         switch (prop.GetData())
         {
-            case Evaluable data:
+            case EvaluableColorVec eColorVec:
                 {
-                    colorVecRef = data.EvaluateColor(0);
+                    colorVecRef = eColorVec;
                     break;
                 }
 
@@ -39,12 +39,13 @@ public class ColorEditor : EditorBase
                 Debug.LogWarning("Invalid data assigned to color editor, Can not display type of:" + prop.GetData().GetType().Name);
                 break;
         }
-        button.image.color = new Color(colorVecRef.rx, colorVecRef.gy, colorVecRef.bz, colorVecRef.aw);
+        ColorVec color = colorVecRef.EvaluateColor(0);
+        button.image.color = new Color(color.rx, color.gy, color.bz, color.aw);
     }
 
     public void OpenPicker()
-    {
-        Instantiate(PickerPrefab, PickerHolder).GetComponent<PickerScript>().Setup(colorVecRef);
+    {        
+        Instantiate(PickerPrefab, PickerHolder).GetComponent<PickerScript>().Setup(colorVecRef);        
     }
 
     public override void Setup(Property prop)

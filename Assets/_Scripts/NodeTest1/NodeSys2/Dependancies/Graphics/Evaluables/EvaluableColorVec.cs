@@ -28,7 +28,7 @@ public class EvaluableColorVec : Evaluable
 
     public override ColorVec EvaluateColor(ColorVec vector)
     {
-        return colorVec;
+        return colorVec.GetCopy();
     }
 
     public override float EvaluateValue(ColorVec vector)

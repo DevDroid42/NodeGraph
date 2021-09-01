@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PickerScript : MonoBehaviour
 {
-    ColorVec colorRef;
-    public void Setup(ColorVec colorRef)
+    EvaluableColorVec colorRef;
+    public void Setup(EvaluableColorVec colorRef)
     {
         this.colorRef = colorRef;
     }
@@ -15,10 +15,8 @@ public class PickerScript : MonoBehaviour
         //A color assinment happens the second the color editor is opened before it has a chance to call setup
         if (colorRef != null)
         {
-            colorRef.aw = color.a;
-            colorRef.rx = color.r;
-            colorRef.gy = color.g;
-            colorRef.bz = color.b;
+            ColorVec newColorVec = new ColorVec(color.r, color.g, color.b, color.a);
+            colorRef.SetColorVec(newColorVec);
         }
     }
 
