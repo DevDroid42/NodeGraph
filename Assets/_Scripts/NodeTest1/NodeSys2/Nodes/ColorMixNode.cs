@@ -28,6 +28,11 @@ public class ColorMixNode : Node
         ProcessEnums();
     }
 
+    public override void Init2()
+    {
+        output.Invoke(CreateMixRGB());
+    }
+
     private void ProcessRes()
     {
         int setRes = (int)((Evaluable)elementCount.GetData()).EvaluateValue(0);

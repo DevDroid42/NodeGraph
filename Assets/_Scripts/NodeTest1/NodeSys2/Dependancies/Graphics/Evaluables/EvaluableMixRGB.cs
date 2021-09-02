@@ -63,21 +63,14 @@ public class EvaluableMixRGB : Evaluable
         {
             return elements[0].EvaluateColor(vector);
         }
-
-        //ColorVec color = new ColorVec(elements[0].EvaluateColor(vector).rx);
-        ColorVec color = elements[0].EvaluateColor(vector).GetCopy();
+        
+        ColorVec color = elements[0].EvaluateColor(vector);
         float fac = factor.EvaluateValue(vector);
         for (int i = 1; i < elements.Count; i++)
         {
             ColorVec elementColor = elements[i].EvaluateColor(vector);
             color += elementColor * fac;
-            //iterate through rgbw
-            //for (int j = 0; j < 4; j++)
-            //{
-            //    //set color compoent to current component + element * factor
-            //    float elementComp = elementColor.getComponent(j);
-            //    color.SetComponent(j, color.getComponent(j) + elementComp * fac);
-            //}
+
         }
         return color;
     }
@@ -141,19 +134,13 @@ public class EvaluableMixRGB : Evaluable
         }
 
         float fac = factor.EvaluateValue(vector);
-        //use a list to store evaluated colors so we don't have to re-evaluate for each component on loop
-        List<ColorVec> colors = new List<ColorVec>();
-        for (int i = 1; i < elements.Count; i++)
-        {
-            colors.Add(elements[i].EvaluateColor(vector));
-        }
         ColorVec orignalColor = elements[0].EvaluateColor(vector);
         ColorVec newColor = elements[0].EvaluateColor(vector);
-        for (int i = 0; i < colors.Count; i++)
+        for (int i = 1; i < elements.Count; i++)
         {
-            newColor *= colors[i];
+            newColor *= elements[i].EvaluateColor(vector);
         }
-        return orignalColor + newColor * fac;
+        return orignalColor + (newColor - orignalColor) * fac;
     }
 
 

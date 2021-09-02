@@ -57,6 +57,7 @@ public class Group
     {
         foreach (GroupInputNode node in inputNodes)
         {
+            //if instanced data then run handle on data that is evaluated instead.
             if(ID == node.getName())
             {
                 node.input.Handle(data);

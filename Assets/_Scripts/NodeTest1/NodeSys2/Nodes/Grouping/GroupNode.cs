@@ -7,6 +7,8 @@ public class GroupNode : Node
 {
     public Graph graph;
     private Group group;
+    //vector used to evaluate instanced data
+    private ColorVec vector;
     public List<Property> groupInputs;    
     public List<Property> groupOutputs;
     private GroupOutputNode.GroupOutDelegate groupOutDelegate;
@@ -29,6 +31,7 @@ public class GroupNode : Node
         SetupProperties();
     }
 
+    //a reference to this method is passed down into the group objects and is called when there is an output
     private void GroupOutHandler(object data, string ID)
     {
         foreach (Property output in groupOutputs)
@@ -49,6 +52,11 @@ public class GroupNode : Node
                 group.PublishToGraph(prop.ID, prop.GetData());
             }
         }
+    }
+
+    public void setVector(ColorVec vector)
+    {
+        this.vector = vector;
     }
 
     //if the group contains nodes that don't have respective properties add them here. 

@@ -157,9 +157,9 @@ public class ColorOperations
 
     public static ColorVec RgbToHsv(ColorVec color)
     {
-        float r = color.rx;
-        float g = color.gy;
-        float b = color.bz;
+        float r = color.rx * 255;
+        float g = color.gy * 255;
+        float b = color.bz * 255;
 
         // h, s, v = hue, saturation, value 
         float cmax = Math.Max(r, Math.Max(g, b)); // maximum of r, g, b 
@@ -190,7 +190,7 @@ public class ColorOperations
             s = (diff / cmax) * 100;
 
         // compute v 
-        float v = cmax * 100;
+        float v = cmax;
         return new ColorVec(h / 255f, s / 255f, v / 255f);
     }
 
