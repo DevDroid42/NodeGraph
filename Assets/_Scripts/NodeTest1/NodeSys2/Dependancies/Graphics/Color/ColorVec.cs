@@ -111,11 +111,12 @@ public class ColorVec
     public static ColorVec operator -(ColorVec color) => new ColorVec(1 - color.rx, 1 - color.gy, 1 - color.bz, 1 - color.aw);
     public static ColorVec operator +(ColorVec color) => new ColorVec(color.rx, color.gy, color.bz, color.aw);
     public static ColorVec operator +(ColorVec color1, ColorVec color2) =>
-       ColorOperations.ClampColor(new ColorVec(color1.rx + color2.rx, color1.gy + color2.gy, color1.bz + color2.bz, color1.aw + color2.aw));
+       new ColorVec(color1.rx + color2.rx, color1.gy + color2.gy, color1.bz + color2.bz, color1.aw + color2.aw);
 
     public static ColorVec operator -(ColorVec color1, ColorVec color2) =>
-        ColorOperations.ClampColor(new ColorVec(color1.rx - color2.rx, color1.gy - color2.gy, color1.bz - color2.bz, color1.aw - color2.aw));
-
+        new ColorVec(color1.rx - color2.rx, color1.gy - color2.gy, color1.bz - color2.bz, color1.aw - color2.aw);
+    public static ColorVec operator *(ColorVec color1, ColorVec color2) =>
+        new ColorVec(color1.rx * color2.rx, color1.gy * color2.gy, color1.bz * color2.bz, color1.aw * color2.aw);
 
     public static explicit operator float(ColorVec b) => ColorOperations.RgbToHsv(b).bz;
     public static implicit operator ColorVec(float b) => new ColorVec(b);
