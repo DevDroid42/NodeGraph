@@ -35,8 +35,9 @@ public class Evaluable
     }
 
     //to be used for vector transformations in subclasses
-    protected ColorVec TransformVector(ColorVec vector)
-    {        
+    protected ColorVec TransformVector(ColorVec vectorIn)
+    {
+        ColorVec vector = vectorIn.GetCopy();
         for (int i = 0; i < 4; i++)
         {
             if (scale.getComponent(i) == 0)

@@ -9,9 +9,9 @@ public class EvaluableMixRGB : Evaluable
     [JsonConverter(typeof(StringEnumConverter))]
     public enum MixType
     {
-        Add, Mix
+        Add, MixLinear, MixClosest
     }
-    public MixType mixType = MixType.Add;
+    public MixType mixType;
     //the factor controls to what extent the mix type is applied. Every add operation is multiplied by the factor and mix 
     //interpolates between elements based on the factor. 
     public Evaluable factor;
@@ -33,12 +33,16 @@ public class EvaluableMixRGB : Evaluable
 
     public override ColorVec EvaluateColor(ColorVec vector)
     {
-        TransformVector(vector);
-        ColorVec output = new ColorVec(0);
+        vector = TransformVector(vector);
+        ColorVec output = new ColorVec(0);        
         switch (mixType)
         {
             case MixType.Add:
                 output = Add(vector);
+                break;
+            case MixType.MixClosest:
+            case MixType.MixLinear:
+                output = mix(vector);
                 break;
             default:
                 break;
@@ -52,7 +56,7 @@ public class EvaluableMixRGB : Evaluable
 
     private ColorVec Add(ColorVec vector)
     {
-        if(elements.Count < 2)
+        if (elements.Count < 2)
         {
             return elements[0].EvaluateColor(vector);
         }
@@ -62,12 +66,12 @@ public class EvaluableMixRGB : Evaluable
         float fac = factor.EvaluateValue(vector);
         for (int i = 1; i < elements.Count; i++)
         {
-            ColorVec elementColor = elements[i].EvaluateColor(vector);            
+            ColorVec elementColor = elements[i].EvaluateColor(vector);
             //iterate through rgbw
             for (int j = 0; j < 4; j++)
             {
                 //set color compoent to current component + element * factor
-                float elementComp = elementColor.getComponent(j);                
+                float elementComp = elementColor.getComponent(j);
                 color.SetComponent(j, color.getComponent(j) + elementComp * fac);
             }
         }
@@ -75,29 +79,66 @@ public class EvaluableMixRGB : Evaluable
     }
 
     private ColorVec mix(ColorVec vector)
-    {
-        ColorVec color = new ColorVec();
-        for (int i = 0; i < elements.Count; i++)
+    {        
+        float x = factor.EvaluateValue(vector);
+
+        if (elements.Count < 2)
         {
-            //iterate through rgbw
-            for (int j = 0; j < 4; j++)
-            {
-                //set color compoent to current component + element * factor
-                color.SetComponent(j, color.getComponent(j) + elements[i].EvaluateColor(vector).getComponent(i) * factor.EvaluateValue(vector));
-            }
+            return elements[0].EvaluateColor(vector);
         }
-        return color;
+
+
+        if (x >= 1)
+        {
+            x = 0.99999f;
+        }
+        if (x <= 0)
+        {
+            x = 0.00001f;
+        }
+
+        int keyIndex1 = (int)((elements.Count - 1) * x);
+        ColorVec clr1 = elements[keyIndex1].EvaluateColor(vector);
+        int keyIndex2 = (int)((elements.Count - 1) * x + 1);
+        ColorVec clr2 = elements[keyIndex2].EvaluateColor(vector);
+
+        float keyPercent1 = (float)keyIndex1 / (elements.Count - 1);
+        float keyPercent2 = (float)keyIndex2 / (elements.Count - 1);
+
+        float g = (x - keyPercent1) / (keyPercent2 - keyPercent1);
+        switch (mixType)
+        {
+            case MixType.MixLinear:
+                ColorVec c = new ColorVec((clr2.rx - clr1.rx) * g + clr1.rx, (clr2.gy - clr1.gy) * g + clr1.gy,
+                        (clr2.bz - clr1.bz) * g + clr1.bz);
+                return c;
+            case MixType.MixClosest:
+                if (g < 0.5)
+                {
+                    return clr1;
+                }
+                else
+                {
+                    return clr2;
+                }
+
+            default:
+                Debug.Log("Error=====Invalid Interpolation Type======Error");
+                return new ColorVec(0, 0, 255);
+        }
     }
+
 
 
     private ColorVec Clamp(ColorVec input, float low, float high)
     {
         for (int i = 0; i < 4; i++)
         {
-            if(input.getComponent(i) < low)
+            if (input.getComponent(i) < low)
             {
                 input.SetComponent(i, low);
-            }else if(input.getComponent(i) > high)
+            }
+            else if (input.getComponent(i) > high)
             {
                 input.SetComponent(i, high);
             }
@@ -106,13 +147,14 @@ public class EvaluableMixRGB : Evaluable
     }
 
     public override float EvaluateValue(ColorVec vector)
-    {        
+    {
         return (float)EvaluateColor(vector);
     }
 
     public override Evaluable GetCopy()
     {
         EvaluableMixRGB mixRGB = new EvaluableMixRGB(factor.GetCopy());
+        mixRGB.mixType = mixType;
         for (int i = 0; i < elements.Count; i++)
         {
             mixRGB.AddElement(elements[i].GetCopy());

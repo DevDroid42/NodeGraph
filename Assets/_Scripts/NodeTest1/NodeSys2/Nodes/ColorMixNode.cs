@@ -70,7 +70,7 @@ public class ColorMixNode : Node
         {
             mixRGB.AddElement((Evaluable)elements[i].GetData());
         }
-        mixRGB.mixType = (EvaluableMixRGB.MixType)mixType.GetData();
+        mixRGB.mixType = ((EvaluableMixRGB.MixType)mixType.GetData());
         return mixRGB;
     }
 
