@@ -11,7 +11,7 @@ public class InstancerNode : GroupNodeBase
 
     private string graphJson;
     private List<Group> groups = new List<Group>();
-    //serves as a parrallel array to the groups list that stores data to be used in constructing new mixers
+    //serves as a parrallel array to the groups list that stores evaluable data to be used in constructing new mixers
     private Evaluable[] groupOutputData;
     private EvaluableMixRGB mixer;
     public List<Property> groupInputs;
