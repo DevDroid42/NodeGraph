@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using nodeSys2;
 
-public class GroupNode : Node
-{
-    public Graph graph;
+public class GroupNode : GroupNodeBase
+{    
     private Group group;
-    //vector used to evaluate instanced data
-    private ColorVec vector;
-    public List<Property> groupInputs;    
+    public List<Property> groupInputs;
     public List<Property> groupOutputs;
     private GroupOutputNode.GroupOutDelegate groupOutDelegate;
 
@@ -31,8 +28,7 @@ public class GroupNode : Node
         SetupProperties();
     }
 
-    //a reference to this method is passed down into the group objects and is called when there is an output
-    private void GroupOutHandler(object data, string ID)
+    private void GroupOutHandler(object data, string ID, int index)
     {
         foreach (Property output in groupOutputs)
         {
@@ -54,54 +50,15 @@ public class GroupNode : Node
         }
     }
 
-    public void setVector(ColorVec vector)
-    {
-        this.vector = vector;
-    }
-
     //if the group contains nodes that don't have respective properties add them here. 
     private void SetupProperties()
     {
         List<string> inputTags = group.GetInputTags();
         List<string> outputTags = group.GetOutputTags();
-        RemoveFromGroupList(inputTags, groupInputs);
-        RemoveFromGroupList(outputTags, groupOutputs);
-        AddToGroupLists(inputTags, groupInputs, true);
-        AddToGroupLists(outputTags, groupOutputs, false);
-    }
-
-    private void AddToGroupLists(List<string> tags, List<Property> propertyList, bool input)
-    {        
-        //iterate through every tag
-        foreach (string tag in tags)
-        {
-            //if a tag doesn't exist in the list of properties create a new property with the tag
-            if (!propertyList.Exists(e => e.ID == tag))
-            {
-                if (input)
-                {
-                    propertyList.Add(CreateInputProperty(tag, true, new Evaluable()));
-                }
-                else
-                {
-                    propertyList.Add(CreateOutputProperty(tag));
-                }
-            }
-        }
-    }
-
-    private void RemoveFromGroupList(List<string> tags, List<Property> propertyList)
-    {
-        for (int i = propertyList.Count - 1; i >= 0 ; i--)
-        {
-            //if a property exists that doesn't have a tag remove the property
-            if (!tags.Exists(e => e == propertyList[i].ID))
-            {
-                RemoveProperty(propertyList[i]);
-                propertyList.RemoveAt(i);
-            }
-        }
-
+        TrimProperties(inputTags, groupInputs);
+        TrimProperties(outputTags, groupOutputs);
+        Addproperties(inputTags, groupInputs, true);
+        Addproperties(outputTags, groupOutputs, false);
     }
 
     public override void Frame(float deltaTime)

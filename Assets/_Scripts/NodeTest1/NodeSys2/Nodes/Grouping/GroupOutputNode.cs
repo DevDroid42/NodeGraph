@@ -7,7 +7,9 @@ using nodeSys2;
 public class GroupOutputNode : Node, INameable
 {
     public Property input, name;
-    public delegate void GroupOutDelegate(object data, string tag);
+    //used to store position in mixRGB object when the node is an instance
+    public int instanceIndex = 0;
+    public delegate void GroupOutDelegate(object data, string tag, int index);
     //used to connect to a parent group or instancer node
     [JsonIgnore] public GroupOutDelegate outDel;
 
@@ -23,7 +25,7 @@ public class GroupOutputNode : Node, INameable
     {
         if (outDel != null)
         {
-            outDel.Invoke(input.GetData(), getName());
+            outDel.Invoke(input.GetData(), getName(), instanceIndex);
         }
     }
 

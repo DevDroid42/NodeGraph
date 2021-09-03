@@ -365,7 +365,7 @@ public class GUIGraph : MonoBehaviour
     //opens selected group node in graph
     public void OpenGroup(Node _groupNode)
     {
-        if (_groupNode is GroupNode groupNode)
+        if (_groupNode is GroupNodeBase groupNode)
         {
             openedGraphs.Add(graphRef);
             SetGraph(groupNode.graph);

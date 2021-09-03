@@ -4,7 +4,7 @@ using UnityEngine;
 public class NodeRegistration
 {
     public enum NodeTypes {floatConst, add, Viewer, loop, ColorConst, ColorTable, Transform , LED, Math, mixRGB, 
-        NetReceive, GroupInput, GroupOutput, Group}
+        NetReceive, GroupInput, GroupOutput, Group, StaticInstancer}
 
     public static Node GetNode(NodeTypes type)
     {
@@ -38,6 +38,8 @@ public class NodeRegistration
                 return new GroupNode(true);
             case NodeTypes.mixRGB:
                 return new ColorMixNode(true);
+            case NodeTypes.StaticInstancer:
+                return new InstancerNode(true);
             default:
                 return null;
 
