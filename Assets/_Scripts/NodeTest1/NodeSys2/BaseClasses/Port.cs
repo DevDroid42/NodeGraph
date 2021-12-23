@@ -99,13 +99,13 @@ namespace nodeSys2
         //we should send this data to the ports property.
         private void Handle(object data)
         {
-            if (data is Evaluable d)
+            if (data is ICopyable d)
             {
                 property.Handle(d.GetCopy());
             }
             else
             {
-                property.Handle(data);
+                Debug.LogError("Warning, uncopyable data received, this is unsupported all data passed down must implement Icopyable");                
             }
         }
     }

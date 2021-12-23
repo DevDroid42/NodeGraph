@@ -15,7 +15,7 @@ namespace nodeSys2
         public static FloatDelagate frameDelagate;
 
         [JsonIgnore]
-        //Frame delagate is a delage that belongs to all nodes. It is called each frame by whatever host is currently running the graph. 
+        //used to pass network data to nodes
         public static NetworkDelagate nodeNetDelagate;
 
         //GUI info

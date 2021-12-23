@@ -166,13 +166,13 @@ public class EvaluableMixRGB : Evaluable
         return (float)EvaluateColor(vector);
     }
 
-    public override Evaluable GetCopy()
+    public override object GetCopy()
     {
-        EvaluableMixRGB mixRGB = new EvaluableMixRGB(factor.GetCopy());
+        EvaluableMixRGB mixRGB = new EvaluableMixRGB((Evaluable)factor.GetCopy());
         mixRGB.mixType = mixType;
         for (int i = 0; i < elements.Count; i++)
         {
-            mixRGB.AddElement(elements[i].GetCopy());
+            mixRGB.AddElement((Evaluable)elements[i].GetCopy());
         }
         return mixRGB;
     }

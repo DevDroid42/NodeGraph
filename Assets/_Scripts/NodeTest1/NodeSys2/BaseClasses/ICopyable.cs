@@ -1,0 +1,5 @@
+﻿
+interface ICopyable 
+{
+    object GetCopy();
+}

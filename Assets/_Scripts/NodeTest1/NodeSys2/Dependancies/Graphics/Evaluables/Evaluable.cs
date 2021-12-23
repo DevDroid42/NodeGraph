@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-public class Evaluable
+public class Evaluable : ICopyable
 {
     //offset applied pre-scaling
     public ColorVec localOffset = 0;
@@ -28,7 +28,7 @@ public class Evaluable
 
     //used to get copy of Evaluable object so references arn't being passed between nodes. Reference passing would entangle
     //node states and create problems
-    public virtual Evaluable GetCopy()
+    public virtual object GetCopy()
     {
         //Debug.LogWarning("WARNING: Using Default get copy, this should never be run");
         return new Evaluable();

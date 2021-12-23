@@ -20,7 +20,7 @@ namespace nodeSys2
             }
             for (int i = 0; i < nodes.Count; i++)
             {
-                nodes[i].InitProperties();                
+                nodes[i].InitProperties();
             }
             for (int i = 0; i < nodes.Count; i++)
             {
@@ -36,6 +36,7 @@ namespace nodeSys2
         {
             for (int i = 0; i < nodes.Count; i++)
             {
+                //nodes only run once per data input received. 
                 nodes[i].ResetRunnable();
             }
         }

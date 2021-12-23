@@ -119,6 +119,7 @@ public class ColorVec
         new ColorVec(color1.rx * color2.rx, color1.gy * color2.gy, color1.bz * color2.bz, color1.aw * color2.aw);
 
     public static explicit operator float(ColorVec b) => ColorOperations.RgbToHsv(b).bz;
+    public static explicit operator bool(ColorVec b) => !((float)b < 0.5);
     public static implicit operator ColorVec(float b) => new ColorVec(b);
 }
 

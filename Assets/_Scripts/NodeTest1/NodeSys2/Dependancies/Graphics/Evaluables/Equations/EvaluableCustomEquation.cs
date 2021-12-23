@@ -53,12 +53,12 @@ public class EvaluableCustomEquation : EvaluableEquation
         
     }
 
-    public override Evaluable GetCopy()
+    public override object GetCopy()
     {
         EvaluableCustomEquation copy = new EvaluableCustomEquation(variables.Length, calc.GetExpression());
         for (int i = 0; i < copy.variables.Length; i++)
         {
-            copy.variables[i] = variables[i].GetCopy();
+            copy.variables[i] = (Evaluable)variables[i].GetCopy();
         }
         return copy;
     }

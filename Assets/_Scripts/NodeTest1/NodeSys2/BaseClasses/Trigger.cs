@@ -1,8 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-//this class contains no data. It is merely created in memory and pattern matched to determine if data is of trigger type
-public class Trigger
+﻿
+public class Pulse : ICopyable
 {
+    //determines if this pulse has been read already
+    private bool pulsePresent;
+
+    public Pulse()
+    {
+        pulsePresent = true;
+    }
+
+    public bool PulsePresent()
+    {
+        //if the pulse is present that means it hasn't been read yet
+        if (pulsePresent)
+        {
+            pulsePresent = false;
+        }
+        return pulsePresent;
+    }
+
+    public object GetCopy()
+    {
+        return this.MemberwiseClone();
+    }
 }

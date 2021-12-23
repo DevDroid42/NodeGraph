@@ -181,7 +181,7 @@ public class EvaluableColorTable : Evaluable
         return x;
     }
 
-    public override Evaluable GetCopy()
+    public override object GetCopy()
     {
         EvaluableColorTable temp = new EvaluableColorTable(GetkeyAmt());
         for (int i = 0; i < temp.GetkeyAmt(); i++)

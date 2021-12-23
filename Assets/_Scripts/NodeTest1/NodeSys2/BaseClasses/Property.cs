@@ -167,26 +167,6 @@ namespace nodeSys2
                 return false;
             }
 
-        }
-
-        public bool Triggered()
-        {
-            if(data != null)
-            {
-                if(data is Trigger)
-                {
-                    data = null;
-                    return true;
-                }
-                else
-                {                    
-                    Debug.LogWarning("Tried to get trigger data on non-trigger property");
-                    return false;
-                }
-            }
-            {
-                return false;
-            }
-        }
+        }        
     }
 }

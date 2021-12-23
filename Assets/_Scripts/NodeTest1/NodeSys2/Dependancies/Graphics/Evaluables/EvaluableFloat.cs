@@ -26,7 +26,7 @@ public class EvaluableFloat : Evaluable
         return num;
     }
 
-    public override Evaluable GetCopy()
+    public override object GetCopy()
     {
         return new EvaluableFloat(num);
     }
