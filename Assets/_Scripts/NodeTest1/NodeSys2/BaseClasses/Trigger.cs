@@ -9,6 +9,11 @@ public class Pulse : ICopyable
         pulsePresent = true;
     }
 
+    public Pulse(bool state)
+    {
+        pulsePresent = state;
+    }
+
     public bool PulsePresent()
     {
         //if the pulse is present that means it hasn't been read yet
