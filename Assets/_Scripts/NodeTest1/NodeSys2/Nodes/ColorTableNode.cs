@@ -49,7 +49,7 @@ public class ColorTableNode : Node
             {
                 for (int i = 0; i < diff; i++)
                 {
-                    colors.Add(CreateInputProperty("Color:" + (colors.Count), true, new EvaluableColorVec(1), typeof(Evaluable)));
+                    colors.Add(CreateInputProperty("Color:" + (colors.Count), true, new EvaluableColorVec(1)));
                     colors[colors.Count - 1].interactable = true;
                 }
             }

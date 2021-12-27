@@ -28,15 +28,7 @@ public class ColorVec
         aw = 1;
     }
 
-    public ColorVec(float R, float G, float B)
-    {
-        this.rx = R;
-        this.gy = G;
-        this.bz = B;
-        aw = 1;
-    }
-
-    public ColorVec(float R, float G, float B, float A)
+    public ColorVec(float R, float G, float B = 0, float A = 1)
     {
         this.rx = R;
         this.gy = G;

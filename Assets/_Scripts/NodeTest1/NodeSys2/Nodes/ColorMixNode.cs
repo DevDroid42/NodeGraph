@@ -11,11 +11,11 @@ public class ColorMixNode : Node
 
     public ColorMixNode(bool x)
     {
-        base.nodeDisc = "Mix Node";
+        base.nodeDisc = "Mix";
         elements = new List<Property>(0);
         mixType = CreateInputProperty("Mix Type", false, new EvaluableMixRGB.MixType());
         mixType.interactable = true;
-        factor = CreateInputProperty("Factor", true, new EvaluableFloat(1), typeof(Evaluable));
+        factor = CreateInputProperty("Factor", true, new EvaluableFloat(1));
         elementCount = CreateInputProperty("Element Count", false, new EvaluableFloat(2));
         elementCount.interactable = true;
         output = CreateOutputProperty("output");
@@ -45,7 +45,7 @@ public class ColorMixNode : Node
             {
                 for (int i = 0; i < diff; i++)
                 {
-                    elements.Add(CreateInputProperty("element: " + (elements.Count), true, new EvaluableColorVec(1), typeof(Evaluable)));
+                    elements.Add(CreateInputProperty("element: " + (elements.Count), true, new EvaluableColorVec(1)));
                     elements[elements.Count - 1].interactable = true;
                 }
             }

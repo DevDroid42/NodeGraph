@@ -9,13 +9,13 @@ public class LoopNode : Node
     {
         nodeDisc = "Loop";
 
-        startP = CreateInputProperty("Start", true, new EvaluableFloat(0), typeof(Evaluable));
+        startP = CreateInputProperty("Start", true, new EvaluableFloat(0));
         startP.interactable = true;
-        minP = CreateInputProperty("min", true, new EvaluableFloat(0), typeof(Evaluable));
+        minP = CreateInputProperty("min", true, new EvaluableFloat(0));
         minP.interactable = true;
-        maxP = CreateInputProperty("Max", true, new EvaluableFloat(1), typeof(Evaluable));
+        maxP = CreateInputProperty("Max", true, new EvaluableFloat(1));
         maxP.interactable = true;
-        rateP = CreateInputProperty("rate", true, new EvaluableFloat(1f), typeof(Evaluable));
+        rateP = CreateInputProperty("rate", true, new EvaluableFloat(1f));
         rateP.interactable = true;
         output = CreateOutputProperty("output");
     }

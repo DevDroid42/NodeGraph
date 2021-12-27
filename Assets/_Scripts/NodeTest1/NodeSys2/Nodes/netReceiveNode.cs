@@ -10,7 +10,7 @@ public class netReceiveNode : Node
     //the constructor needs to have a paramater so that the deserializer can use the default one
     public netReceiveNode(bool x)
     {
-        base.nodeDisc = "NodeNet Receive";
+        base.nodeDisc = "Net Receive";
         dataType = base.CreateInputProperty("Data Type", false, new NetworkMessage.DataType());
         dataType.interactable = true;
         ID = base.CreateInputProperty("Data ID", false, new StringData(""));

@@ -89,6 +89,7 @@ namespace nodeSys2
         }
 
         //creates a property and adds it to the list. Also returns the created property to optionally be used for caching
+        //if the default data is subclass of Evaluable then the gate type is set to evaluable, otherwise the gate type is of type object
         public Property CreateInputProperty(string ID, bool connectable, object defaultData)
         {
             //===============DUPLICATE CHECKING MIGHT BE BUSTED================================
@@ -97,7 +98,8 @@ namespace nodeSys2
             //this is done both to prevent accidental duplicates and duplicates from the constructor running on deserialization.
             if (inputs.TrueForAll(prop => prop.ID != ID))
             {
-                Property tempRef = new Property(this, ID, true, connectable, defaultData, typeof(object));
+                Type gate = defaultData.GetType().IsSubclassOf(typeof(Evaluable)) ? typeof(Evaluable) : typeof(object);
+                Property tempRef = new Property(this, ID, true, connectable, defaultData, gate);                
                 inputs.Add(tempRef);
                 return tempRef;
             }
@@ -112,7 +114,7 @@ namespace nodeSys2
         {
             if (inputs.TrueForAll(prop => prop.ID != ID))
             {
-                Property tempRef = new Property(this, ID, true, connectable, defaultData, type);
+                Property tempRef = new Property(this, ID, true, connectable, defaultData, type);               
                 inputs.Add(tempRef);
                 return tempRef;
             }

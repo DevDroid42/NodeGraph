@@ -16,19 +16,19 @@ public class TransformNode : Node
 
     public TransformNode(bool x)
     {
-        base.nodeDisc = "Transform Node";
+        base.nodeDisc = "Transform";
         setTypeProp = CreateInputProperty("Mix Type", false, new SetType());
         setTypeProp.interactable = true;
-        inputData = CreateInputProperty("Input", true, new Evaluable(), typeof(Evaluable));
-        localOffset = CreateInputProperty("Local Offset", true, new EvaluableFloat(0), typeof(Evaluable));
+        inputData = CreateInputProperty("Input", true, new Evaluable());
+        localOffset = CreateInputProperty("Local Offset", true, new EvaluableFloat(0));
         localOffset.interactable = true;
-        scale = CreateInputProperty("Scale", true, new EvaluableFloat(1), typeof(Evaluable));
+        scale = CreateInputProperty("Scale", true, new EvaluableFloat(1));
         scale.interactable = true;
-        pivot = CreateInputProperty("pivot", true, new EvaluableFloat(0), typeof(Evaluable));
+        pivot = CreateInputProperty("pivot", true, new EvaluableFloat(0));
         pivot.interactable = true;
-        rot = CreateInputProperty("Rotation", true, new EvaluableFloat(0), typeof(Evaluable));
+        rot = CreateInputProperty("Rotation", true, new EvaluableFloat(0));
         rot.interactable = true;
-        globalOffset = CreateInputProperty("Global Offset", true, new EvaluableFloat(0), typeof(Evaluable));
+        globalOffset = CreateInputProperty("Global Offset", true, new EvaluableFloat(0));
         globalOffset.interactable = true;
         output = CreateOutputProperty("Output");
     }

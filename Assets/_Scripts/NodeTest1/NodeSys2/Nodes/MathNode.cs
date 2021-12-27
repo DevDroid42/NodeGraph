@@ -19,7 +19,7 @@ public class MathNode : Node
         status = CreateInputProperty("status", false, new Message("Evaluated: 0"));
 
         //CHANGE TO VECTOR TYPE AFTER EDITOR IS IMPLEMENTED
-        vector = CreateInputProperty("vector", true, new EvaluableColorVec(0), typeof(Evaluable));
+        vector = CreateInputProperty("vector", true, new EvaluableColorVec(0));
         variableCount = CreateInputProperty("Variable Count", false, new EvaluableFloat(0));
         variableCount.interactable = true;
 
@@ -88,7 +88,7 @@ public class MathNode : Node
             {
                 for (int i = 0; i < diff; i++)
                 {
-                    variables.Add(CreateInputProperty("V" + (variables.Count), true, new EvaluableFloat(1), typeof(Evaluable)));
+                    variables.Add(CreateInputProperty("V" + (variables.Count), true, new EvaluableFloat(1)));
                     variables[variables.Count - 1].interactable = true;
                 }
             }

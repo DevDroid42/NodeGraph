@@ -28,7 +28,7 @@ public class InstancerNode : GroupNodeBase
         InstanceCount.interactable = true;
         mixType = CreateInputProperty("mixType", false, new EvaluableMixRGB.MixType());
         mixType.interactable = true;
-        factor = CreateInputProperty("factor", true, new EvaluableFloat(1), typeof(Evaluable));
+        factor = CreateInputProperty("factor", true, new EvaluableFloat(1));
         factor.interactable = true;
 
         output = CreateOutputProperty("output");

@@ -19,11 +19,11 @@ public class LogicNode : Node
     public LogicNode(bool x)
     {
         base.nodeDisc = "Logic";
-        data1 = CreateInputProperty("data1", true, new EvaluableFloat(0), typeof(EvaluableFloat));
+        data1 = CreateInputProperty("data1", true, new EvaluableFloat(0));
         data1.interactable = true;
         compareMode = CreateInputProperty("Compare Mode", false, new ComparisonType());
         compareMode.interactable = true;
-        data2 = CreateInputProperty("data2", true, new EvaluableFloat(0), typeof(EvaluableFloat));
+        data2 = CreateInputProperty("data2", true, new EvaluableFloat(0));
         data2.interactable = true;
         pulseOutput = CreateOutputProperty("Pulse Output");        
         valueOutput = CreateOutputProperty("Value Output");        
@@ -47,16 +47,16 @@ public class LogicNode : Node
         switch ((ComparisonType)compareMode.GetData())
         {
             case ComparisonType.greaterThen:
-                Eval(((Evaluable)data1.GetData()).EvaluateValue(0) > ((Evaluable)data1.GetData()).EvaluateValue(0));           
+                Eval(((Evaluable)data1.GetData()).EvaluateValue(0) > ((Evaluable)data2.GetData()).EvaluateValue(0));           
                 break;
             case ComparisonType.lessThen:
-                Eval(((Evaluable)data1.GetData()).EvaluateValue(0) < ((Evaluable)data1.GetData()).EvaluateValue(0));
+                Eval(((Evaluable)data1.GetData()).EvaluateValue(0) < ((Evaluable)data2.GetData()).EvaluateValue(0));
                 break;
             case ComparisonType.or:
-                Eval(((bool)((Evaluable)data1.GetData()).EvaluateColor(0)) || (bool)(((Evaluable)data1.GetData()).EvaluateColor(0)));
+                Eval(((bool)((Evaluable)data1.GetData()).EvaluateColor(0)) || (bool)(((Evaluable)data2.GetData()).EvaluateColor(0)));
                 break;
             case ComparisonType.and:
-                Eval(((bool)((Evaluable)data1.GetData()).EvaluateColor(0)) && (bool)(((Evaluable)data1.GetData()).EvaluateColor(0)));
+                Eval(((bool)((Evaluable)data1.GetData()).EvaluateColor(0)) && (bool)(((Evaluable)data2.GetData()).EvaluateColor(0)));
                 break;
             default:
                 break;

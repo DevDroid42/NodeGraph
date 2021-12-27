@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class NodeRegistration
 {
-    public enum NodeTypes {floatConst, add, Viewer, loop, ColorConst, ColorTable, Transform , LED, Math, mixRGB, 
+    public enum NodeTypes {floatConst, add, loop, ColorConst, ColorTable, Transform , LED, Math, mixRGB, 
         NetReceive, GroupInput, GroupOutput, Group, StaticInstancer, logic}
 
     public static Node GetNode(NodeTypes type)
@@ -13,9 +13,7 @@ public class NodeRegistration
             case NodeTypes.floatConst:
                 return new FloatConstant(true);
             case NodeTypes.add:
-                return new AddNode(true);                
-            case NodeTypes.Viewer:
-                return new ViewerNode(true);
+                return new AddNode(true);
             case NodeTypes.loop:
                 return new LoopNode(true);
             case NodeTypes.ColorConst:
