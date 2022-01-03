@@ -4,7 +4,7 @@ using UnityEngine;
 public class NodeRegistration
 {
     public enum NodeTypes {NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Transform , LED, Math, mixRGB, 
-        NetReceive, GroupInput, GroupOutput, Group, StaticInstancer, logic}
+        NetReceive, GroupInput, GroupOutput, Group, StaticInstancer, DynamicInstancer, InstancedPulse, logic}
 
     public static Node GetNode(NodeTypes type)
     {
@@ -39,7 +39,11 @@ public class NodeRegistration
             case NodeTypes.mixRGB:
                 return new ColorMixNode(true);
             case NodeTypes.StaticInstancer:
-                return new InstancerNode(true);
+                return new StaticInstancer(true);
+            case NodeTypes.DynamicInstancer:
+                return new DynamicInstancer(true);
+            case NodeTypes.InstancedPulse:
+                return new InstancedPulseNode(true);
             case NodeTypes.logic:
                 return new LogicNode(true);
             default:

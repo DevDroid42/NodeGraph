@@ -18,7 +18,7 @@ public class GroupNodeBase : Node
             {
                 if (input)
                 {
-                    propertyList.Add(CreateInputProperty(tag, true, new Evaluable()));
+                    propertyList.Add(CreateInputProperty(tag, true, new Evaluable(), typeof(ICopyable)));
                 }
                 else
                 {

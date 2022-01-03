@@ -6,11 +6,11 @@ using System;
 
 //similar functionality to group node but handles instances of graphs. Each instance will have it's outputs of same name mixed via 
 //color mixing
-public class InstancerNode : GroupNodeBase
+public class StaticInstancer : GroupNodeBase
 {
 
     private string graphJson;
-    private List<Group> groups = new List<Group>();
+    protected List<Group> groups = new List<Group>();
     //serves as a parrallel array to the groups list that stores evaluable data to be used in constructing new mixers
     private Evaluable[] groupOutputData;
     private EvaluableMixRGB mixer;
@@ -18,7 +18,7 @@ public class InstancerNode : GroupNodeBase
     public Property InstanceCount, mixType, factor, output;
     private GroupOutputNode.GroupOutDelegate groupOutDelegate;
 
-    public InstancerNode(bool x)
+    public StaticInstancer(bool x)
     {
         graph = new Graph();
         groupInputs = new List<Property>();

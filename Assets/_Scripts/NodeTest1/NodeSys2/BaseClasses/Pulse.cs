@@ -1,7 +1,8 @@
-﻿
+﻿using Newtonsoft.Json;
 public class Pulse : ICopyable
 {
-    //determines if this pulse has been read already
+    //determines if this pulse has been read already    
+    [JsonProperty]
     private bool pulsePresent;
 
     public Pulse()

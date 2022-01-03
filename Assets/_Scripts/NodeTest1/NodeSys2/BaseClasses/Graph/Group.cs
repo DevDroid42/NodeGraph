@@ -4,6 +4,7 @@ using UnityEngine;
 using nodeSys2;
 public class Group
 {
+    private List<InstancedPulseNode> pulseNodes = new List<InstancedPulseNode>();
     private List<GroupInputNode> inputNodes = new List<GroupInputNode>();
     private List<GroupOutputNode> outputNodes = new List<GroupOutputNode>();
     private ColorVec vector = new ColorVec(0);
@@ -22,6 +23,11 @@ public class Group
                 case GroupInputNode node:
                     {
                         inputNodes.Add(node);
+                        break;
+                    }
+                case InstancedPulseNode node:
+                    {
+                        pulseNodes.Add(node);
                         break;
                     }
                 case GroupOutputNode node:
@@ -92,6 +98,15 @@ public class Group
                     node.input.Handle(data);
                 }
             }
+        }
+    }
+
+    public void PulseGraph()
+    {
+        foreach(InstancedPulseNode node in pulseNodes)
+        {
+            //Debug.Log("pulsedGraph");
+            node.Handle();
         }
     }
 }

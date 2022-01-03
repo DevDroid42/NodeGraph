@@ -90,7 +90,7 @@ namespace nodeSys2
 
         //creates a property and adds it to the list. Also returns the created property to optionally be used for caching
         //if the default data is subclass of Evaluable then the gate type is set to evaluable, otherwise the gate type is of type object
-        public Property CreateInputProperty(string ID, bool connectable, object defaultData)
+        public Property CreateInputProperty(string ID, bool connectable, object defaultData, int index = -1)
         {
             //===============DUPLICATE CHECKING MIGHT BE BUSTED================================
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -98,9 +98,17 @@ namespace nodeSys2
             //this is done both to prevent accidental duplicates and duplicates from the constructor running on deserialization.
             if (inputs.TrueForAll(prop => prop.ID != ID))
             {
-                Type gate = defaultData.GetType().IsSubclassOf(typeof(Evaluable)) ? typeof(Evaluable) : typeof(object);
-                Property tempRef = new Property(this, ID, true, connectable, defaultData, gate);                
-                inputs.Add(tempRef);
+                //if any subclass of evaluable is called then gate property to Evaluables, Otherwhise gate to type provided
+                Type gate = defaultData.GetType().IsSubclassOf(typeof(Evaluable)) ? typeof(Evaluable) : defaultData.GetType();
+                Property tempRef = new Property(this, ID, true, connectable, defaultData, gate);
+                if (index < 0)
+                {
+                    inputs.Add(tempRef);
+                }
+                else
+                {
+                    inputs.Insert(index, tempRef);
+                }
                 return tempRef;
             }
             else
@@ -110,12 +118,19 @@ namespace nodeSys2
             }
         }
 
-        public Property CreateInputProperty(string ID, bool connectable, object defaultData, Type type)
+        public Property CreateInputProperty(string ID, bool connectable, object defaultData, Type gate, int index = -1)
         {
             if (inputs.TrueForAll(prop => prop.ID != ID))
             {
-                Property tempRef = new Property(this, ID, true, connectable, defaultData, type);               
-                inputs.Add(tempRef);
+                Property tempRef = new Property(this, ID, true, connectable, defaultData, gate);
+                if (index < 0)
+                {
+                    inputs.Add(tempRef);
+                }
+                else
+                {
+                    inputs.Insert(index, tempRef);
+                }
                 return tempRef;
             }
             else

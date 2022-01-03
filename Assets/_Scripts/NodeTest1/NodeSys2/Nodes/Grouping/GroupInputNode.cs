@@ -18,7 +18,7 @@ public class GroupInputNode : Node, INameable
     public GroupInputNode(bool x)
     {
         base.nodeDisc = "Group Input";
-        input = CreateInputProperty("DataIn", false, new Evaluable());
+        input = CreateInputProperty("DataIn", false, new Evaluable(), typeof(ICopyable));
         input.visible = false;
         inputType = CreateInputProperty("Input Type", false, new InputType());
         inputType.interactable = true;

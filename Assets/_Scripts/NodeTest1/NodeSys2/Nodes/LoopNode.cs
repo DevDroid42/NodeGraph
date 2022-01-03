@@ -44,9 +44,9 @@ public class LoopNode : Node
         processData();
         ProcessEnums();
         rateInverter = 1;
-        frameDelagate -= Frame;
-        frameDelagate += Frame;
         current = start;
+        frameDelagate -= Frame;
+        frameDelagate += Frame;        
     }
 
     public override void Handle()
@@ -54,6 +54,8 @@ public class LoopNode : Node
         processData();
         if (((Pulse)ResetTrig.GetData()).PulsePresent())
         {
+            Debug.Log("loop node received pulse on reset trigger with speed of:" + rate + " and inversion of:" + rateInverter+
+                " loop type" + loopType);            
             current = start;
         }
         if (((Pulse)InvertTrig.GetData()).PulsePresent())

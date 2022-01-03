@@ -97,8 +97,8 @@ namespace nodeSys2
             }
         }
         private bool Isa(object data, Type type)
-        {
-            return data.GetType() == type || data.GetType().IsSubclassOf(type);
+        {            
+            return type.IsAssignableFrom(data.GetType());
         }
 
         public void Invoke(object data)
