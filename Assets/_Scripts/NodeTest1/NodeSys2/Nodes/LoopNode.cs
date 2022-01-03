@@ -17,10 +17,14 @@ public class LoopNode : Node
     public LoopNode(bool x)
     {
         nodeDisc = "Loop";
-        ResetTrig = CreateInputProperty("Reset Trigger", true, new Pulse(false), typeof(Pulse));        
+        ResetTrig = CreateInputProperty("Reset Trigger", true, new Pulse(false), typeof(Pulse));
+        ResetTrig.visible = false;
         InvertTrig = CreateInputProperty("Invert Trigger", true, new Pulse(false), typeof(Pulse));
+        InvertTrig.visible = false;
         stepTrig = CreateInputProperty("Step Trigger", true, new Pulse(false), typeof(Pulse));
+        stepTrig.visible = false;
         stepSize = CreateInputProperty("Step Size", true, new EvaluableFloat(0.1f));
+        stepSize.visible = false;
         stepSize.interactable = true;
         loopTypeProp = CreateInputProperty("Loop type", false, new LoopType());
         loopTypeProp.interactable = true;
@@ -56,18 +60,6 @@ public class LoopNode : Node
         {
             rateInverter *= -1;
         }
-        if (((Pulse)stepTrig.GetData()).PulsePresent())
-        {
-            current += ((Evaluable)stepSize.GetData()).EvaluateValue(0) * rateInverter;
-            if(current - max > 0)
-            {
-                current = min + (current - max);
-            }
-            if (min - current > 0)
-            {
-                current = max - (min - current);
-            }
-        }
     }
     
     public override void Frame(float deltaTime)
@@ -76,29 +68,33 @@ public class LoopNode : Node
         {
             case LoopType.loop:
                 Increment(deltaTime);
-                if (current < min)
+                if (current - max > 0)
                 {
-                    current = max;
+                    current = min + (current - max);
                 }
-                else if (current > max)
+                if (min - current > 0)
                 {
-                    current = min;
+                    current = max - (min - current);
                 }
                 break;
-            case LoopType.stop:                
+            case LoopType.stop:
+                if (((Pulse)stepTrig.GetData()).PulsePresent())
+                {
+                    current += ((Evaluable)stepSize.GetData()).EvaluateValue(0) * rateInverter;
+                }
                 if (current <= min)
                 {
+                    current = min;
                     if (rate * rateInverter > 0)
-                    {
-                        current = min;
+                    {                        
                         Increment(deltaTime);
                     }
                 }
                 else if (current >= max)
                 {
+                    current = max;
                     if (rate * rateInverter < 0)
-                    {
-                        current = max;
+                    {                        
                         Increment(deltaTime);
                     }
                 }
@@ -127,6 +123,10 @@ public class LoopNode : Node
 
     private void Increment(float deltaTime)
     {
+        if (((Pulse)stepTrig.GetData()).PulsePresent())
+        {
+            current += ((Evaluable)stepSize.GetData()).EvaluateValue(0) * rateInverter;
+        }
         current += rate * rateInverter * deltaTime;
     }
 
@@ -161,4 +161,16 @@ public class LoopNode : Node
     }
 
 
+}
+
+public class AdvancedLoopNode : LoopNode
+{
+    public AdvancedLoopNode(bool x) : base(x)
+    {
+        nodeDisc = "Advanced Loop";
+        ResetTrig.visible = true;
+        InvertTrig.visible = true;
+        stepTrig.visible = true;
+        stepSize.visible = true;
+    }
 }

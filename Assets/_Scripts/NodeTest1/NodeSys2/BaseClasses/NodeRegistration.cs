@@ -3,19 +3,21 @@ using UnityEngine;
 
 public class NodeRegistration
 {
-    public enum NodeTypes {floatConst, add, loop, ColorConst, ColorTable, Transform , LED, Math, mixRGB, 
+    public enum NodeTypes {NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Transform , LED, Math, mixRGB, 
         NetReceive, GroupInput, GroupOutput, Group, StaticInstancer, logic}
 
     public static Node GetNode(NodeTypes type)
     {
         switch (type)
         {
-            case NodeTypes.floatConst:
+            case NodeTypes.NumberConstant:
                 return new FloatConstant(true);
-            case NodeTypes.add:
+            case NodeTypes.Add:
                 return new AddNode(true);
-            case NodeTypes.loop:
+            case NodeTypes.Loop:                               
                 return new LoopNode(true);
+            case NodeTypes.AdvancedLoop:
+                return new AdvancedLoopNode(true);
             case NodeTypes.ColorConst:
                 return new ColorConstant(true);
             case NodeTypes.LED:
