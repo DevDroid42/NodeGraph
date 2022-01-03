@@ -59,6 +59,14 @@ public class LoopNode : Node
         if (((Pulse)stepTrig.GetData()).PulsePresent())
         {
             current += ((Evaluable)stepSize.GetData()).EvaluateValue(0) * rateInverter;
+            if(current - max > 0)
+            {
+                current = min + (current - max);
+            }
+            if (min - current > 0)
+            {
+                current = max - (min - current);
+            }
         }
     }
     
@@ -78,14 +86,24 @@ public class LoopNode : Node
                 }
                 break;
             case LoopType.stop:                
-                if (current < min && rate * rateInverter > 0)
+                if (current <= min)
                 {
-                    current = min;
-                    Increment(deltaTime);
+                    if (rate * rateInverter > 0)
+                    {
+                        current = min;
+                        Increment(deltaTime);
+                    }
                 }
-                else if (current > max && rate * rateInverter < 0)
+                else if (current >= max)
                 {
-                    current = max;
+                    if (rate * rateInverter < 0)
+                    {
+                        current = max;
+                        Increment(deltaTime);
+                    }
+                }
+                else
+                {
                     Increment(deltaTime);
                 }
                 break;

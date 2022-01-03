@@ -20,12 +20,13 @@ public class Pulse : ICopyable
         if (pulsePresent)
         {
             pulsePresent = false;
+            return true;
         }
-        return pulsePresent;
+        return false;
     }
 
     public object GetCopy()
     {
-        return this.MemberwiseClone();
+        return new Pulse(pulsePresent);
     }
 }
