@@ -11,7 +11,7 @@ using Newtonsoft.Json.Converters;
 public class NetworkMessage
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum DataType {Value = 0, ValueArray = 1, Color = 2, ColorArray = 3, Text = 4};
+    public enum DataType {Float = 0, FloatArray = 1, Color = 2, ColorArray = 3, Text = 4};
     //the dataType this message holds
     public DataType dataType = new DataType();
     //the ip this message was sent from

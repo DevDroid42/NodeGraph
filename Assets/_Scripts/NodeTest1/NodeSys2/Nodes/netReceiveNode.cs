@@ -33,8 +33,8 @@ public class netReceiveNode : Node
             //string value = dataType.GetData().ToString();
             switch ((NetworkMessage.DataType)dataType.GetData())
             {
-                case NetworkMessage.DataType.Value:
-                    output.Invoke(new EvaluableFloat(ByteConverter.GetInt(message.data)));
+                case NetworkMessage.DataType.Float:
+                    output.Invoke(new EvaluableFloat(ByteConverter.GetFLoat(message.data)));
                     break;
                 default:
                     Debug.LogWarning("Invalid data type received with ID of " + message.ID);

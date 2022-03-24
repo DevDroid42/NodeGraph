@@ -5,9 +5,10 @@ using UnityEngine;
 //collection of static methods for converting NodeNet data types from bytes to abstractions (variables)
 public class ByteConverter
 {
-    public static int GetInt(byte[] bytes)
+    public static float GetFLoat(byte[] bytes)
     {
-        int i = BitConverter.ToInt32(bytes, 0);
+        float i = System.BitConverter.ToSingle(bytes, 0);
+        //int i = BitConverter.to(bytes, 0);
         return i;
     }
 }

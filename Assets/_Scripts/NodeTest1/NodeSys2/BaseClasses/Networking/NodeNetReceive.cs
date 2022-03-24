@@ -44,7 +44,7 @@ public class NodeNetReceive
 }
 
 //A thread to process and store data as it comes in. This is made for live data streaming. messages retreived will always
-//be the most receint received from the header. All messages received in this manner are not garanteed to be processed
+//be the most recent received from the header. All messages received in this manner are not garanteed to be processed
 public class NodeNetReceiveThreaded
 {
     private object msgLock = new object();
@@ -65,6 +65,7 @@ public class NodeNetReceiveThreaded
             lock (msgLock)
             {
                 bool messageReceived = true;
+                bool messageUpdated = false;
                 NetworkMessage receivedMsg = null;
                 //if there is an error parsing don't add to queue
                 try
@@ -86,11 +87,13 @@ public class NodeNetReceiveThreaded
                         if (receivedMsg.CompareHeader(messageQueue[i]))
                         {
                             messageQueue[i].UpdateDataBytes(receiveBytes);
+                            messageUpdated = true;
+                            break;
                         }
-                        else
-                        {
-                            messageQueue.Add(receivedMsg);
-                        }
+                    }
+                    if (!messageUpdated)
+                    {
+                        messageQueue.Add(receivedMsg);
                     }
                 }
             }

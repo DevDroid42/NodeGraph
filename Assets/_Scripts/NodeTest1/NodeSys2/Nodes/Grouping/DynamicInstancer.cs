@@ -24,7 +24,7 @@ public class DynamicInstancer : StaticInstancer
     {
         if (((Pulse)instanceTrigger.GetData()).PulsePresent())
         {
-            Debug.Log("InstanceRunning: " + currentInstance + "\t Group Count:" + groups.Count);
+            //Debug.Log("InstanceRunning: " + currentInstance + "\t Group Count:" + groups.Count);
             foreach (Property prop in groupInputs)
             {
                 if (groups[currentInstance] != null)
