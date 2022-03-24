@@ -33,7 +33,11 @@ public class NodeNetReceive
     {
         List<NetworkMessage> messages = netThreadObj.GetMessages();
         foreach (NetworkMessage message in messages)
-        {
+        {   
+            if(message.dataType == NetworkMessage.DataType.Debug)
+            {
+                Debug.Log(Encoding.ASCII.GetString(message.data));
+            }
             //Debug.Log(message);
             if (Node.nodeNetDelagate != null)
             {

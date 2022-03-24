@@ -4,7 +4,7 @@ using UnityEngine;
 public class NodeRegistration
 {
     public enum NodeTypes {NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Transform , LED, Math, mixRGB, 
-        NetReceive, GroupInput, GroupOutput, Group, StaticInstancer, DynamicInstancer, InstancedPulse, logic}
+        NetReceive, GroupInput, GroupOutput, Group, StaticInstancer, DynamicInstancer, InstancedPulse, logic, udpSend}
 
     public static Node GetNode(NodeTypes type)
     {
@@ -46,6 +46,8 @@ public class NodeRegistration
                 return new InstancedPulseNode(true);
             case NodeTypes.logic:
                 return new LogicNode(true);
+            case NodeTypes.udpSend:
+                return new LedUDP(true);
             default:
                 return null;
 

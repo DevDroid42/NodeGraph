@@ -1,11 +1,12 @@
 ﻿using nodeSys2;
 using System;
 using System.Net.Sockets;
+using System.Net;
 using UnityEngine;
 
 public class LedUDP : Node
 {
-    public Property ipProp, portProp, ledCountProp, EvaluableData, message;
+    public Property ipProp, portProp, ledCountProp, input, message;
     private int port, ledCount;
     private string ip;
     NonMonoUDP udp;
@@ -13,14 +14,14 @@ public class LedUDP : Node
     public LedUDP(bool x)
     {
         nodeDisc = "LED Node";
-        ipProp = CreateInputProperty("IP:", false, new StringData("192.168.0.49"));
+        ipProp = CreateInputProperty("IP:", false, new StringData("192.168.0.133"));
         ipProp.interactable = true;
         ledCountProp = CreateInputProperty("Led Count", false, new EvaluableFloat(0));
         ledCountProp.interactable = true;
         portProp = CreateInputProperty("Port", false, new EvaluableFloat(21234));
         portProp.interactable = true;
-        EvaluableData = CreateInputProperty("Color Data", true, new Evaluable());
-        EvaluableData.visible = false;
+        input = CreateInputProperty("Color Data", true, new Evaluable());
+        input.visible = true;
         message = CreateInputProperty("status:", false, new Message(""));
     }
 
@@ -41,31 +42,15 @@ public class LedUDP : Node
 
     public override void Frame(float deltaTime)
     {
-        udp.Send(ledCount, colorData);
+        udp.Send(ledCount, (Evaluable)input.GetData());
     }
 
-    private Evaluable colorData = new Evaluable();
+    
     public override void Handle()
     {
-        if (ProccessData())
-        {
-            //udp.Update(ledCount, colorData);
-            //byte[] message = GenWARLS(ledCount, colorData);
-            //udpClient.Send(message, message.Length);
-        }
+        
     }
-
-    private bool ProccessData()
-    {
-        if (EvaluableData.TryGetDataType(ref colorData))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+  
 }
 
 
@@ -74,36 +59,19 @@ public class NonMonoUDP
     public string ip = "192.168.0.49";
     public int port = 21324;
     private UdpClient udpClient;
+    
 
     // Start is called before the first frame update
     public NonMonoUDP(string ip, int port)
     {
         this.ip = ip;
         udpClient = new UdpClient(port);
-        InitConnection();
-    }
-
-    public void InitConnection()
-    {
-        try
-        {
-            udpClient.Connect(ip, port);
-        }
-        catch (Exception e)
-        {
-            Debug.LogWarning(e.ToString());
-        }
-    }
-
-    public void CloseConnection()
-    {
-        udpClient.Close();
     }
 
     public void Send(int ledCount, Evaluable data)
     {
-        byte[] message = GenWARLS(ledCount, data);
-        udpClient.Send(message, message.Length);
+        byte[] message = GenWARLS(ledCount, data);        
+        udpClient.Send(message, message.Length, ip, port);
     }
 
     public byte[] GenWARLS(int ledCount, Evaluable colorData)

@@ -11,4 +11,14 @@ public class ByteConverter
         //int i = BitConverter.to(bytes, 0);
         return i;
     }
+
+    public static EvaluableColorTable GetColorTable(byte[] bytes)
+    {
+        EvaluableColorTable table = new EvaluableColorTable(bytes.Length);
+        for (int i = 0; i < bytes.Length; i++)
+        {
+            table.SetKey(i, bytes[i] / 255f);
+        }
+        return table;
+    }
 }

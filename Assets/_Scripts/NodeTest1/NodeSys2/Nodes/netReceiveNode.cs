@@ -1,5 +1,6 @@
 ﻿using nodeSys2;
 using System;
+using System.Text;
 using UnityEngine;
 //using UnityEngine;
 
@@ -35,6 +36,9 @@ public class netReceiveNode : Node
             {
                 case NetworkMessage.DataType.Float:
                     output.Invoke(new EvaluableFloat(ByteConverter.GetFLoat(message.data)));
+                    break;
+                case NetworkMessage.DataType.ByteArray:
+                    output.Invoke(ByteConverter.GetColorTable(message.data));
                     break;
                 default:
                     Debug.LogWarning("Invalid data type received with ID of " + message.ID);
