@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class NodeRegistration
 {
+    //public enum NodeGroups {,Instancers,Math,Mixing}
+
     public enum NodeTypes {NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Transform , LED, Math, mixRGB, 
         NetReceive, GroupInput, GroupOutput, Group, StaticInstancer, DynamicInstancer, InstancedPulse, logic, udpSend}
 
@@ -29,7 +31,7 @@ public class NodeRegistration
             case NodeTypes.Math:
                 return new MathNode(true);
             case NodeTypes.NetReceive:
-                return new netReceiveNode(true);
+                return new NetReceiveNode(true);
             case NodeTypes.GroupInput:
                 return new GroupInputNode(true);
             case NodeTypes.GroupOutput:

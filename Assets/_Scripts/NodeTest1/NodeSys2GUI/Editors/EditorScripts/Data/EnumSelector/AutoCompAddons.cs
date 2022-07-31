@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI.Extensions;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(AutoCompleteComboBox))]
+[RequireComponent(typeof(AutoCompExtended))]
 public class AutoCompAddons : MonoBehaviour
 {
-    private AutoCompleteComboBox box;
+    private AutoCompExtended box;
     public Transform itemParent;
     public InputField inputField;
     public Text placeholder;
@@ -16,7 +16,7 @@ public class AutoCompAddons : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        box = GetComponent<AutoCompleteComboBox>();
+        box = GetComponent<AutoCompExtended>();
     }
 
     string[] _panelItems;

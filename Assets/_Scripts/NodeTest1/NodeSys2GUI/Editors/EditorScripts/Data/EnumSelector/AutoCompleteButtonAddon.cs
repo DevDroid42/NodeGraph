@@ -7,7 +7,7 @@ using UnityEngine.UI.Extensions;
 
 public class AutoCompleteButtonAddon : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public AutoCompleteComboBox box;
+    public AutoCompExtended box;
     public Image image;
     public Sprite defaultSprite;
     public Sprite hoverSprite;
