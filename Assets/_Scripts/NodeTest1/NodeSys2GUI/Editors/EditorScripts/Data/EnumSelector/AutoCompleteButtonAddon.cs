@@ -7,20 +7,23 @@ using UnityEngine.UI.Extensions;
 
 public class AutoCompleteButtonAddon : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public AutoCompExtended box;
+    public AutoCompleteComboBox box;
+    public AutoCompAddons addons;
     public Image image;
     public Sprite defaultSprite;
     public Sprite hoverSprite;
     public Text text;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        box.OnValChangedEvent.AddListener(SetColor);
+        box.OnSelectionChanged.AddListener(SetColor);
+        addons.onMoved.AddListener(SetColor);
     }
 
-    void SetColor()
+    void SetColor(string inputValue, bool test2)
     {
-        if(text.text == box.Text)
+        Debug.Log("INPUT:" + inputValue);
+        if(text.text == inputValue)
         {
             text.color = box.ValidSelectionTextColor;
         }
@@ -29,6 +32,7 @@ public class AutoCompleteButtonAddon : MonoBehaviour, IPointerClickHandler, IPoi
             text.color = box.MatchingItemsRemainingTextColor;
         }
     }
+    
 
     public void OnPointerClick(PointerEventData eventData)
     {
