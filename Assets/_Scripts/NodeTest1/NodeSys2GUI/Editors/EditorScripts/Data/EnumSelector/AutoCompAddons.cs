@@ -8,7 +8,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AutoCompleteComboBox))]
 public class AutoCompAddons : MonoBehaviour
 {
-    private AutoCompleteComboBox box;
     //this event is made to match the OnValueChanged event to update the options
     public class valChangedEvent : UnityEvent<string, bool> { }
     public valChangedEvent onMoved = new valChangedEvent();
@@ -17,15 +16,8 @@ public class AutoCompAddons : MonoBehaviour
     public Text placeholder;
     public Text IFText;
     public Text MoveText;
-    public GameObject items;
 
-    private GameObject pausedOptions;
-    private bool paused;
-    // Start is called before the first frame update
-    void Start()
-    {
-        box = GetComponent<AutoCompleteComboBox>();
-    }
+    private bool moving;
 
     string[] _panelItems;
     int index = 0;
@@ -44,7 +36,7 @@ public class AutoCompAddons : MonoBehaviour
         MoveText.color = new Color(MoveText.color.r, MoveText.color.g, MoveText.color.b, 1);
         placeholder.color = new Color(placeholder.color.r, placeholder.color.g, placeholder.color.b, 0);
 
-        if (paused)
+        if (moving)
         {
             MoveText.text = "";
         }
@@ -65,16 +57,16 @@ public class AutoCompAddons : MonoBehaviour
             if (index < _panelItems.Length - 1)
             {
                 index++;
-                if (!paused)
+                if (!moving)
                     index = 0;
-                SetPaused(true);
+                moving = true;
                 onMoved.Invoke(_panelItems[index], false);
                 MoveText.text = _panelItems[index];
             }
             else
             {
                 index = 0;
-                SetPaused(true);
+                moving = true;
                 onMoved.Invoke(_panelItems[index], false);
                 MoveText.text = _panelItems[index];
             }
@@ -85,16 +77,16 @@ public class AutoCompAddons : MonoBehaviour
             if (index > 0)
             {
                 index--;
-                if (!paused)
+                if (!moving)
                     index = 0;
-                SetPaused(true);
+                moving = true;
                 onMoved.Invoke(_panelItems[index], false);
                 MoveText.text = _panelItems[index];
             }
             else
             {
                 index = _panelItems.Length - 1;
-                SetPaused(true);
+                moving = true;
                 onMoved.Invoke(_panelItems[index], false);
                 MoveText.text = _panelItems[index];
             }            
@@ -103,31 +95,13 @@ public class AutoCompAddons : MonoBehaviour
 
     public void SetInputField()
     {
-        if (paused)
+        if (moving)
         {
-            SetPaused(false);
+            moving = false;
             inputField.text = MoveText.text;
             inputField.caretPosition = MoveText.text.Length + 1;
             GlobalInputDelagates.select.Invoke();
         }
-    }
-
-    //on pause copy the live update window and show a snapshot of it
-    void SetPaused(bool paused)
-    {
-        //changing from unpaused to paused state
-        if(!this.paused && paused)
-        {
-            pausedOptions = Instantiate(items, items.transform.parent);
-            items.SetActive(false);
-        }
-        //changing from paused to unpaused state
-        if(this.paused && !paused)
-        {
-            Destroy(pausedOptions);
-            items.SetActive(true);
-        }
-        this.paused = paused;
     }
 
     void OnBack()

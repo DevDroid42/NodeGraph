@@ -22,7 +22,6 @@ public class AutoCompleteButtonAddon : MonoBehaviour, IPointerClickHandler, IPoi
 
     void SetColor(string inputValue, bool test2)
     {
-        Debug.Log("INPUT:" + inputValue);
         if(text.text == inputValue)
         {
             text.color = box.ValidSelectionTextColor;
