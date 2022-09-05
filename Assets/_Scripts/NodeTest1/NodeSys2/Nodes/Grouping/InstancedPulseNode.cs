@@ -7,7 +7,7 @@ public class InstancedPulseNode : Node
 {
     public Property output;
 
-    public InstancedPulseNode(bool x)
+    public InstancedPulseNode(ColorVec pos) : base(pos)
     {
         nodeDisc = "Instanced Pulse";
         output = CreateOutputProperty("output");

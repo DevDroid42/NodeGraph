@@ -127,9 +127,9 @@ public class GUIGraph : MonoBehaviour
         return GraphSerialization.GraphToJson(graphRef);
     }
 
-    public void AddNode(NodeRegistration.NodeTypes nodeType)
+    public void AddNode(NodeRegistration.NodeTypes nodeType, ColorVec pos)
     {
-        graphRef.nodes.Add(NodeRegistration.GetNode(nodeType));
+        graphRef.nodes.Add(NodeRegistration.GetNode(nodeType, pos));
         ActionPreformed();
         UpdateGUI();
     }

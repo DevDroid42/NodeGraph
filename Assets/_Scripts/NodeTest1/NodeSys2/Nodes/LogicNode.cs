@@ -16,7 +16,7 @@ public class LogicNode : Node
 
     public Property data1, compareMode, data2, pulseOutput, valueOutput;
 
-    public LogicNode(bool x)
+    public LogicNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Logic";
         data1 = CreateInputProperty("data1", true, new EvaluableFloat(0));

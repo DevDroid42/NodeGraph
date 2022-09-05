@@ -13,7 +13,7 @@ public class GroupOutputNode : Node, INameable
     //used to connect to a parent group or instancer node
     [JsonIgnore] public GroupOutDelegate outDel;
 
-    public GroupOutputNode(bool x)
+    public GroupOutputNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Group output";
         name = CreateInputProperty("Data tag", false, new StringData("output"), typeof(StringData));

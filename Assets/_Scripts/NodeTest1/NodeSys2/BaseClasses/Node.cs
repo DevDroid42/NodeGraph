@@ -68,9 +68,20 @@ namespace nodeSys2
             MarkedForDeletion = true;
         }
 
+        [JsonConstructor]
         public Node()
         {
 
+        }
+
+        public Node(ColorVec position)
+        {
+            if (position == null)
+            {
+                position = 0;
+            }
+            xPos = position.rx;
+            xPos = position.gy;
         }
         
         //ensures that all ports delagates are connected to each other and references to parents are properly set

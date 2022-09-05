@@ -8,7 +8,7 @@ public class AddNode : Node
 
     public Property num1, num2, output;
     //the constructor needs to have a paramater so that the deserializer can use the default one
-    public AddNode(bool x)
+    public AddNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Add Node";
         num1 = base.CreateInputProperty("Num1", true, new EvaluableFloat(0));

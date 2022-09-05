@@ -11,7 +11,7 @@ public class LedUDP : Node
     private string ip;
     NonMonoUDP udp;
 
-    public LedUDP(bool x)
+    public LedUDP(ColorVec pos) : base(pos)
     {
         nodeDisc = "LED Node";
         ipProp = CreateInputProperty("IP:", false, new StringData("192.168.0.133"));

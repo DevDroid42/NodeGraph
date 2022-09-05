@@ -15,7 +15,7 @@ public class GroupInputNode : Node, INameable
     }    
     public Property input, inputType, name, output;
 
-    public GroupInputNode(bool x)
+    public GroupInputNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Group Input";
         input = CreateInputProperty("DataIn", false, new Evaluable(), typeof(ICopyable));

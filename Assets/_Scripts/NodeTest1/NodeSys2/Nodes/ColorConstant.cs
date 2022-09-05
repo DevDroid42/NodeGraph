@@ -16,7 +16,7 @@ public class ColorConstant : Node
     private ColorVec internalColorDupe = new ColorVec();
 
 
-    public ColorConstant(bool x)
+    public ColorConstant(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Color Constant";
         colorMode = CreateInputProperty("ColorSpace", false, new ColorOperations.ColorSpace());

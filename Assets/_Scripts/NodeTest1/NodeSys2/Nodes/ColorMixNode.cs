@@ -9,7 +9,7 @@ public class ColorMixNode : Node
     public Property mixType, factor, elementCount, output;
     public List<Property> elements;
 
-    public ColorMixNode(bool x)
+    public ColorMixNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Mix";
         elements = new List<Property>(0);

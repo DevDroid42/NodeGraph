@@ -8,48 +8,48 @@ public class NodeRegistration
     public enum NodeTypes {NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Transform , LED, Math, mixRGB, 
         NetReceive, GroupInput, GroupOutput, Group, StaticInstancer, DynamicInstancer, InstancedPulse, logic, udpSend}
 
-    public static Node GetNode(NodeTypes type)
+    public static Node GetNode(NodeTypes type, ColorVec pos)
     {
         switch (type)
         {
             case NodeTypes.NumberConstant:
-                return new FloatConstant(true);
+                return new FloatConstant(pos);
             case NodeTypes.Add:
-                return new AddNode(true);
+                return new AddNode(pos);
             case NodeTypes.Loop:                               
-                return new LoopNode(true);
+                return new LoopNode(pos);
             case NodeTypes.AdvancedLoop:
-                return new AdvancedLoopNode(true);
+                return new AdvancedLoopNode(pos);
             case NodeTypes.ColorConst:
-                return new ColorConstant(true);
+                return new ColorConstant(pos);
             case NodeTypes.LED:
-                return new LedUDP(true);
+                return new LedUDP(pos);
             case NodeTypes.ColorTable:
-                return new ColorTableNode(true);
+                return new ColorTableNode(pos);
             case NodeTypes.Transform:
-                return new TransformNode(true);
+                return new TransformNode(pos);
             case NodeTypes.Math:
-                return new MathNode(true);
+                return new MathNode(pos);
             case NodeTypes.NetReceive:
-                return new NetReceiveNode(true);
+                return new NetReceiveNode(pos);
             case NodeTypes.GroupInput:
-                return new GroupInputNode(true);
+                return new GroupInputNode(pos);
             case NodeTypes.GroupOutput:
-                return new GroupOutputNode(true);
+                return new GroupOutputNode(pos);
             case NodeTypes.Group:
-                return new GroupNode(true);
+                return new GroupNode(pos);
             case NodeTypes.mixRGB:
-                return new ColorMixNode(true);
+                return new ColorMixNode(pos);
             case NodeTypes.StaticInstancer:
-                return new StaticInstancer(true);
+                return new StaticInstancer(pos);
             case NodeTypes.DynamicInstancer:
-                return new DynamicInstancer(true);
+                return new DynamicInstancer(pos);
             case NodeTypes.InstancedPulse:
-                return new InstancedPulseNode(true);
+                return new InstancedPulseNode(pos);
             case NodeTypes.logic:
-                return new LogicNode(true);
+                return new LogicNode(pos);
             case NodeTypes.udpSend:
-                return new LedUDP(true);
+                return new LedUDP(pos);
             default:
                 return null;
 

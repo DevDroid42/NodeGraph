@@ -10,7 +10,7 @@ public class MathNode : Node
     public List<Property> variables;
     private EvaluableCustomEquation equation;
 
-    public MathNode(bool x)
+    public MathNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Math";
         variables = new List<Property>();

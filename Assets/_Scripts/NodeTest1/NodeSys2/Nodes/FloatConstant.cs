@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 public class FloatConstant : Node
 {
     public Property constant, output;
-    public FloatConstant(bool x)
+    public FloatConstant(ColorVec pos) : base(pos)
     {
         nodeDisc = "Float Constant";
         constant = CreateInputProperty("const", false, new EvaluableFloat(0));

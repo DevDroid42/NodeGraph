@@ -14,7 +14,7 @@ public class LoopNode : Node
     private LoopType loopType;
     private int rateInverter = 1;
 
-    public LoopNode(bool x)
+    public LoopNode(ColorVec pos) : base(pos)
     {
         nodeDisc = "Loop";
         ResetTrig = CreateInputProperty("Reset Trigger", true, new Pulse(false), typeof(Pulse));
@@ -165,9 +165,10 @@ public class LoopNode : Node
 
 }
 
+//same as the loop node but exposes more options
 public class AdvancedLoopNode : LoopNode
 {
-    public AdvancedLoopNode(bool x) : base(x)
+    public AdvancedLoopNode(ColorVec pos) : base(pos)
     {
         nodeDisc = "Advanced Loop";
         ResetTrig.visible = true;

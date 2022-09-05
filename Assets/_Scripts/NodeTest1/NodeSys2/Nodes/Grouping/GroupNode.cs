@@ -10,7 +10,7 @@ public class GroupNode : GroupNodeBase
     public List<Property> groupOutputs;
     private GroupOutputNode.GroupOutDelegate groupOutDelegate;
 
-    public GroupNode(bool x)
+    public GroupNode(ColorVec pos) : base(pos)
     {
         graph = new Graph();        
         base.nodeDisc = "Group Node";        

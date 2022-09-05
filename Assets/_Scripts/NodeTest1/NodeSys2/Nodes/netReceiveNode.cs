@@ -9,7 +9,7 @@ public class NetReceiveNode : Node
 
     public Property ID, dataType, output;
     //the constructor needs to have a paramater so that the deserializer can use the default one
-    public NetReceiveNode(bool x)
+    public NetReceiveNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Net Receive";
         dataType = base.CreateInputProperty("Data Type", false, new NetworkMessage.DataType());

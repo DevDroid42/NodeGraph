@@ -8,7 +8,7 @@ public class DynamicInstancer : StaticInstancer
     public Property instanceTrigger;
     private int currentInstance;
 
-    public DynamicInstancer(bool x) : base(x)
+    public DynamicInstancer(ColorVec pos) : base(pos)
     {
         nodeDisc = "Dynamic Instancer";
         instanceTrigger = CreateInputProperty("Trigger", true, new Pulse(false), 0);

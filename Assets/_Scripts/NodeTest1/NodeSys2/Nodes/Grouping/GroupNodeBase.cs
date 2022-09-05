@@ -8,6 +8,8 @@ public class GroupNodeBase : Node
 {
     public Graph graph;
 
+    public GroupNodeBase(ColorVec pos) : base(pos) { }
+
     protected void Addproperties(List<string> tags, List<Property> propertyList, bool input)
     {
         //iterate through every tag

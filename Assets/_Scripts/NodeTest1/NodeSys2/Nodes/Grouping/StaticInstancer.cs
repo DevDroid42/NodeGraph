@@ -18,7 +18,7 @@ public class StaticInstancer : GroupNodeBase
     public Property InstanceCount, mixType, factor, output;
     private GroupOutputNode.GroupOutDelegate groupOutDelegate;
 
-    public StaticInstancer(bool x)
+    public StaticInstancer(ColorVec pos) : base(pos)
     {
         graph = new Graph();
         groupInputs = new List<Property>();

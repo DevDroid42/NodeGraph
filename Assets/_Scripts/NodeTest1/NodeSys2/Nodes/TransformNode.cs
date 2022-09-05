@@ -14,7 +14,7 @@ public class TransformNode : Node
     public enum SetType {OverWrite, Add, Subtract}
     private SetType setType;
 
-    public TransformNode(bool x)
+    public TransformNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Transform";
         setTypeProp = CreateInputProperty("Mix Type", false, new SetType());

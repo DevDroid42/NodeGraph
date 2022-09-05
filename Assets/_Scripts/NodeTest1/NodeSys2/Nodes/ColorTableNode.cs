@@ -9,7 +9,7 @@ public class ColorTableNode : Node
     public Property colorTable, interpolationType, clippingType, resolution, output;
     public List<Property> colors;
 
-    public ColorTableNode(bool x)
+    public ColorTableNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Color Table";
         colors = new List<Property>(0);
