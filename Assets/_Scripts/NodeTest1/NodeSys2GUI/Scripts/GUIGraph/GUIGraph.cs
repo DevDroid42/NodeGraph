@@ -300,8 +300,8 @@ public class GUIGraph : MonoBehaviour
         {
             if (guiNode.nodeRef == graphRef.nodes[i])
             {
-                graphRef.nodes[i].xPos = rt.localPosition.x;
-                graphRef.nodes[i].yPos = rt.localPosition.y;
+                graphRef.nodes[i].xPos = rt.position.x;
+                graphRef.nodes[i].yPos = rt.position.y;
                 graphRef.nodes[i].xScale = rt.sizeDelta.x;
                 graphRef.nodes[i].yScale = rt.sizeDelta.y;
             }

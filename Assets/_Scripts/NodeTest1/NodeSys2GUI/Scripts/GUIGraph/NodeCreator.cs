@@ -41,7 +41,7 @@ public class NodeCreator : MonoBehaviour
     void AddNode(int type)
     {
         Debug.Log((NodeRegistration.NodeTypes)type);
-        Vector2 pos = CanvasUtilities.RaycastPosWorld() * (float)(1/0.01019898) * 2;
+        Vector2 pos = CanvasUtilities.RaycastPosWorld();
         graph.AddNode((NodeRegistration.NodeTypes)type, new ColorVec(pos.x, pos.y));
     }
 }

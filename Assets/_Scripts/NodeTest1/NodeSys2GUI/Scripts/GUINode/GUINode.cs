@@ -53,7 +53,7 @@ public class GUINode : MonoBehaviour
     {
         GUIGraphRef = graphRef;
         nodeRef = node;
-        transform.localPosition = new Vector3(nodeRef.xPos, nodeRef.yPos, 0f);
+        transform.position = new Vector3(nodeRef.xPos, nodeRef.yPos, 0f);
         nodeTitle.text = nodeRef.GetName();
         SetupProperties();
         SetupNodeData();
