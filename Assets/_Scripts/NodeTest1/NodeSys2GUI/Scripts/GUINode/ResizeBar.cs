@@ -38,7 +38,7 @@ public class ResizeBar : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnDrag(PointerEventData eventData)
     {
-        sensitivity = 1 / BackgroundScroll.zoom.x * 110;
+        sensitivity = 1 / CameraMovement.zoom * 110;
         Vector2 PosDiff = ((Vector2)eventData.pointerCurrentRaycast.worldPosition) - initalCursor;
         switch (resizeType)
         {

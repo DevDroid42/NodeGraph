@@ -241,7 +241,7 @@ public class GUIGraph : MonoBehaviour
         lr.transform.localScale = new Vector2(110, 110);
         LineRenderer lrScript = lr.GetComponent<LineRenderer>();
         lrScript.SetPositions(points);
-        lrScript.widthMultiplier = BackgroundScroll.zoom.x / 10;
+        lrScript.widthMultiplier = CameraMovement.zoom / 10;
         return lr;
 
 

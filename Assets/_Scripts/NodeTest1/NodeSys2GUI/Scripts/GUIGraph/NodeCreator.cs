@@ -32,6 +32,8 @@ public class NodeCreator : MonoBehaviour
     void OpenNodeMenu()
     {
         enumSelector.transform.position = CanvasUtilities.RaycastPosWorld();
+        //This is a band-aid solution. For some reason the z value is being set to random values when directly assigning position
+        enumSelector.transform.localPosition = (Vector2)enumSelector.transform.localPosition;
         //enumSelector.SetUpEnum()
         enumSelector.OpenMenu();        
     }
@@ -39,7 +41,7 @@ public class NodeCreator : MonoBehaviour
     void AddNode(int type)
     {
         Debug.Log((NodeRegistration.NodeTypes)type);
-        Vector2 pos = CanvasUtilities.RaycastPosWorld();
+        Vector2 pos = CanvasUtilities.RaycastPosWorld() * (float)(1/0.01019898) * 2;
         graph.AddNode((NodeRegistration.NodeTypes)type, new ColorVec(pos.x, pos.y));
     }
 }

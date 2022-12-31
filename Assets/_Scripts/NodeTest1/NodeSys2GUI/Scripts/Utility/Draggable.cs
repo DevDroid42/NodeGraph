@@ -105,6 +105,8 @@ public class Draggable : MonoBehaviour
         onDrag.Invoke();
         if (selected)
             transform.position = initialObjectPos + ((Vector2)pointerData.pointerCurrentRaycast.worldPosition - initialCursorPos);
+            //This is a band-aid solution. For some reason the z value is being set to random values when directly assigning position
+            transform.localPosition = (Vector2)transform.localPosition;
     }
 
     private void BeginTranslate()

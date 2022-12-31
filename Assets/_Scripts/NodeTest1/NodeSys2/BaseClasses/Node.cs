@@ -81,7 +81,7 @@ namespace nodeSys2
                 position = 0;
             }
             xPos = position.rx;
-            xPos = position.gy;
+            yPos = position.gy;
         }
         
         //ensures that all ports delagates are connected to each other and references to parents are properly set
