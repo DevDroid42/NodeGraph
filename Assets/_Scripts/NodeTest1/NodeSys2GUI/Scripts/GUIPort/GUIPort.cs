@@ -43,13 +43,13 @@ public class GUIPort : MonoBehaviour
     private void PopulateListOfSnappablePorts()
     {
         snappablePorts = new List<GUIPort>();
-        foreach(GameObject node in GUIGraphRef.guiNodes)
+        foreach (GameObject node in GUIGraphRef.guiNodes)
         {
             if (!node.activeSelf) continue;
-            foreach(GUIPort port in node.GetComponentsInChildren<GUIPort>())
+            foreach (GUIPort port in node.GetComponentsInChildren<GUIPort>())
             {
                 //we can only snap to differing port types
-                if(port.isInputPort != isInputPort)
+                if (port.isInputPort != isInputPort)
                 {
                     snappablePorts.Add(port);
                 }
@@ -90,7 +90,6 @@ public class GUIPort : MonoBehaviour
     {
         selected = true;
         dragInProgess = true;
-        
     }
 
     private void Drag()
@@ -119,13 +118,17 @@ public class GUIPort : MonoBehaviour
                     minPort = port;
                 }
             }
-            if(minPort == null)
+            if (minPort == null)
             {
                 ct.position = transform.position;
             }
             else
             {
                 ct.position = minPort.transform.position;
+            }
+            if (Input.GetMouseButtonDown(0) && minPort != null)
+            {
+                ConnectToPort(minPort);
             }
         }
         else
@@ -141,39 +144,43 @@ public class GUIPort : MonoBehaviour
         dragInProgess = false;
         if (CanvasUtilities.TryGetRaycastComponent<GUIPort>(out GUIPort otherPort))
         {
-            //if so make sure it's a different type of port
-            if (otherPort.isInputPort != isInputPort)
-            {
-                //run the connection method on the input port
-                if (isInputPort)
-                {
-                    if (portRef.IsConnected())
-                    {
-                        portRef.Disconnect();
-                    }
-                    portRef.Connect(otherPort.portRef);
-                }
-                else
-                {
-                    if (otherPort.portRef.IsConnected())
-                    {
-                        otherPort.portRef.Disconnect();
-                    }
-                    otherPort.portRef.Connect(portRef);
-                }
-            }
-            GUIGraphRef.ActionPreformed();
+            ConnectToPort(otherPort);
         }
         else
         {
             Destroy(line);
         }
 
-        GUIGraph.updateGraphGUI.Invoke();
         if (line != null)
         {
             Destroy(line);
         }
+    }
+
+    private void ConnectToPort(GUIPort otherPort)
+    {
+        //if so make sure it's a different type of port
+        if (otherPort.isInputPort == isInputPort) return;
+
+        //run the connection method on the input port
+        if (isInputPort)
+        {
+            if (portRef.IsConnected())
+            {
+                portRef.Disconnect();
+            }
+            portRef.Connect(otherPort.portRef);
+        }
+        else
+        {
+            if (otherPort.portRef.IsConnected())
+            {
+                otherPort.portRef.Disconnect();
+            }
+            otherPort.portRef.Connect(portRef);
+        }
+        GUIGraph.updateGraphGUI.Invoke();
+        GUIGraphRef.ActionPreformed();
     }
 
     public void OnDrag(PointerEventData eventData)
