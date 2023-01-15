@@ -1,21 +1,20 @@
 ﻿using UnityEngine;
+using System;
 using UnityEngine.EventSystems;
 using nodeSys2;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 public class GUIPort : MonoBehaviour
      , IPointerClickHandler // 2
      , IPointerDownHandler
-     , IPointerUpHandler 
      , IDragHandler
-     , IEndDragHandler
-     , IPointerEnterHandler
-     , IPointerExitHandler     
 {
     public GUIGraph GUIGraphRef;
     public GUINode GUINodeRef;
     public Port portRef;
-    public bool inputPort;
+    public bool isInputPort;
     public Color PortColor;
     public Sprite HoverSprite;
     public GameObject LinePrefab;
@@ -23,6 +22,13 @@ public class GUIPort : MonoBehaviour
     //used to store cursors position
     private GameObject cursor;
     private RectTransform ct;
+
+    //we will track if the node is currently being dragged with this
+    private bool selected = false;
+    //list of ports we can snap to
+    List<GUIPort> snappablePorts;
+    //we don't want to be able to drag more than one port at a time
+    private static bool dragInProgess = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,71 +40,129 @@ public class GUIPort : MonoBehaviour
         ct.sizeDelta = new Vector2(10, 10);
     }
 
+    private void PopulateListOfSnappablePorts()
+    {
+        snappablePorts = new List<GUIPort>();
+        foreach(GameObject node in GUIGraphRef.guiNodes)
+        {
+            if (!node.activeSelf) continue;
+            foreach(GUIPort port in node.GetComponentsInChildren<GUIPort>())
+            {
+                //we can only snap to differing port types
+                if(port.isInputPort != isInputPort)
+                {
+                    snappablePorts.Add(port);
+                }
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-
+        if (selected)
+        {
+            Drag();
+        }
+        if (dragInProgess && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)))
+        {
+            EndDrag();
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData) // 3
     {
         //print("I was clicked at " + eventData.position);
-        if (inputPort)
+        if (isInputPort && portRef.IsConnected())
         {
             portRef.Disconnect();
             GUIGraphRef.ActionPreformed();
+            GUIGraph.updateGraphGUI.Invoke();
         }
-        GUIGraph.updateGraphGUI.Invoke();
+        else if (!dragInProgess)
+        {
+            BeginDrag();
+        }
+
     }
 
-    public void OnDrag(PointerEventData eventData)
+    private void BeginDrag()
+    {
+        selected = true;
+        dragInProgess = true;
+        
+    }
+
+    private void Drag()
     {
         //Debug.Log("dragging");
-        if(line != null)
+        if (line != null)
         {
             Destroy(line);
         }
-        ct.position = eventData.pointerCurrentRaycast.worldPosition;
-        line = GUIGraph.DrawLinesFromRect(gameObject, cursor, LinePrefab, transform);
-    }    
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        //Debug.Log("pointer up");
-        if (eventData.pointerCurrentRaycast.gameObject != null)
-        {            
-            //check if over other port
-            if (eventData.pointerCurrentRaycast.gameObject.TryGetComponent(out GUIPort otherPort))
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            PopulateListOfSnappablePorts();
+        }
+        Vector2 mousePos = CanvasUtilities.RaycastPosWorld();
+        //snap to nearest 
+        if (Input.GetKey(KeyCode.LeftAlt))
+        {
+            GUIPort minPort = null;
+            float minDist = float.PositiveInfinity;
+            foreach (GUIPort port in snappablePorts)
             {
-                //if so make sure it's a different type of port
-                if (otherPort.inputPort != inputPort)
+                float dist = Vector2.Distance(port.transform.position, mousePos);
+                if (dist < minDist)
                 {
-                    //run the connection method on the input port
-                    if (inputPort)
-                    {
-                        if (portRef.IsConnected())
-                            portRef.Disconnect();
-                        portRef.Connect(otherPort.portRef);
-                    }
-                    else
-                    {
-                        if (otherPort.portRef.IsConnected())
-                            otherPort.portRef.Disconnect();
-                        otherPort.portRef.Connect(portRef);
-                    }
+                    minDist = dist;
+                    minPort = port;
                 }
-                GUIGraphRef.ActionPreformed();                
             }
+            if(minPort == null)
+            {
+                ct.position = transform.position;
+            }
+            else
+            {
+                ct.position = minPort.transform.position;
+            }
+        }
+        else
+        {
+            ct.position = mousePos;
+        }
+        line = GUIGraph.DrawLinesFromRect(gameObject, cursor, LinePrefab, transform);
+    }
+
+    private void EndDrag()
+    {
+        selected = false;
+        dragInProgess = false;
+        if (CanvasUtilities.TryGetRaycastComponent<GUIPort>(out GUIPort otherPort))
+        {
+            //if so make sure it's a different type of port
+            if (otherPort.isInputPort != isInputPort)
+            {
+                //run the connection method on the input port
+                if (isInputPort)
+                {
+                    if (portRef.IsConnected())
+                    {
+                        portRef.Disconnect();
+                    }
+                    portRef.Connect(otherPort.portRef);
+                }
+                else
+                {
+                    if (otherPort.portRef.IsConnected())
+                    {
+                        otherPort.portRef.Disconnect();
+                    }
+                    otherPort.portRef.Connect(portRef);
+                }
+            }
+            GUIGraphRef.ActionPreformed();
         }
         else
         {
@@ -106,20 +170,19 @@ public class GUIPort : MonoBehaviour
         }
 
         GUIGraph.updateGraphGUI.Invoke();
-        if(line != null)
+        if (line != null)
         {
             Destroy(line);
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnDrag(PointerEventData eventData)
     {
-        //these need to be implemented because of a unity bug:
-        //https://answers.unity.com/questions/1082179/mouse-drag-element-inside-scrollrect-throws-pointe.html
+        BeginDrag();
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        //need to be implemented because of unity bug
+
     }
 }

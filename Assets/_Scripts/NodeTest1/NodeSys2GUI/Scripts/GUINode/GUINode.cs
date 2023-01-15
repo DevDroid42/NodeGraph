@@ -114,7 +114,7 @@ public class GUINode : MonoBehaviour
                     guiPort.portRef = properties[i].dataPort;
                     guiPort.GUIGraphRef = GUIGraphRef;
                     guiPort.GUINodeRef = this;
-                    guiPort.inputPort = isInput;
+                    guiPort.isInputPort = isInput;
                     //if it is an input setup the editor. However, outputs don't have editors so don't otherwise
                     if (properties[i].isInput)
                     {

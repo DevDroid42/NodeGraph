@@ -12,8 +12,7 @@ public class CanvasUtilities : MonoBehaviour
     {
     }
 
-    //gets current cursor world position based on raycast intersection
-    public static Vector2 RaycastPosWorld()
+    public static List<RaycastResult> GetRaycastResults()
     {
         //Set the Pointer Event Position to that of the mouse position
         PointerEventData pointerData = new PointerEventData(EventSystem.current);
@@ -24,6 +23,34 @@ public class CanvasUtilities : MonoBehaviour
         //Raycast using the Graphics Raycaster and mouse click position
         //raycaster.Raycast(eventData, results);
         EventSystem.current.RaycastAll(pointerData, results);
+
+        return results;
+    }
+
+    //Attempts to get a compenent from a list of raycast results. 
+    //In the case where multiple components are present a random one will be selected
+    public static bool TryGetRaycastComponent<T>(out T component) where T : class
+    {
+        component = null;
+
+        List<RaycastResult> results = GetRaycastResults();
+
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject.TryGetComponent<T>(out T comp))
+            {
+                component = comp;
+            }
+        }
+        //return true if the component is found
+        return component != null;
+    }
+
+    //gets current cursor world position based on raycast intersection
+    public static Vector2 RaycastPosWorld()
+    {
+        //Create a list of Raycast Results
+        List<RaycastResult> results = GetRaycastResults();
 
         //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
         //Debug.Log("Raycast Count: " + results.Count);

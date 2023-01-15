@@ -22,7 +22,7 @@ public class GUIPortHolder : MonoBehaviour
         guiPort = Port.GetComponent<GUIPort>();
         rt = Port.GetComponent<RectTransform>();
         //if the port is an input put it on the left
-        if (guiPort.inputPort)
+        if (guiPort.isInputPort)
         {
             rt.anchorMin = new Vector2(0, 0.5f);
             rt.anchorMax = new Vector2(0, 0.5f);
