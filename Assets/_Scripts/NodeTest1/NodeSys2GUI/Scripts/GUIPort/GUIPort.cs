@@ -64,7 +64,7 @@ public class GUIPort : MonoBehaviour
         {
             Drag();
         }
-        if (dragInProgess && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)))
+        if (selected && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)))
         {
             EndDrag();
         }
