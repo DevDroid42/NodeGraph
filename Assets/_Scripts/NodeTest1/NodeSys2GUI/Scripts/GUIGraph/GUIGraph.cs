@@ -158,10 +158,18 @@ public class GUIGraph : MonoBehaviour
         }
         MakeConnections();
     }
-
-    public List<GameObject> lines = new List<GameObject>();
     public void MakeConnections()
     {
+        StartCoroutine(MakeConnectionsCoroutine());
+    }
+
+    public List<GameObject> lines = new List<GameObject>();
+    public IEnumerator MakeConnectionsCoroutine()
+    {
+        //Band-aid fix. Wait a frame for the unity layout scripts to run so that 
+        //the positioning of ports is correct
+        yield return null;
+
         VerifyNodes();
         for (int i = 0; i < lines.Count; i++)
         {
