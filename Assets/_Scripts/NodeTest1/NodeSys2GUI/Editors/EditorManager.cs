@@ -18,11 +18,34 @@ public class EditorManager : MonoBehaviour
     public GameObject VectorEditor;
     public GameObject EnumEditor;
 
+
+
+    //Idea, assign a type here that is used to change which data type gets instantiated. 
+    //all dependancy injections should function soley on properties and never 
+    //a properties instance of data
     public void SetupEditor(Property props, Transform EditorHolder)
     {
         if (props.visible)
         {
-
+            switch (props.currentEditor)
+            {
+                case EditorTypeManagement.Editor.nonEvaluable:
+                    NonEvaluableSetup(props, EditorHolder);
+                    break;
+                case EditorTypeManagement.Editor.boolean:
+                    throw new NotImplementedException();
+                    break;
+                case EditorTypeManagement.Editor.number:
+                    SetupEditor(Instantiate(floatEditor, EditorHolder), props);
+                    break;
+                case EditorTypeManagement.Editor.color:
+                    SetupEditor(Instantiate(ColorEditor, EditorHolder), props);
+                    break;
+                case EditorTypeManagement.Editor.table:
+                    SetupEditor(Instantiate(ColorTableEditor, EditorHolder), props);
+                    break;
+            }
+            /*
             switch (props.GetData())
             {
                 case EvaluableFloat num:
@@ -31,7 +54,7 @@ public class EditorManager : MonoBehaviour
                         break;
                     }
                 case EvaluableColorVec clrVec:
-                    {                        
+                    {
                         if (clrVec.displayMode == EvaluableColorVec.DefaultDisplayMode.Color)
                         {
                             SetupEditor(Instantiate(ColorEditor, EditorHolder), props);
@@ -75,6 +98,7 @@ public class EditorManager : MonoBehaviour
                     }
 
             }
+            */
 
         }
         else
@@ -82,6 +106,28 @@ public class EditorManager : MonoBehaviour
             EditorHolder.parent.gameObject.SetActive(false);
         }
 
+    }
+
+    private void NonEvaluableSetup(Property props, Transform EditorHolder)
+    {
+        switch (props.GetData())
+        {
+            case Enum _enum:
+                {
+                    SetupEditor(Instantiate(EnumEditor, EditorHolder), props);
+                    break;
+                }
+            case StringData str:
+                {
+                    SetupEditor(Instantiate(StringEditor, EditorHolder), props);
+                    break;
+                }
+            default:
+                {
+                    SetupEditor(Instantiate(StringViewer, EditorHolder), props);
+                    break;
+                }
+        }
     }
 
     private void SetupEditor(GameObject editor, Property prop)

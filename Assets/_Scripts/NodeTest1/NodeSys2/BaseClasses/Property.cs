@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace nodeSys2
 {
@@ -32,9 +33,18 @@ namespace nodeSys2
         public float height;
         //this port will be shown if the connectable flag is set to true.
         public Port dataPort;
+
+        
+        //what does this property internally get used as? This is set on construction via the default data type
+        [JsonConverter(typeof(StringEnumConverter))]
+        public EditorTypeManagement.Editor internalRepresentation;
+        //The current editor specifies what editor will be used to view the data
+        [JsonConverter(typeof(StringEnumConverter))]
+        public EditorTypeManagement.Editor currentEditor;
+
         //a reference to the node this property is a part of
         private Node node;        
-        //this is the type that gates input. Data types that are not his type or a sublclass of said type will be regected from input
+        //this is the type that gates input. Data types that are not this type or a sublclass of said type will be regected from input
         //=====NOTE TO SELF====== type objects are problematic across threads - https://docs.microsoft.com/en-us/dotnet/api/system.type?view=net-5.0
         [JsonProperty] private Type gateType;
 
@@ -77,6 +87,11 @@ namespace nodeSys2
             this.ID = ID;
             disc = ID;
             gateType = type;
+            if(DefaultData != null)
+            {
+                internalRepresentation = EditorTypeManagement.GetEditorByType(DefaultData);
+                currentEditor = internalRepresentation;
+            }
         }
 
         //this is called by the the data port object this property holds when it receives data

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using nodeSys2;
+using UnityEngine.EventSystems;
 
 public class GenericEditor : MonoBehaviour
 {
