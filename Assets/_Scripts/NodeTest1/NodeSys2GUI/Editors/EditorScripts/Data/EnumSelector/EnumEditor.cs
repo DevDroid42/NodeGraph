@@ -11,16 +11,6 @@ public class EnumEditor : EditorBase
     public Dropdown dropDown;
     Property propCache;
 
-    private void Start()
-    {
-
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private List<string> enumStrings;
     Type _enumType;
     public override void Setup(Property prop)

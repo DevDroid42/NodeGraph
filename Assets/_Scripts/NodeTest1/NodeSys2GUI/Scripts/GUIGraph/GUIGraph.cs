@@ -9,6 +9,9 @@ using UnityEngine.Events;
 
 public class GUIGraph : MonoBehaviour
 {
+    //singleton pattern;
+    public static GUIGraph currentInstance;
+
     [Serializable]
     public class IntEvent : UnityEvent<int> { }
     public IntEvent groupDepthChanged;
@@ -40,6 +43,7 @@ public class GUIGraph : MonoBehaviour
 
     private void Awake()
     {
+        currentInstance = this;
         if (updateGraphGUI == null)
         {
             updateGraphGUI = new UnityEvent();

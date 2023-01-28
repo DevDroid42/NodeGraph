@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3947280224067171439
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33,11 +33,11 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 292.85, y: 139}
-  m_SizeDelta: {x: 145.32599, y: 103.08682}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -706.48706, y: -284.4566}
+  m_SizeDelta: {x: 145.32593, y: 103.08679}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &3947280224067171409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc6a101242a9b64a8a01cd7033a4898, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txt: {fileID: 0}
+  txt: {fileID: 6903428037683817908}
 --- !u!1001 &3947280224709554454
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108,8 +108,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7568977891020254473, guid: b9066b64422b83941a425f42f0fca2d0,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3947280224347337899}
+    - target: {fileID: 7568977891020254473, guid: b9066b64422b83941a425f42f0fca2d0,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7568977891020254473, guid: b9066b64422b83941a425f42f0fca2d0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Pressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 7568977891020254473, guid: b9066b64422b83941a425f42f0fca2d0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7568977891020254474, guid: b9066b64422b83941a425f42f0fca2d0,
         type: 3}
@@ -134,7 +149,7 @@ PrefabInstance:
     - target: {fileID: 7568977891020254474, guid: b9066b64422b83941a425f42f0fca2d0,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7568977891020254474, guid: b9066b64422b83941a425f42f0fca2d0,
         type: 3}
@@ -144,12 +159,12 @@ PrefabInstance:
     - target: {fileID: 7568977891020254474, guid: b9066b64422b83941a425f42f0fca2d0,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7568977891020254474, guid: b9066b64422b83941a425f42f0fca2d0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 145.32599
+      value: 145.32593
       objectReference: {fileID: 0}
     - target: {fileID: 7568977891020254474, guid: b9066b64422b83941a425f42f0fca2d0,
         type: 3}
@@ -194,7 +209,7 @@ PrefabInstance:
     - target: {fileID: 7568977891020254474, guid: b9066b64422b83941a425f42f0fca2d0,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 145.32599
+      value: 145.32593
       objectReference: {fileID: 0}
     - target: {fileID: 7568977891020254474, guid: b9066b64422b83941a425f42f0fca2d0,
         type: 3}
@@ -240,3 +255,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3947280224709554454}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6903428037683817908 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7568977890434423970, guid: b9066b64422b83941a425f42f0fca2d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 3947280224709554454}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

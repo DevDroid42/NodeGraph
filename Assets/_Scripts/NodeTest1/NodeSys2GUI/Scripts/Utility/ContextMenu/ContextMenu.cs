@@ -11,14 +11,19 @@ public class ContextMenu : MonoBehaviour
 
     private Action<String> callback;
 
-    public void OpenMenu(Action<String> callback, List<String> options)
+    public void SetupMenu(Action<String> callback, List<String> options, Dictionary<String, Color> colors = null)
     {
         this.callback = callback;
         foreach (String option in options)
         {
             GameObject createdButton = Instantiate(button, transform);
             createdButton.SetActive(true);
-            createdButton.GetComponentInChildren<Text>().text = option;
+            Text buttonText = createdButton.GetComponentInChildren<Text>();
+            buttonText.text = option;
+            if (colors != null && colors.ContainsKey(option))
+            {
+                buttonText.color = colors[option];
+            }
             createdButton.GetComponent<ContextMenuButton>().callback = OptionSelected;
         }
     }
@@ -27,5 +32,13 @@ public class ContextMenu : MonoBehaviour
     {
         callback.Invoke(selection);
         Destroy(gameObject);
+    }
+
+    private void LateUpdate()
+    {
+        if(Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(0))
+        {
+            //Destroy(gameObject);
+        }
     }
 }

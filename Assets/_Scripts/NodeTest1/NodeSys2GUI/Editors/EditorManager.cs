@@ -6,9 +6,8 @@ using System;
 
 public class EditorManager : MonoBehaviour
 {
-    //This class is responsible for doing the pattern matching to determine the editor to choose and sending that down to the generic editor 
-    //component in each editor
-    List<GameObject> editors = new List<GameObject>();
+    public GameObject contextMenu;
+    public Transform popupHolder;
 
     public GameObject floatEditor;
     public GameObject StringEditor;
@@ -132,7 +131,7 @@ public class EditorManager : MonoBehaviour
 
     private void SetupEditor(GameObject editor, Property prop)
     {
-        editor.GetComponent<GenericEditor>().SetupEditor(prop);
+        editor.GetComponent<GenericEditor>().SetupEditor(prop, contextMenu, popupHolder);
         RectTransform rt = editor.GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(1, 1);
         rt.anchoredPosition = new Vector2(0, 0);

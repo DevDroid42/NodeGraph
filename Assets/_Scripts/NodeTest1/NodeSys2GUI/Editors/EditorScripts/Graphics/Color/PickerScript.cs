@@ -1,22 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using nodeSys2;
 using UnityEngine;
 
 public class PickerScript : MonoBehaviour
 {
-    EvaluableColorVec colorRef;
-    public void Setup(EvaluableColorVec colorRef)
+    Property prop;
+    public void Setup(Property prop)
     {
-        this.colorRef = colorRef;
+        this.prop = prop;
     }
 
     public void SetColor(Color color)
     {
         //A color assinment happens the second the color editor is opened before it has a chance to call setup
-        if (colorRef != null)
+        if (prop != null)
         {
             ColorVec newColorVec = new ColorVec(color.r, color.g, color.b, color.a);
-            colorRef.SetColorVec(newColorVec);
+            prop.SetData(newColorVec);
         }
     }
 

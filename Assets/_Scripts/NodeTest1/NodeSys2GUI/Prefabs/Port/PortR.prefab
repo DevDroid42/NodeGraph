@@ -89,7 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GUIGraphRef: {fileID: 0}
   GUINodeRef: {fileID: 0}
-  inputPort: 0
+  isInputPort: 0
   PortColor: {r: 0, g: 0, b: 0, a: 0}
   HoverSprite: {fileID: 0}
   LinePrefab: {fileID: 5045478019256941109, guid: 2e547cd32c6e75a4b8eb6eb04a957dd6,
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2080328054191952129}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
