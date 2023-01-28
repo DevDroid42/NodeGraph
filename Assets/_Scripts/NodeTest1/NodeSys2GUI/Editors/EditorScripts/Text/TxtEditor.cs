@@ -7,10 +7,9 @@ using System;
 
 public class TxtEditor : EditorBase
 {
-    public IntData intData;
     public StringData stringData;
-    public EvaluableFloat floatData;
     public InputField inputField;
+    private Property prop;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,18 +31,13 @@ public class TxtEditor : EditorBase
         stringData.txt = str;
     }
 
-    public void EditInt(string num)
-    {
-        intData.num = int.Parse(num);
-    }
-
     public void EditFloat(string num)
     {
         if (num.Length > 0)
         {
             if (float.TryParse(num, out float data))
             {
-                floatData.SetNum(data);
+                prop.SetData(new EvaluableFloat(data));
             }            
         }
     }
@@ -51,21 +45,23 @@ public class TxtEditor : EditorBase
     public override void Setup(Property prop)
     {
         base.Setup(prop);
-        UpdateField(prop.GetData().ToString());
+        this.prop = prop;
         switch (prop.GetData())
         {
-            case EvaluableFloat num:
+            case Evaluable evaluable:
                 {
-                    floatData = num;
+                    UpdateField(evaluable.EvaluateValue(0).ToString());
                     break;
                 }
             case StringData str:
                 {
+                    UpdateField(str.txt);
                     stringData = str;
                     break;
                 }
             default:
                 {
+                    UpdateField(prop.GetData().ToString());
                     break;
                 }
         }

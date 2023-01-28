@@ -54,7 +54,7 @@ public class GenericEditor : MonoBehaviour, IPointerClickHandler, IPointerDownHa
         menu.transform.position = CanvasUtilities.RaycastPosWorld();
         menu.gameObject.SetActive(true);
         Dictionary<String, Color> colors = new Dictionary<String, Color>();
-        colors.Add(prop.currentEditor.ToString(), Color.blue);
+        colors.Add(prop.currentEditor.ToString(), Color.cyan);
         if (prop.currentEditor != prop.internalRepresentation)
         {
             colors.Add(prop.internalRepresentation.ToString(), Color.green);

@@ -17,7 +17,7 @@ public class PickerScript : MonoBehaviour
         if (prop != null)
         {
             ColorVec newColorVec = new ColorVec(color.r, color.g, color.b, color.a);
-            prop.SetData(newColorVec);
+            prop.SetData(new EvaluableColorVec(newColorVec));
         }
     }
 
