@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class ColorTableEditor : EditorBase
 {
-    Property propCache;
+    Property prop;
     Image img;
     Texture2D tex;
     public int resolution = 128;
@@ -25,7 +25,7 @@ public class ColorTableEditor : EditorBase
         if (time > 0.040)
         {
             time = 0;
-            switch (propCache.GetData())
+            switch (prop.GetData())
             {
                 case Evaluable testTable:
                     {
@@ -57,7 +57,7 @@ public class ColorTableEditor : EditorBase
     public override void Setup(Property prop)
     {
         base.Setup(prop);
-        propCache = prop;
+        this.prop = prop;
     }
 
     private void OnDestroy()

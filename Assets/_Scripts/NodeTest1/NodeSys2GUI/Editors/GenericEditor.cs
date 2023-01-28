@@ -27,8 +27,8 @@ public class GenericEditor : MonoBehaviour, IPointerClickHandler, IPointerDownHa
         //ToDo set transform height here
         if (prop.interactable)
         {
-            interactableObj.SetActive(true);
             nonInteractableObj.SetActive(false);
+            interactableObj.SetActive(true);
         }
         else
         {
