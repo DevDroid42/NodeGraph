@@ -859,6 +859,31 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3947280224067171438, guid: d36faf447cf0386478db41c4374d6db6,
         type: 3}
+    - target: {fileID: 1149337086901540045, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: popupHolder
+      value: 
+      objectReference: {fileID: 470027818}
+    - target: {fileID: 1149337086901540045, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: hoverColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1149337086901540045, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: hoverColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1149337086901540045, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: hoverColor.g
+      value: 0.71746665
+      objectReference: {fileID: 0}
+    - target: {fileID: 1149337086901540045, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: hoverColor.r
+      value: 0.674
+      objectReference: {fileID: 0}
     - target: {fileID: 1553126815066110273, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
       propertyPath: m_Enabled
@@ -1387,6 +1412,11 @@ PrefabInstance:
     - target: {fileID: 7379993964385261759, guid: bed482c5229cd37449ee36554a59fb9c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8973135808891344190, guid: bed482c5229cd37449ee36554a59fb9c,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
@@ -5770,11 +5800,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ContextMenu
       objectReference: {fileID: 0}
-    - target: {fileID: 3947280224067171438, guid: d36faf447cf0386478db41c4374d6db6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3947280224067171439, guid: d36faf447cf0386478db41c4374d6db6,
         type: 3}
       propertyPath: m_Pivot.x
@@ -5879,26 +5904,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6903428037131410460, guid: d36faf447cf0386478db41c4374d6db6,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6903428037131410460, guid: d36faf447cf0386478db41c4374d6db6,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6903428037131410460, guid: d36faf447cf0386478db41c4374d6db6,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 145.32593
-      objectReference: {fileID: 0}
-    - target: {fileID: 6903428037131410460, guid: d36faf447cf0386478db41c4374d6db6,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 145.32593
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d36faf447cf0386478db41c4374d6db6, type: 3}
