@@ -9,6 +9,7 @@ public class EditorManager : MonoBehaviour
     public GameObject contextMenu;
     public Transform popupHolder;
 
+    public GameObject boolEditor;
     public GameObject floatEditor;
     public GameObject StringEditor;
     public GameObject StringViewer;
@@ -32,7 +33,7 @@ public class EditorManager : MonoBehaviour
                     NonEvaluableSetup(props, EditorHolder);
                     break;
                 case EditorTypeManagement.Editor.boolean:
-                    throw new NotImplementedException();
+                    SetupEditor(Instantiate(boolEditor, EditorHolder), props);
                     break;
                 case EditorTypeManagement.Editor.number:
                     SetupEditor(Instantiate(floatEditor, EditorHolder), props);
