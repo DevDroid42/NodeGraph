@@ -50,6 +50,7 @@ public class BooleanEditorScript : EditorBase
 
     public void SetBool(bool value)
     {
+        if (prop == null) return;
         prop.SetData(new EvaluableBool(value));
     }
 }
