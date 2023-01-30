@@ -45,7 +45,7 @@ public class BooleanEditorScript : EditorBase
 
     public void UpdateGUI()
     {
-        GUIGraph.updateGraphGUI.Invoke();
+        //GUIGraph.updateGraphGUI.Invoke();
     }
 
     public void SetBool(bool value)
