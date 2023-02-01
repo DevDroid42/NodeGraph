@@ -12,7 +12,6 @@ public class TransformNode : Node
 
     [JsonConverter(typeof(StringEnumConverter))]
     public enum SetType {OverWrite, Add, Subtract}
-    private SetType setType;
 
     public TransformNode(ColorVec pos) : base(pos)
     {
@@ -36,7 +35,7 @@ public class TransformNode : Node
     public override void Init()
     {
         base.Init();
-        ProcessEnums();
+        EnumUtils.ConvertEnum<SetType>(setTypeProp);
         ManipulateTransform();
     }
 
@@ -50,7 +49,7 @@ public class TransformNode : Node
     private void ManipulateTransform()
     {
         Evaluable data = (Evaluable)inputData.GetData();        
-        switch (setType)
+        switch ((SetType)setTypeProp.GetData())
         {
             case SetType.OverWrite:
                 data.localOffset = ((Evaluable)(localOffset.GetData())).EvaluateColor(0);
@@ -76,14 +75,5 @@ public class TransformNode : Node
             default:
                 break;
         }
-    }
-
-    private void ProcessEnums()
-    {
-        if(setTypeProp.GetData().GetType() == typeof(string))
-        {
-            setTypeProp.SetData((SetType)Enum.Parse(typeof(SetType), (string)setTypeProp.GetData()));
-        }
-        setType = (SetType)setTypeProp.GetData();        
     }
 }

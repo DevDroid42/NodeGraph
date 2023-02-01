@@ -11,7 +11,6 @@ public class LoopNode : Node
 
     [JsonConverter(typeof(StringEnumConverter))]
     public enum LoopType {loop, stop, invert}
-    private LoopType loopType;
     private int rateInverter = 1;
 
     public LoopNode(ColorVec pos) : base(pos)
@@ -42,7 +41,7 @@ public class LoopNode : Node
     public override void Init()
     {
         processData();
-        ProcessEnums();
+        EnumUtils.ConvertEnum<LoopType>(loopTypeProp);
         rateInverter = 1;
         current = start;
         frameDelagate -= Frame;
@@ -66,7 +65,7 @@ public class LoopNode : Node
     
     public override void Frame(float deltaTime)
     {        
-        switch (loopType)
+        switch ((LoopType)loopTypeProp.GetData())
         {
             case LoopType.loop:
                 Increment(deltaTime);
@@ -152,17 +151,6 @@ public class LoopNode : Node
             start = data.EvaluateValue(0);
         }
     }
-
-    private void ProcessEnums()
-    {
-        if (loopTypeProp.GetData().GetType() == typeof(string))
-        {   
-            loopTypeProp.SetData((LoopType)Enum.Parse(typeof(LoopType), (string)loopTypeProp.GetData()));
-        }
-        loopType = ((LoopType)loopTypeProp.GetData());
-    }
-
-
 }
 
 //same as the loop node but exposes more options

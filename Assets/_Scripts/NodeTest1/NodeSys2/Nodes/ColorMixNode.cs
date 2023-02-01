@@ -6,36 +6,36 @@ using System;
 
 public class ColorMixNode : Node
 {
-    public Property mixType, factor, elementCount, output;
+    public Property mixTypeProp, factorProp, elementCountProp, outputProp;
     public List<Property> elements;
 
     public ColorMixNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Mix";
         elements = new List<Property>(0);
-        mixType = CreateInputProperty("Mix Type", false, new EvaluableMixRGB.MixType());
-        mixType.interactable = true;
-        factor = CreateInputProperty("Factor", true, new EvaluableFloat(1));
-        elementCount = CreateInputProperty("Element Count", false, new EvaluableFloat(2));
-        elementCount.interactable = true;
-        output = CreateOutputProperty("output");
+        mixTypeProp = CreateInputProperty("Mix Type", false, new EvaluableMixRGB.MixType());
+        mixTypeProp.interactable = true;
+        factorProp = CreateInputProperty("Factor", true, new EvaluableFloat(1));
+        elementCountProp = CreateInputProperty("Element Count", false, new EvaluableFloat(2));
+        elementCountProp.interactable = true;
+        outputProp = CreateOutputProperty("output");
     }
 
     public override void Init()
     {        
         base.Init();
+        EnumUtils.ConvertEnum<EvaluableMixRGB.MixType>(mixTypeProp);
         ProcessRes();
-        ProcessEnums();
     }
 
     public override void Init2()
     {
-        output.Invoke(CreateMixRGB());
+        outputProp.Invoke(CreateMixRGB());
     }
 
     private void ProcessRes()
     {
-        int setRes = (int)((Evaluable)elementCount.GetData()).EvaluateValue(0);
+        int setRes = (int)((Evaluable)elementCountProp.GetData()).EvaluateValue(0);
         //if the set resoltion is different than the current one resize the list by either removing excess data
         //or adding new data
         if (elements.Count != setRes)
@@ -65,27 +65,18 @@ public class ColorMixNode : Node
 
     public override void Handle()
     {
-        output.Invoke(CreateMixRGB());
+        outputProp.Invoke(CreateMixRGB());
     }
 
     private EvaluableMixRGB CreateMixRGB()
     {
-        EvaluableMixRGB mixRGB = new EvaluableMixRGB((Evaluable)factor.GetData());
+        EvaluableMixRGB mixRGB = new EvaluableMixRGB((Evaluable)factorProp.GetData());
         for (int i = 0; i < elements.Count; i++)
         {
             mixRGB.AddElement((Evaluable)elements[i].GetData());
         }
-        mixRGB.mixType = ((EvaluableMixRGB.MixType)mixType.GetData());
+        mixRGB.mixType = (EvaluableMixRGB.MixType)mixTypeProp.GetData();
         return mixRGB;
     }
-
-    private void ProcessEnums()
-    {
-        if (mixType.GetData().GetType() == typeof(string))
-        {            
-            mixType.SetData(Enum.Parse(typeof(EvaluableMixRGB.MixType), (string)mixType.GetData()));
-        }
-    }
-
 
 }

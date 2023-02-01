@@ -32,7 +32,7 @@ public class LogicNode : Node
     public override void Init()
     {
         base.Init();
-        ProcessEnums();
+        EnumUtils.ConvertEnum<ComparisonType>(compareMode);
     }
 
     public override void Init2()
@@ -80,14 +80,6 @@ public class LogicNode : Node
         {
             valueOutput.Invoke(new EvaluableColorVec(0));
             previousEvaluation = false;
-        }
-    }
-
-    private void ProcessEnums()
-    {
-        if (compareMode.GetData().GetType() == typeof(string))
-        {
-            compareMode.SetData(Enum.Parse(typeof(ComparisonType), (string)compareMode.GetData()));
         }
     }
 }
