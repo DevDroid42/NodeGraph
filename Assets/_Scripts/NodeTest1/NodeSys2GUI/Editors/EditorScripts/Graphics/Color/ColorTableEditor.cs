@@ -43,7 +43,7 @@ public class ColorTableEditor : EditorBase
                     }
                     img.color = new Color(1f, 1f, 1f);
 
-                    //System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
+                    System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
                     if (threadedEvaluation)
                     {
                         

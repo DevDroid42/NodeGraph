@@ -7,7 +7,7 @@ namespace nodeSys2
 {
     public class Graph
     {
-
+        public string GraphName = "";
         public List<Node> nodes = new List<Node>();        
         public static NodeNetReceive nodeNetReceiver;
 

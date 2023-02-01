@@ -16,6 +16,7 @@ public class ColorMixNode : Node
         mixTypeProp = CreateInputProperty("Mix Type", false, new EvaluableMixRGB.MixType());
         mixTypeProp.interactable = true;
         factorProp = CreateInputProperty("Factor", true, new EvaluableFloat(1));
+        factorProp.internalRepresentation = EditorTypeManagement.Editor.table;
         elementCountProp = CreateInputProperty("Element Count", false, new EvaluableFloat(2));
         elementCountProp.interactable = true;
         outputProp = CreateOutputProperty("output");
@@ -46,6 +47,7 @@ public class ColorMixNode : Node
                 for (int i = 0; i < diff; i++)
                 {
                     elements.Add(CreateInputProperty("element: " + (elements.Count), true, new EvaluableColorVec(1)));
+                    elements[elements.Count - 1].internalRepresentation = EditorTypeManagement.Editor.table;
                     elements[elements.Count - 1].interactable = true;
                 }
             }

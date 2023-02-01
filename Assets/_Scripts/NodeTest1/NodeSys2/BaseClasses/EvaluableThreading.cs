@@ -25,6 +25,7 @@ public class EvaluableThreading
         Parallel.ForEach(rangePartitioner, (range, loopState) =>
         {
             Evaluable copiedData = (Evaluable)data.GetCopy();
+            //Evaluable copiedData = data;
             // Loop over each range element without a delegate invocation.
             for (int i = range.Item1; i < range.Item2; i++)
             {
