@@ -9,12 +9,19 @@ public class BooleanEditorScript : EditorBase
 {
     public Toggle toggle;
     private Property prop;
+    private bool lockGraphUpdate = true;
 
     public override void Setup(Property prop)
     {
+        //prevent stack overflow. UpdateBool changes toggle state,
+        //Unity calls updateGUI, which then in turn calls setup
+        //lock graph update will prevent unity from calling
+        //GUI update on setup
+        lockGraphUpdate = true;
         base.Setup(prop);
         this.prop = prop;
         UpdateBool();
+        lockGraphUpdate = false;
     }
 
     public void UpdateBool()
@@ -45,7 +52,8 @@ public class BooleanEditorScript : EditorBase
 
     public void UpdateGUI()
     {
-        //GUIGraph.updateGraphGUI.Invoke();
+        if (lockGraphUpdate) return;
+        GUIGraph.updateGraphGUI.Invoke();
     }
 
     public void SetBool(bool value)
