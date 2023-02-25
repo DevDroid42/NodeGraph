@@ -115,7 +115,7 @@ public class EvaluableColorTable : Evaluable
 
     public override ColorVec EvaluateColor(ColorVec vector)
     {        
-        float x = TransformVector(vector).rx;
+        float x = TransformVector((float)vector);
         switch (clipType)
         {
             case ClippingMode.tile:
@@ -168,19 +168,6 @@ public class EvaluableColorTable : Evaluable
         return (float)EvaluateColor(vector);
     }
 
-    private float Translate(float x)
-    {
-        if (scale.rx == 0)
-        {
-            return 0.0001f;
-        }
-        x -= globalOffset.rx;
-        float pivotVal = pivot.rx;
-        x = (x - pivotVal) * 1 / scale.rx + pivotVal;
-        x -= localOffset.rx;
-        return x;
-    }
-
     public override object GetCopy()
     {
         EvaluableColorTable temp = new EvaluableColorTable(GetkeyAmt());
@@ -190,11 +177,11 @@ public class EvaluableColorTable : Evaluable
         }
         temp.clipType = clipType;
         temp.interType = interType;
-        temp.localOffset = localOffset.GetCopy();
-        temp.globalOffset= globalOffset.GetCopy();
-        temp.scale = scale.GetCopy();
-        temp.rot = rot.GetCopy();
-        temp.pivot = pivot.GetCopy();
+        temp.localOffset = localOffset;
+        temp.globalOffset= globalOffset;
+        temp.scale = scale;
+        temp.rot = rot;
+        temp.pivot = pivot;
         return temp;
     }
 

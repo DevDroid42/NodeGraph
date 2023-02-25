@@ -33,7 +33,7 @@ public class EvaluableMixRGB : Evaluable
 
     public override ColorVec EvaluateColor(ColorVec vector)
     {
-        vector = TransformVector(vector);
+        vector = TransformVector((float)vector);
         ColorVec output = new ColorVec(0);        
         switch (mixType)
         {

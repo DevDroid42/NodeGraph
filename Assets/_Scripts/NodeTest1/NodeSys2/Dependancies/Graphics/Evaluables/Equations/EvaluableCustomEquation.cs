@@ -28,7 +28,7 @@ public class EvaluableCustomEquation : EvaluableEquation
 
     public override float EvaluateValue(ColorVec vector)
     {
-        vector = TransformVector(vector);
+        vector = TransformVector((float)vector);
         for (int i = 0; i < variables.Length; i++)
         {
             calc.variables[i] = variables[i].EvaluateValue(vector);

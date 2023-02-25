@@ -52,18 +52,18 @@ public class TransformNode : Node
         switch ((SetType)setTypeProp.GetData())
         {
             case SetType.OverWrite:
-                data.localOffset = ((Evaluable)(localOffset.GetData())).EvaluateColor(0);
-                data.scale = ((Evaluable)(scale.GetData())).EvaluateColor(0);
-                data.pivot = ((Evaluable)(pivot.GetData())).EvaluateColor(0);
-                data.rot = ((Evaluable)(rot.GetData())).EvaluateColor(0);
-                data.globalOffset = ((Evaluable)(globalOffset.GetData())).EvaluateColor(0);
+                data.localOffset = ((Evaluable)(localOffset.GetData())).EvaluateValue(0);
+                data.scale = ((Evaluable)(scale.GetData())).EvaluateValue(0);
+                data.pivot = ((Evaluable)(pivot.GetData())).EvaluateValue(0);
+                data.rot = ((Evaluable)(rot.GetData())).EvaluateValue(0);
+                data.globalOffset = ((Evaluable)(globalOffset.GetData())).EvaluateValue(0);
                 break;
             case SetType.Add:
-                data.localOffset += ((Evaluable)(localOffset.GetData())).EvaluateColor(0);
-                data.scale += ((Evaluable)(scale.GetData())).EvaluateColor(0);
-                data.pivot += ((Evaluable)(pivot.GetData())).EvaluateColor(0);
-                data.rot += ((Evaluable)(rot.GetData())).EvaluateColor(0);
-                data.globalOffset += ((Evaluable)(globalOffset.GetData())).EvaluateColor(0);
+                data.localOffset += ((Evaluable)(localOffset.GetData())).EvaluateValue(0);
+                data.scale += ((Evaluable)(scale.GetData())).EvaluateValue(0);
+                data.pivot += ((Evaluable)(pivot.GetData())).EvaluateValue(0);
+                data.rot += ((Evaluable)(rot.GetData())).EvaluateValue(0);
+                data.globalOffset += ((Evaluable)(globalOffset.GetData())).EvaluateValue(0);
                 break;
             case SetType.Subtract:
                 data.localOffset -= ((Evaluable)(localOffset.GetData())).localOffset;

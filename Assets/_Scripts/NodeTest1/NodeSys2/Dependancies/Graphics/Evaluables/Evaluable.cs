@@ -2,12 +2,12 @@
 public class Evaluable : ICopyable
 {
     //offset applied pre-scaling
-    public ColorVec localOffset = 0;
+    public float localOffset = 0;
     //offset applied post-scaling
-    public ColorVec globalOffset = 0;
-    public ColorVec scale = 1;
-    public ColorVec rot = 0;
-    public ColorVec pivot = 0;    
+    public float globalOffset = 0;
+    public float scale = 1;
+    public float rot = 0;
+    public float pivot = 0;    
 
     //Note: should always return a new color, not one with a reference inside the evaluable object
     public virtual ColorVec EvaluateColor(ColorVec vector)
@@ -35,22 +35,17 @@ public class Evaluable : ICopyable
     }
 
     //to be used for vector transformations in subclasses
-    protected ColorVec TransformVector(ColorVec vectorIn)
+    protected float TransformVector(float input)
     {
-        ColorVec vector = vectorIn.GetCopy();
-        for (int i = 0; i < 4; i++)
+        //avoid divide by zero error
+        if (scale == 0)
         {
-            if (scale.getComponent(i) == 0)
-            {
-                vector.SetComponent(i, 0.00001f);
-                continue;
-            }
-            //transform the vector by the global offset
-            vector.SetComponent(i, vector.getComponent(i) - globalOffset.getComponent(i));
-            float pivotVal = pivot.getComponent(i);
-            vector.SetComponent(i, (vector.getComponent(i) - pivotVal) * 1 / scale.getComponent(i) + pivotVal);
-            vector.SetComponent(i, vector.getComponent(i) - localOffset.getComponent(i));
+            input = 0.00001f;
         }
-        return vector;
+        //transform the vector by the global offset
+        input = input - globalOffset;
+        input = (input - pivot) * 1 / scale + pivot;
+        input = input - localOffset;
+        return input;
     }
 }
