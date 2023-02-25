@@ -10,12 +10,12 @@ public class Evaluable : ICopyable
     public float pivot = 0;    
 
     //Note: should always return a new color, not one with a reference inside the evaluable object
-    public virtual ColorVec EvaluateColor(ColorVec vector)
+    public virtual ColorVec EvaluateColor(float vector)
     {
         return new ColorVec(0);
     }
 
-    public virtual float EvaluateValue(ColorVec vector)
+    public virtual float EvaluateValue(float vector)
     {
         return 0;
     }

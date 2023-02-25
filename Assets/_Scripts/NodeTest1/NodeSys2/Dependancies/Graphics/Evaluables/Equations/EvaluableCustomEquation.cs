@@ -21,12 +21,12 @@ public class EvaluableCustomEquation : EvaluableEquation
         this.errorChecking = errorChecking;
     }
 
-    public override ColorVec EvaluateColor(ColorVec vector)
+    public override ColorVec EvaluateColor(float vector)
     {
         return EvaluateValue(vector);
     }
 
-    public override float EvaluateValue(ColorVec vector)
+    public override float EvaluateValue(float vector)
     {
         vector = TransformVector((float)vector);
         for (int i = 0; i < variables.Length; i++)

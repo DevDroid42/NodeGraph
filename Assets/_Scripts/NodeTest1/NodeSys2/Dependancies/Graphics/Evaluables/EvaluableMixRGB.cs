@@ -31,7 +31,7 @@ public class EvaluableMixRGB : Evaluable
         elements.Add(element);
     }
 
-    public override ColorVec EvaluateColor(ColorVec vector)
+    public override ColorVec EvaluateColor(float vector)
     {
         vector = TransformVector((float)vector);
         ColorVec output = new ColorVec(0);        
@@ -57,7 +57,7 @@ public class EvaluableMixRGB : Evaluable
         return output.GetCopy();
     }
 
-    private ColorVec Add(ColorVec vector)
+    private ColorVec Add(float vector)
     {
         if (elements.Count < 2)
         {
@@ -75,7 +75,7 @@ public class EvaluableMixRGB : Evaluable
         return color;
     }
 
-    private ColorVec mix(ColorVec vector)
+    private ColorVec mix(float vector)
     {        
         float x = factor.EvaluateValue(vector);
 
@@ -126,7 +126,7 @@ public class EvaluableMixRGB : Evaluable
         }
     }
 
-    private ColorVec Multiply(ColorVec vector)
+    private ColorVec Multiply(float vector)
     {
         if (elements.Count < 2)
         {
@@ -161,7 +161,7 @@ public class EvaluableMixRGB : Evaluable
         return input;
     }
 
-    public override float EvaluateValue(ColorVec vector)
+    public override float EvaluateValue(float vector)
     {
         return (float)EvaluateColor(vector);
     }

@@ -7,7 +7,7 @@ public class Group
     private List<InstancedPulseNode> pulseNodes = new List<InstancedPulseNode>();
     private List<GroupInputNode> inputNodes = new List<GroupInputNode>();
     private List<GroupOutputNode> outputNodes = new List<GroupOutputNode>();
-    private ColorVec vector = new ColorVec(0);
+    private float vector = 0;
     private Graph graph;
 
     public Group(Graph graph, GroupOutputNode.GroupOutDelegate callback)
@@ -72,7 +72,7 @@ public class Group
         }
         return inputTags;
     }
-    public void SetVector(ColorVec vector)
+    public void SetVector(float vector)
     {
         this.vector = vector;
     }

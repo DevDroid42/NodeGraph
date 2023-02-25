@@ -113,7 +113,7 @@ public class EvaluableColorTable : Evaluable
 
     }
 
-    public override ColorVec EvaluateColor(ColorVec vector)
+    public override ColorVec EvaluateColor(float vector)
     {        
         float x = TransformVector((float)vector);
         switch (clipType)
@@ -163,7 +163,7 @@ public class EvaluableColorTable : Evaluable
         }
     }
 
-    public override float EvaluateValue(ColorVec vector)
+    public override float EvaluateValue(float vector)
     {                
         return (float)EvaluateColor(vector);
     }

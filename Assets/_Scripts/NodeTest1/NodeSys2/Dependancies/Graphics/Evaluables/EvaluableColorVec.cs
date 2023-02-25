@@ -26,12 +26,12 @@ public class EvaluableColorVec : Evaluable
         this.colorVec = colorVec;
     }
 
-    public override ColorVec EvaluateColor(ColorVec vector)
+    public override ColorVec EvaluateColor(float vector)
     {
         return colorVec.GetCopy();
     }
 
-    public override float EvaluateValue(ColorVec vector)
+    public override float EvaluateValue(float vector)
     {
         return (float)colorVec;
     }

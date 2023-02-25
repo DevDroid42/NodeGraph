@@ -60,7 +60,7 @@ public class MathNode : Node
     {
         if (equation.ToString() != "")
         {
-            ColorVec localVector = ((Evaluable)vector.GetData()).EvaluateColor(0);
+            float localVector = ((Evaluable)vector.GetData()).EvaluateValue(0);
             float value;
             try
             {

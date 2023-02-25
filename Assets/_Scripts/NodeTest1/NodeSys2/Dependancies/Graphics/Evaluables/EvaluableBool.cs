@@ -16,12 +16,12 @@ public class EvaluableBool : Evaluable
         val = number;
     }
 
-    public override ColorVec EvaluateColor(ColorVec vector)
+    public override ColorVec EvaluateColor(float vector)
     {
         return EvaluateValue(0);
     }
 
-    public override float EvaluateValue(ColorVec vector)
+    public override float EvaluateValue(float vector)
     {
         if (val)
         {

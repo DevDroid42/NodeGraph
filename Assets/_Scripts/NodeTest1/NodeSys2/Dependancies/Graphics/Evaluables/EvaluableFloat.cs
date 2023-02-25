@@ -16,12 +16,12 @@ public class EvaluableFloat : Evaluable
         num = number;
     }
 
-    public override ColorVec EvaluateColor(ColorVec vector)
+    public override ColorVec EvaluateColor(float vector)
     {
         return num;
     }
 
-    public override float EvaluateValue(ColorVec vector)
+    public override float EvaluateValue(float vector)
     {
         return num;
     }
