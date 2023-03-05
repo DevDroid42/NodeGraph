@@ -11,12 +11,14 @@ public class ColorTableEditor : EditorBase
     Image img;
     Texture2D tex;
     public int resolution = 128;
-    public bool threadedEvaluation = true;
+    //create one colorVec array to avoid building and tearing down arrays
+    private ColorVec[] colors;
     // Start is called before the first frame update
     void Start()
     {
         img = GetComponent<Image>();
         tex = new Texture2D(resolution, 1, TextureFormat.ARGB32, false);
+        colors = new ColorVec[resolution];
     }
 
     // Update is called once per frame
@@ -44,28 +46,15 @@ public class ColorTableEditor : EditorBase
                     img.color = new Color(1f, 1f, 1f);
 
                     System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
-                    if (threadedEvaluation)
+
+                    //stopWatch.Start();
+                    for (int i = 0; i < 1; i++)
                     {
-                        
-                        //stopWatch.Start();
-                        for (int i = 0; i < 1; i++)
-                        {
-                            ThreadedEvaluation(data);
-                        }
-                        //stopWatch.Stop();
-                        //Debug.Log("Threaded Speed: " + stopWatch.ElapsedMilliseconds);
+                        UpdateTexture(data);
                     }
-                    else
-                    {
-                        //stopWatch.Start();
-                        for (int i = 0; i < 1; i++)
-                        {
-                            SequentialEvaluation(data);
-                        }
-                        //stopWatch.Stop();
-                        //Debug.Log("Sequential Speed: " + stopWatch.ElapsedMilliseconds);
-                    }
-                    
+                    //stopWatch.Stop();
+                    //Debug.Log("Threaded Speed: " + stopWatch.ElapsedMilliseconds);
+
                     tex.Apply();
                     img.sprite = Sprite.Create(tex, new Rect(0, 0, resolution, 1), new Vector2(0.5f, 0.5f));
                     break;
@@ -77,21 +66,12 @@ public class ColorTableEditor : EditorBase
         }
     }
 
-    private void ThreadedEvaluation(Evaluable data)
+    private void UpdateTexture(Evaluable data)
     {
-        ColorVec[] colors = EvaluableThreading.ThreadedEvaluateRange(data, tex.width);
-        for (int i = 0; i < colors.Length; i++)
-        {
-            ColorVec col = colors[i];
-            tex.SetPixel(i, 0, new Color(col.rx, col.gy, col.bz, col.aw));
-        }
-    }
-
-    private void SequentialEvaluation(Evaluable data)
-    {
+        BatchEvaluation.EvaluateColorRangeByRef(colors, data);
         for (int i = 0; i < tex.width; i++)
         {
-            ColorVec col = data.EvaluateColor((float)i / tex.width);
+            ColorVec col = colors[i];
             //Debug.Log(col);
             tex.SetPixel(i, 0, new Color(col.rx, col.gy, col.bz, col.aw));
         }
