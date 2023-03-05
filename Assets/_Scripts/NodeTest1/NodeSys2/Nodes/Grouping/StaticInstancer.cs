@@ -69,8 +69,10 @@ public class StaticInstancer : GroupNodeBase
         }
         for (int i = 0; i < groups.Count; i++)
         {
-            groups[i].SetVector(i / (float)groups.Count);
             groups[i].AssignOutputIndex(i);
+
+            float position = i / (float)groups.Count-1;
+            groups[i].SetVector(position); 
         }
         groupOutputData = new Evaluable[groups.Count];
     }

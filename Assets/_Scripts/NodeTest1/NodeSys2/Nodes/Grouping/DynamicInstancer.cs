@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//overrides the handle of static instancer such that only one instance is fed data at a time when this node is pulsed 
 public class DynamicInstancer : StaticInstancer
 {
     public Property instanceTrigger;
