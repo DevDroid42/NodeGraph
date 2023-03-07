@@ -44,7 +44,7 @@ public class Evaluable : ICopyable
         }
         //transform the vector by the global offset
         input = input - globalOffset;
-        input = (input - pivot) * 1 / scale + pivot;
+        input = (input - pivot) * (1 / scale) + pivot;
         input = input - localOffset;
         return input;
     }

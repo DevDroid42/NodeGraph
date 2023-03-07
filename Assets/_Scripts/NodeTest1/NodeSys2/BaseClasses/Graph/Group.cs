@@ -42,7 +42,7 @@ public class Group
     }
 
     //assigns the index of all output nodes in this group
-    public void AssignOutputIndex(int index)
+    public void AssignInstanceInfo(int index, int count, float ratio)
     {
         //iterate over all nodes
         for (int i = 0; i < graph.nodes.Count; i++)
@@ -50,6 +50,12 @@ public class Group
             if(graph.nodes[i] is GroupOutputNode output)
             {
                 output.instanceIndex = index;
+            }else if(graph.nodes[i] is InstanceInfoNode instanceInfo)
+            {
+                instanceInfo.index = index;
+                instanceInfo.count = count;
+                instanceInfo.ratio = ratio;
+                instanceInfo.Handle();
             }
         }
     }
