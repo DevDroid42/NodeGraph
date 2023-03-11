@@ -1,4 +1,5 @@
-﻿using nodeSys2;
+﻿using Newtonsoft.Json;
+using nodeSys2;
 using System;
 using UnityEngine;
 //using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 public class AddNode : Node
 {
 
-    public Property num1, num2, output;
+    [JsonProperty] private Property num1, num2, output;
     //the constructor needs to have a paramater so that the deserializer can use the default one
     public AddNode(ColorVec pos) : base(pos)
     {
@@ -31,7 +32,7 @@ public class AddNode : Node
 
     private void ProcessData()
     {
-        Evaluable f = null;
+        IEvaluable f = null;
         if (num1.TryGetDataType(ref f))
         {
             float1 = f.EvaluateValue(0);

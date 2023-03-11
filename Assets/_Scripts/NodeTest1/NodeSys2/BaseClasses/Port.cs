@@ -27,6 +27,9 @@ namespace nodeSys2
         //the reference to the property that this port is atatched to
         private Property property;
 
+        //a reference to the last data that flowed through this node. On disconnect we will send a copy of this
+        private ICopyable lastData;
+
         public bool IsConnected()
         {
             return connected;
@@ -75,6 +78,10 @@ namespace nodeSys2
         //Removes the reference from the connected port. 
         public void Disconnect()
         {
+            if (property.isInput && lastData != null)
+            {
+                Handle(lastData.GetCopy());
+            }
             if (connected)
             {
                 //invoke null to clear out references back to data
@@ -95,13 +102,21 @@ namespace nodeSys2
             }
         }
 
+        private bool alwaysCopy = false;
         //this method is invoked from another connected port delagate. This means data was received on an input port.
         //we should send this data to the ports property.
         private void Handle(object data)
         {
-            if (data is ICopyable d)
+            
+            if (!alwaysCopy && data is IEvaluable evaluable)
             {
-                property.Handle(d.GetCopy());
+                property.Handle(evaluable);
+                lastData = evaluable;
+            }
+            else if (data is ICopyable copyable)
+            {
+                property.Handle(copyable.GetCopy());
+                lastData = copyable;
             }
             else
             {

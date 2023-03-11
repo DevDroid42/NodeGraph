@@ -48,7 +48,7 @@ public class TxtEditor : EditorBase
         this.prop = prop;
         switch (prop.GetData())
         {
-            case Evaluable evaluable:
+            case IEvaluable evaluable:
                 {
                     UpdateField(evaluable.EvaluateValue(0).ToString());
                     break;

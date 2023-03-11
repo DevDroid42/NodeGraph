@@ -1,4 +1,5 @@
-﻿using nodeSys2;
+﻿using Newtonsoft.Json;
+using nodeSys2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 //overrides the handle of static instancer such that only one instance is fed data at a time when this node is pulsed 
 public class DynamicInstancer : StaticInstancer
 {
-    public Property instanceTrigger;
+    [JsonProperty] private Property instanceTrigger;
     private int currentInstance;
 
     public DynamicInstancer(ColorVec pos) : base(pos)

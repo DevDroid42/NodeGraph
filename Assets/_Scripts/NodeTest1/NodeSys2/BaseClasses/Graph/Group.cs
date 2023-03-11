@@ -95,7 +95,7 @@ public class Group
             //if instanced data then run handle on data that is evaluated instead.
             if (ID == node.getName())
             {
-                if ((GroupInputNode.InputType)node.inputType.GetData() == GroupInputNode.InputType.Instanced && data is Evaluable eData)
+                if ((GroupInputNode.InputType)node.inputType.GetData() == GroupInputNode.InputType.Instanced && data is IEvaluable eData)
                 {
                     node.input.Handle(new EvaluableColorVec(eData.EvaluateColor(vector)));
                 }

@@ -48,7 +48,7 @@ public class GenericEditor : MonoBehaviour, IPointerClickHandler, IPointerDownHa
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!(eventData.button == PointerEventData.InputButton.Right)) return;
-        if (!(prop.GetData() is Evaluable)) return;
+        if (!(prop.GetData() is IEvaluable)) return;
 
         ContextMenu menu = Instantiate(contextMenu, popupHolder).GetComponent<ContextMenu>();
         menu.transform.position = CanvasUtilities.RaycastPosWorld();

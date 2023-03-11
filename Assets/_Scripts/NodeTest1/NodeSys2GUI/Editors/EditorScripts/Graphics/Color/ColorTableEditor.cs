@@ -37,7 +37,7 @@ public class ColorTableEditor : EditorBase
     {
         switch (prop.GetData())
         {
-            case Evaluable data:
+            case IEvaluable data:
                 {
                     if (img.sprite != null)
                     {
@@ -66,7 +66,7 @@ public class ColorTableEditor : EditorBase
         }
     }
 
-    private void UpdateTexture(Evaluable data)
+    private void UpdateTexture(IEvaluable data)
     {
         BatchEvaluation.EvaluateColorRangeByRef(colors, data);
         for (int i = 0; i < tex.width; i++)

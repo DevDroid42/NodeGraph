@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using nodeSys2;
 using System;
+using Newtonsoft.Json;
 
 public class ColorTableNode : Node
 {
-    public Property colorTable, interpolationType, clippingType, resolution, output;
-    public List<Property> colors;
+    [JsonProperty] private Property colorTable, interpolationType, clippingType, resolution, output;
+    [JsonProperty] private List<Property> colors;
 
     public ColorTableNode(ColorVec pos) : base(pos)
     {
@@ -34,12 +35,12 @@ public class ColorTableNode : Node
     public override void Init2()
     {
         base.Init2();
-        output.Invoke((Evaluable)colorTable.GetData());
+        output.Invoke((IEvaluable)colorTable.GetData());
     }
 
     private void ProcessRes()
     {
-        int setRes = (int)((Evaluable)resolution.GetData()).EvaluateValue(0);
+        int setRes = (int)((IEvaluable)resolution.GetData()).EvaluateValue(0);
         //if the set resoltion is different than the current one resize the list by either removing excess data
         //or adding new data
         if (colors.Count != setRes)
@@ -70,7 +71,7 @@ public class ColorTableNode : Node
     public override void Handle()
     {
         SetColors();
-        output.Invoke(((Evaluable)colorTable.GetData()));
+        output.Invoke(((IEvaluable)colorTable.GetData()));
     }
 
     private void SetColors()
@@ -85,7 +86,7 @@ public class ColorTableNode : Node
         }
         for (int i = 0; i < colors.Count; i++)
         {
-            table.SetKey(i, ((Evaluable)colors[i].GetData()).EvaluateColor(0));
+            table.SetKey(i, ((IEvaluable)colors[i].GetData()).EvaluateColor(0));
         }        
     }
 

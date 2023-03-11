@@ -1,12 +1,13 @@
-﻿using nodeSys2;
+﻿using Newtonsoft.Json;
+using nodeSys2;
 using System;
 using UnityEngine;
 
 public class ColorConstant : Node
 {
     //internal color used for manual color setting
-    public Property red, green, blue, alpha, internalColor, colorMode, outputColor;
-    public Property[] floatInputs = new Property[4];
+    [JsonProperty] private Property red, green, blue, alpha, internalColor, colorMode, outputColor;
+    [JsonProperty] private Property[] floatInputs = new Property[4];
 
     //these are used to track when a data type is changed. because both the floatInputs and internal color control the same data, 
     //when init starts we have no way of knowing which one was changed. Each time init runs it will save a duplicate of the internal color Property
@@ -77,21 +78,21 @@ public class ColorConstant : Node
     public override void Init2()
     {
         base.Init2();
-        outputColor.Invoke(((Evaluable)(internalColor.GetData())));
+        outputColor.Invoke(((IEvaluable)(internalColor.GetData())));
     }
 
     private void ProcessColorChanges()
     {
         //if they are equal than the color picker hasn't been used. Set the color to be the floatInputs
-        if (((Evaluable)internalColor.GetData()).EvaluateColor(0).Equals(internalColorDupe))
+        if (((IEvaluable)internalColor.GetData()).EvaluateColor(0).Equals(internalColorDupe))
         {
             EvaluableColorVec proccesedColor = new EvaluableColorVec(ProcessData());
             internalColor.SetData(proccesedColor);
-            internalColorDupe = ((Evaluable)internalColor.GetData()).EvaluateColor(0).GetCopy();
+            internalColorDupe = ((IEvaluable)internalColor.GetData()).EvaluateColor(0).GetCopy();
         }
         else //the color has been changed by the picker. Chnage the float constants to match the internal color and reset the dupe
         {
-            internalColorDupe = ((Evaluable)internalColor.GetData()).EvaluateColor(0).GetCopy();
+            internalColorDupe = ((IEvaluable)internalColor.GetData()).EvaluateColor(0).GetCopy();
             alpha.SetData(new EvaluableFloat(internalColorDupe.aw));
             if (rgb)
             {                
@@ -114,17 +115,17 @@ public class ColorConstant : Node
     {
         EvaluableColorVec proccesedColor = new EvaluableColorVec(ProcessData());
         internalColor.SetData(proccesedColor);
-        internalColorDupe = ((Evaluable)internalColor.GetData()).EvaluateColor(0).GetCopy();
+        internalColorDupe = ((IEvaluable)internalColor.GetData()).EvaluateColor(0).GetCopy();
         ProcessColorChanges();
         internalColor.interactable = false;
         internalColor.Disc = "Color (Driven)";
-        outputColor.Invoke(((Evaluable)(internalColor.GetData())));
+        outputColor.Invoke(((IEvaluable)(internalColor.GetData())));
     }
 
 
     private ColorVec ProcessData()
     {
-        Evaluable c = null;
+        IEvaluable c = null;
         float[] floatBuffer = new float[floatInputs.Length];
         for (int i = 0; i < floatInputs.Length; i++)
         {

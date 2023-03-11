@@ -3,10 +3,11 @@ using System;
 using System.Net.Sockets;
 using System.Net;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class LedUDP : Node
 {
-    public Property ipProp, portProp, ledCountProp, input, message;
+    [JsonProperty] private Property ipProp, portProp, ledCountProp, input, message;
     private int port, ledCount;
     private string ip;
     NonMonoUDP udp;
@@ -20,7 +21,7 @@ public class LedUDP : Node
         ledCountProp.interactable = true;
         portProp = CreateInputProperty("Port", false, new EvaluableFloat(21234));
         portProp.interactable = true;
-        input = CreateInputProperty("Color Data", true, new Evaluable());
+        input = CreateInputProperty("Color Data", true, new EvaluableBlank());
         input.visible = true;
         message = CreateInputProperty("status:", false, new Message(""));
     }
@@ -29,9 +30,9 @@ public class LedUDP : Node
     {
         frameDelagate -= Frame;
         frameDelagate += Frame;
-        port = (int)((Evaluable)(portProp.GetData())).EvaluateValue(0);
+        port = (int)((IEvaluable)(portProp.GetData())).EvaluateValue(0);
         ip = (string)((StringData)(ipProp.GetData())).txt;
-        ledCount = (int)((Evaluable)(ledCountProp.GetData())).EvaluateValue(0);
+        ledCount = (int)((IEvaluable)(ledCountProp.GetData())).EvaluateValue(0);
 
         if (udp == null)
         {
@@ -42,7 +43,7 @@ public class LedUDP : Node
 
     public override void Frame(float deltaTime)
     {
-        udp.Send(ledCount, (Evaluable)input.GetData());
+        udp.Send(ledCount, (IEvaluable)input.GetData());
     }
 
     
@@ -68,13 +69,13 @@ public class NonMonoUDP
         udpClient = new UdpClient(port);
     }
 
-    public void Send(int ledCount, Evaluable data)
+    public void Send(int ledCount, IEvaluable data)
     {
         byte[] message = GenWARLS(ledCount, data);        
         udpClient.Send(message, message.Length, ip, port);
     }
 
-    public byte[] GenWARLS(int ledCount, Evaluable colorData)
+    public byte[] GenWARLS(int ledCount, IEvaluable colorData)
     {
         byte[] message = new byte[ledCount * 4 + 2];
         message[0] = 1;

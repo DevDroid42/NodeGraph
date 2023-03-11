@@ -3,32 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
-public class EvaluableCustomEquation : EvaluableEquation
+public class EvaluableCustomEquation : IEvaluable
 {
     [JsonProperty]
     private Calculator calc;        
-    public Evaluable[] variables;
+    public IEvaluable[] variables;
     private bool errorChecking;
 
     public EvaluableCustomEquation(int variableCount, string Expression, bool errorChecking = true)
     {
-        variables = new Evaluable[variableCount];
+        variables = new IEvaluable[variableCount];
         for (int i = 0; i < variables.Length; i++)
         {
-            variables[i] = new Evaluable();
+            variables[i] = new EvaluableBlank();
         }
         calc = new Calculator(variableCount, Expression);
         this.errorChecking = errorChecking;
     }
 
-    public override ColorVec EvaluateColor(float vector)
+    public ColorVec EvaluateColor(float vector)
     {
         return EvaluateValue(vector);
     }
 
-    public override float EvaluateValue(float vector)
+    public float EvaluateValue(float vector)
     {
-        vector = TransformVector((float)vector);
         for (int i = 0; i < variables.Length; i++)
         {
             calc.variables[i] = variables[i].EvaluateValue(vector);
@@ -53,12 +52,12 @@ public class EvaluableCustomEquation : EvaluableEquation
         
     }
 
-    public override object GetCopy()
+    public object GetCopy()
     {
         EvaluableCustomEquation copy = new EvaluableCustomEquation(variables.Length, calc.GetExpression());
         for (int i = 0; i < copy.variables.Length; i++)
         {
-            copy.variables[i] = (Evaluable)variables[i].GetCopy();
+            copy.variables[i] = (IEvaluable)variables[i].GetCopy();
         }
         return copy;
     }
@@ -66,5 +65,10 @@ public class EvaluableCustomEquation : EvaluableEquation
     public override string ToString()
     {
         return calc.GetExpression();
+    }
+
+    public int GetResolution()
+    {
+        throw new System.NotImplementedException();
     }
 }

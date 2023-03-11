@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using nodeSys2;
+using Newtonsoft.Json;
 
 public class GroupNode : GroupNodeBase
 {    
     private Group group;
-    public List<Property> groupInputs;
-    public List<Property> groupOutputs;
+    [JsonProperty] private List<Property> groupInputs;
+    [JsonProperty] private List<Property> groupOutputs;
     private GroupOutputNode.GroupOutDelegate groupOutDelegate;
 
     public GroupNode(ColorVec pos) : base(pos)

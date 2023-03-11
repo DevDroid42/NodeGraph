@@ -29,7 +29,7 @@ public class ColorEditor : EditorBase
     {
         switch (prop.GetData())
         {
-            case Evaluable evaluable:
+            case IEvaluable evaluable:
                 {
                     ColorVec color = evaluable.EvaluateColor(0);
                     button.image.color = new Color(color.rx, color.gy, color.bz, color.aw);

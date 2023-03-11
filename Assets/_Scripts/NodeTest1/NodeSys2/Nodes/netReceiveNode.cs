@@ -1,4 +1,5 @@
-﻿using nodeSys2;
+﻿using Newtonsoft.Json;
+using nodeSys2;
 using System;
 using System.Text;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine;
 public class NetReceiveNode : Node
 {
 
-    public Property ID, dataType, output;
+    [JsonProperty] private Property ID, dataType, output;
     //the constructor needs to have a paramater so that the deserializer can use the default one
     public NetReceiveNode(ColorVec pos) : base(pos)
     {

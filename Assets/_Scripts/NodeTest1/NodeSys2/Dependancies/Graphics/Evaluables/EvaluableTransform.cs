@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EvaluableTransform : MonoBehaviour
+
+public class EvaluableTransform : IEvaluable
 {
     //offset applied pre-scaling
     public float localOffset = 0;
@@ -10,6 +11,8 @@ public class EvaluableTransform : MonoBehaviour
     public float globalOffset = 0;
     public float scale = 1;
     public float pivot = 0;
+
+    public IEvaluable child;
 
     //to be used for vector transformations in subclasses
     private float TransformVector(float input)
@@ -25,4 +28,34 @@ public class EvaluableTransform : MonoBehaviour
         input = input - localOffset;
         return input;
     }
+
+    public ColorVec EvaluateColor(float vector)
+    {
+        vector = TransformVector(vector);
+        return child.EvaluateColor(vector);
+    }
+
+    public float EvaluateValue(float vector)
+    {
+        vector = TransformVector(vector);
+        return child.EvaluateValue(vector);
+    }
+
+    public object GetCopy()
+    {
+        EvaluableTransform copy = new EvaluableTransform();
+        copy.child = (IEvaluable)child.GetCopy();
+        copy.localOffset = localOffset;
+        copy.globalOffset = globalOffset;
+        copy.scale = scale;
+        copy.pivot = pivot;
+        return copy;
+    }
+
+    public int GetResolution()
+    {
+        return child.GetResolution();
+    }
+
+   
 }

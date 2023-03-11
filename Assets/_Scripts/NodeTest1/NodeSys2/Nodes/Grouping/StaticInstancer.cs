@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using nodeSys2;
 using System;
+using Newtonsoft.Json;
 
 //similar functionality to group node but handles instances of graphs. Each instance will have it's outputs of same name mixed via 
 //color mixing
@@ -12,10 +13,10 @@ public class StaticInstancer : GroupNodeBase
     private string graphJson;
     protected List<Group> groups = new List<Group>();
     //serves as a parrallel array to the groups list that stores evaluable data to be used in constructing new mixers
-    private Evaluable[] groupOutputData;
+    private IEvaluable[] groupOutputData;
     private EvaluableMixRGB mixer;
-    public List<Property> groupInputs;
-    public Property InstanceCount, mixType, factor, output;
+    [JsonProperty] protected List<Property> groupInputs;
+    [JsonProperty] private Property InstanceCount, mixType, factor, output;
     private GroupOutputNode.GroupOutDelegate groupOutDelegate;
 
     public StaticInstancer(ColorVec pos) : base(pos)
@@ -73,12 +74,12 @@ public class StaticInstancer : GroupNodeBase
             float position = i / (float)groups.Count;
             groups[i].SetVector(position); 
         }
-        groupOutputData = new Evaluable[groups.Count];
+        groupOutputData = new IEvaluable[groups.Count];
     }
 
     private void GroupOutputHandler(object data, string ID, int index)
     {
-        if (data is Evaluable eData)
+        if (data is IEvaluable eData)
         {
             groupOutputData[index] = eData;
         }
@@ -90,8 +91,8 @@ public class StaticInstancer : GroupNodeBase
                 return;
             }
         }
-        mixer = new EvaluableMixRGB((Evaluable)factor.GetData());
-        foreach (Evaluable evaluable in groupOutputData)
+        mixer = new EvaluableMixRGB((IEvaluable)factor.GetData());
+        foreach (IEvaluable evaluable in groupOutputData)
         {
             mixer.AddElement(evaluable);
         }

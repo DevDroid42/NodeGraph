@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using nodeSys2;
 using System;
+using Newtonsoft.Json;
 
 public class ColorMixNode : Node
 {
-    public Property mixTypeProp, factorProp, elementCountProp, outputProp;
-    public List<Property> elements;
+    [JsonProperty] private Property mixTypeProp, factorProp, elementCountProp, outputProp;
+    [JsonProperty] private List<Property> elements;
 
     public ColorMixNode(ColorVec pos) : base(pos)
     {
@@ -36,7 +37,7 @@ public class ColorMixNode : Node
 
     private void ProcessRes()
     {
-        int setRes = (int)((Evaluable)elementCountProp.GetData()).EvaluateValue(0);
+        int setRes = (int)((IEvaluable)elementCountProp.GetData()).EvaluateValue(0);
         //if the set resoltion is different than the current one resize the list by either removing excess data
         //or adding new data
         if (elements.Count != setRes)
@@ -72,10 +73,10 @@ public class ColorMixNode : Node
 
     private EvaluableMixRGB CreateMixRGB()
     {
-        EvaluableMixRGB mixRGB = new EvaluableMixRGB((Evaluable)factorProp.GetData());
+        EvaluableMixRGB mixRGB = new EvaluableMixRGB((IEvaluable)factorProp.GetData());
         for (int i = 0; i < elements.Count; i++)
         {
-            mixRGB.AddElement((Evaluable)elements[i].GetData());
+            mixRGB.AddElement((IEvaluable)elements[i].GetData());
         }
         mixRGB.mixType = (EvaluableMixRGB.MixType)mixTypeProp.GetData();
         return mixRGB;

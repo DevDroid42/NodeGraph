@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using nodeSys2;
+using Newtonsoft.Json;
 
 public class InstancedPulseNode : Node
 {
-    public Property output;
+    [JsonProperty] private Property output;
 
     public InstancedPulseNode(ColorVec pos) : base(pos)
     {

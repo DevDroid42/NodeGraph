@@ -65,7 +65,7 @@ public class UDPTesting : MonoBehaviour
         udpClient.Send(message, message.Length);
     }
 
-    public byte[] GenWARLS(int ledCount, Evaluable colorData)
+    public byte[] GenWARLS(int ledCount, IEvaluable colorData)
     {
         byte[] message = new byte[ledCount * 4 + 2];
         message[0] = 1;

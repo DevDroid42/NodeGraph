@@ -6,7 +6,7 @@ using System;
 
 public class LoopNode : Node
 {
-    public Property ResetTrig, InvertTrig, stepTrig, stepSize, loopTypeProp, minP, maxP, rateP, output, startP;
+    [JsonProperty] protected Property ResetTrig, InvertTrig, stepTrig, stepSize, loopTypeProp, minP, maxP, rateP, output, startP;
     private float start, min, max, rate, current;
 
     [JsonConverter(typeof(StringEnumConverter))]
@@ -81,7 +81,7 @@ public class LoopNode : Node
             case LoopType.stop:
                 if (((Pulse)stepTrig.GetData()).PulsePresent())
                 {
-                    current += ((Evaluable)stepSize.GetData()).EvaluateValue(0) * rateInverter;
+                    current += ((IEvaluable)stepSize.GetData()).EvaluateValue(0) * rateInverter;
                 }
                 if (current <= min)
                 {
@@ -126,14 +126,14 @@ public class LoopNode : Node
     {
         if (((Pulse)stepTrig.GetData()).PulsePresent())
         {
-            current += ((Evaluable)stepSize.GetData()).EvaluateValue(0) * rateInverter;
+            current += ((IEvaluable)stepSize.GetData()).EvaluateValue(0) * rateInverter;
         }
         current += rate * rateInverter * deltaTime;
     }
 
     private void processData()
     {
-        Evaluable data = new Evaluable();
+        IEvaluable data = new EvaluableBlank();
         if (minP.TryGetDataType(ref data))
         {
             min = data.EvaluateValue(0);

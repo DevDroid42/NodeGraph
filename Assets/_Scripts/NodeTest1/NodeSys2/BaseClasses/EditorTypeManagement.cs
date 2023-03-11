@@ -14,7 +14,7 @@ public class EditorTypeManagement
     //The default editor to display for different basic Evaluable types
     public static Editor GetEditorByType(Object data)
     {
-        if(!(data is Evaluable)) return Editor.nonEvaluable;
+        if(!(data is IEvaluable)) return Editor.nonEvaluable;
 
         switch (data)
         {

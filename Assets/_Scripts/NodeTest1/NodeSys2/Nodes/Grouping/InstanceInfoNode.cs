@@ -8,7 +8,7 @@ public class InstanceInfoNode : Node
 {
     [JsonIgnore]
     public float index, count, ratio;
-    public Property indexProp, countProp, ratioProp;
+    [JsonProperty] private Property indexProp, countProp, ratioProp;
     
     public InstanceInfoNode(ColorVec pos) : base(pos)
     {

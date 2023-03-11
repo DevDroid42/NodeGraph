@@ -110,7 +110,7 @@ namespace nodeSys2
             if (inputs.TrueForAll(prop => prop.ID != ID))
             {
                 //if any subclass of evaluable is called then gate property to Evaluables, Otherwhise gate to type provided
-                Type gate = defaultData.GetType().IsSubclassOf(typeof(Evaluable)) ? typeof(Evaluable) : defaultData.GetType();
+                Type gate = defaultData is IEvaluable ? typeof(IEvaluable) : defaultData.GetType();
                 Property tempRef = new Property(this, ID, true, connectable, defaultData, gate);
                 if (index < 0)
                 {

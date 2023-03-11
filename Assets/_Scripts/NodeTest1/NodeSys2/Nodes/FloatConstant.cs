@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 public class FloatConstant : Node
 {
-    public Property constant, output;
+    [JsonProperty] private Property constant, output;
     public FloatConstant(ColorVec pos) : base(pos)
     {
         nodeDisc = "Float Constant";
@@ -18,6 +18,6 @@ public class FloatConstant : Node
     public override void Init2()
     {
         base.Init2();
-        output.Invoke((Evaluable)constant.GetData());
+        output.Invoke((IEvaluable)constant.GetData());
     }
 }

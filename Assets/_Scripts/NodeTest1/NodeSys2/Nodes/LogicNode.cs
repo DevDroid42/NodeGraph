@@ -8,13 +8,13 @@ using System;
 
 public class LogicNode : Node
 {
+    [JsonProperty] private Property data1, compareMode, data2, pulseOutput, valueOutput;
+
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ComparisonType
     {
         greaterThen, lessThen, or, and
     }
-
-    public Property data1, compareMode, data2, pulseOutput, valueOutput;
 
     public LogicNode(ColorVec pos) : base(pos)
     {
@@ -47,16 +47,16 @@ public class LogicNode : Node
         switch ((ComparisonType)compareMode.GetData())
         {
             case ComparisonType.greaterThen:
-                Eval(((Evaluable)data1.GetData()).EvaluateValue(0) > ((Evaluable)data2.GetData()).EvaluateValue(0));           
+                Eval(((IEvaluable)data1.GetData()).EvaluateValue(0) > ((IEvaluable)data2.GetData()).EvaluateValue(0));           
                 break;
             case ComparisonType.lessThen:
-                Eval(((Evaluable)data1.GetData()).EvaluateValue(0) < ((Evaluable)data2.GetData()).EvaluateValue(0));
+                Eval(((IEvaluable)data1.GetData()).EvaluateValue(0) < ((IEvaluable)data2.GetData()).EvaluateValue(0));
                 break;
             case ComparisonType.or:
-                Eval(((bool)((Evaluable)data1.GetData()).EvaluateColor(0)) || (bool)(((Evaluable)data2.GetData()).EvaluateColor(0)));
+                Eval(((bool)((IEvaluable)data1.GetData()).EvaluateColor(0)) || (bool)(((IEvaluable)data2.GetData()).EvaluateColor(0)));
                 break;
             case ComparisonType.and:
-                Eval(((bool)((Evaluable)data1.GetData()).EvaluateColor(0)) && (bool)(((Evaluable)data2.GetData()).EvaluateColor(0)));
+                Eval(((bool)((IEvaluable)data1.GetData()).EvaluateColor(0)) && (bool)(((IEvaluable)data2.GetData()).EvaluateColor(0)));
                 break;
             default:
                 break;

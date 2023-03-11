@@ -1,7 +1,7 @@
 ﻿
 using Newtonsoft.Json;
 
-public class EvaluableFloat : Evaluable
+public class EvaluableFloat : IEvaluable
 {
     [JsonProperty]
     private float num;
@@ -16,17 +16,17 @@ public class EvaluableFloat : Evaluable
         num = number;
     }
 
-    public override ColorVec EvaluateColor(float vector)
+    public ColorVec EvaluateColor(float vector)
     {
         return num;
     }
 
-    public override float EvaluateValue(float vector)
+    public float EvaluateValue(float vector)
     {
         return num;
     }
 
-    public override object GetCopy()
+    public object GetCopy()
     {
         return new EvaluableFloat(num);
     }
@@ -34,5 +34,10 @@ public class EvaluableFloat : Evaluable
     public override string ToString()
     {
         return num.ToString();
+    }
+
+    public int GetResolution()
+    {
+        return 1;
     }
 }

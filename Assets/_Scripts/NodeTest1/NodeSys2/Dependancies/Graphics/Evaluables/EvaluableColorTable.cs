@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EvaluableColorTable : Evaluable
+public class EvaluableColorTable : IEvaluable
 {
     [JsonProperty]
     private List<ColorVec> keys = new List<ColorVec>();
@@ -113,9 +113,9 @@ public class EvaluableColorTable : Evaluable
 
     }
 
-    public override ColorVec EvaluateColor(float vector)
-    {        
-        float x = TransformVector((float)vector);
+    public ColorVec EvaluateColor(float vector)
+    {
+        float x = vector;
         switch (clipType)
         {
             case ClippingMode.tile:
@@ -163,33 +163,24 @@ public class EvaluableColorTable : Evaluable
         }
     }
 
-    public override float EvaluateValue(float vector)
+    public float EvaluateValue(float vector)
     {                
         return (float)EvaluateColor(vector);
     }
 
-    public override object GetCopy()
+    public object GetCopy()
     {
         EvaluableColorTable temp = new EvaluableColorTable(GetkeyAmt());
         for (int i = 0; i < temp.GetkeyAmt(); i++)
         {
             temp.SetKey(i, keys[i].GetCopy());
         }
-        temp.clipType = clipType;
-        temp.interType = interType;
-        temp.localOffset = localOffset;
-        temp.globalOffset= globalOffset;
-        temp.scale = scale;
-        temp.rot = rot;
-        temp.pivot = pivot;
         return temp;
     }
 
-    public static implicit operator EvaluableColorTable(ColorVec c)
+    public int GetResolution()
     {
-        EvaluableColorTable table = new EvaluableColorTable(1);
-        table.keys[0] = new ColorVec(c.rx, c.gy, c.bz, c.aw);
-        return table;
+        return keys.Count;
     }
 
 }

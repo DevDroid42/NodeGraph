@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EvaluableBool : Evaluable
+public class EvaluableBool : IEvaluable
 {
     private bool val;
 
@@ -16,12 +16,12 @@ public class EvaluableBool : Evaluable
         val = number;
     }
 
-    public override ColorVec EvaluateColor(float vector)
+    public ColorVec EvaluateColor(float vector)
     {
         return EvaluateValue(0);
     }
 
-    public override float EvaluateValue(float vector)
+    public float EvaluateValue(float vector)
     {
         if (val)
         {
@@ -33,7 +33,7 @@ public class EvaluableBool : Evaluable
         }
     }
 
-    public override object GetCopy()
+    public object GetCopy()
     {
         return new EvaluableBool(val);
     }
@@ -41,5 +41,10 @@ public class EvaluableBool : Evaluable
     public override string ToString()
     {
         return val.ToString();
+    }
+
+    public int GetResolution()
+    {
+        throw new System.NotImplementedException();
     }
 }

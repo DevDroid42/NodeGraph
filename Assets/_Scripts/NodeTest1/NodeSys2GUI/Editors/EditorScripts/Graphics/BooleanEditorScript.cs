@@ -28,7 +28,7 @@ public class BooleanEditorScript : EditorBase
     {
         switch (prop.GetData())
         {
-            case Evaluable evaluable:
+            case IEvaluable evaluable:
                 {
                     toggle.isOn = evaluable.EvaluateValue(0) >= 0.5;
                     break;

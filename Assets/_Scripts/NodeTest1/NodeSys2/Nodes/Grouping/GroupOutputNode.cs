@@ -6,7 +6,7 @@ using nodeSys2;
 
 public class GroupOutputNode : Node, INameable
 {
-    public Property input, name;
+    [JsonProperty] private Property input, name;
     //used to store position in mixRGB object when the node is an instance
     public int instanceIndex = 0;
     public delegate void GroupOutDelegate(object data, string tag, int index);
@@ -18,7 +18,7 @@ public class GroupOutputNode : Node, INameable
         base.nodeDisc = "Group output";
         name = CreateInputProperty("Data tag", false, new StringData("output"), typeof(StringData));
         name.interactable = true;
-        input = CreateInputProperty("input", true, new Evaluable());
+        input = CreateInputProperty("input", true, new EvaluableBlank());
     }
 
     public override void Handle()

@@ -2,9 +2,10 @@
 using Newtonsoft.Json.Converters;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class EvaluableMixRGB : Evaluable
+public class EvaluableMixRGB : IEvaluable
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum MixType
@@ -14,26 +15,25 @@ public class EvaluableMixRGB : Evaluable
     public MixType mixType;
     //the factor controls to what extent the mix type is applied. Every add operation is multiplied by the factor and mix 
     //interpolates between elements based on the factor. 
-    public Evaluable factor;
-    public List<Evaluable> elements;
+    public IEvaluable factor;
+    public List<IEvaluable> elements;
     public bool clamp = true;
     public float low = 0;
     public float high = 1;
 
-    public EvaluableMixRGB(Evaluable factor)
+    public EvaluableMixRGB(IEvaluable factor)
     {
         this.factor = factor;
-        elements = new List<Evaluable>();
+        elements = new List<IEvaluable>();
     }
 
-    public void AddElement(Evaluable element)
+    public void AddElement(IEvaluable element)
     {
         elements.Add(element);
     }
 
-    public override ColorVec EvaluateColor(float vector)
+    public ColorVec EvaluateColor(float vector)
     {
-        vector = TransformVector((float)vector);
         ColorVec output = new ColorVec(0);        
         switch (mixType)
         {
@@ -161,19 +161,24 @@ public class EvaluableMixRGB : Evaluable
         return input;
     }
 
-    public override float EvaluateValue(float vector)
+    public float EvaluateValue(float vector)
     {
         return (float)EvaluateColor(vector);
     }
 
-    public override object GetCopy()
+    public object GetCopy()
     {
-        EvaluableMixRGB mixRGB = new EvaluableMixRGB((Evaluable)factor.GetCopy());
+        EvaluableMixRGB mixRGB = new EvaluableMixRGB((IEvaluable)factor.GetCopy());
         mixRGB.mixType = mixType;
         for (int i = 0; i < elements.Count; i++)
         {
-            mixRGB.AddElement((Evaluable)elements[i].GetCopy());
+            mixRGB.AddElement((IEvaluable)elements[i].GetCopy());
         }
         return mixRGB;
+    }
+
+    public int GetResolution()
+    {
+        return elements.Max(element => element.GetResolution());
     }
 }

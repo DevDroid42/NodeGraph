@@ -2,7 +2,7 @@
 
 using Newtonsoft.Json;
 
-public class EvaluableColorVec : Evaluable
+public class EvaluableColorVec : IEvaluable
 {
     [JsonProperty]
     protected ColorVec colorVec;
@@ -26,18 +26,23 @@ public class EvaluableColorVec : Evaluable
         this.colorVec = colorVec;
     }
 
-    public override ColorVec EvaluateColor(float vector)
+    public ColorVec EvaluateColor(float vector)
     {
         return colorVec.GetCopy();
     }
 
-    public override float EvaluateValue(float vector)
+    public float EvaluateValue(float vector)
     {
         return (float)colorVec;
     }
 
-    public override object GetCopy()
+    public object GetCopy()
     {
         return new EvaluableColorVec(new ColorVec(colorVec.rx, colorVec.gy, colorVec.bz, colorVec.aw));
+    }
+
+    public int GetResolution()
+    {
+        return 1;
     }
 }

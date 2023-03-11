@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using nodeSys2;
 using System;
+using Newtonsoft.Json;
 
 public class MathNode : Node
 {
-    public Property expression, status, vector, variableCount, valueOutput, EquationOutput;
+    [JsonProperty] private Property expression, status, vector, variableCount, valueOutput, EquationOutput;
     public List<Property> variables;
     private EvaluableCustomEquation equation;
 
@@ -31,7 +32,7 @@ public class MathNode : Node
     public override void Init()
     {
         base.Init();
-        setRes = (int)((Evaluable)variableCount.GetData()).EvaluateValue(0);
+        setRes = (int)((IEvaluable)variableCount.GetData()).EvaluateValue(0);
         InsantiateEquation();
         ProcessRes();        
     }
@@ -60,7 +61,7 @@ public class MathNode : Node
     {
         if (equation.ToString() != "")
         {
-            float localVector = ((Evaluable)vector.GetData()).EvaluateValue(0);
+            float localVector = ((IEvaluable)vector.GetData()).EvaluateValue(0);
             float value;
             try
             {
@@ -107,7 +108,7 @@ public class MathNode : Node
 
         for (int i = 0; i < equation.variables.Length; i++)
         {
-            equation.variables[i] = (Evaluable)variables[i].GetData();
+            equation.variables[i] = (IEvaluable)variables[i].GetData();
         }
 
     }
