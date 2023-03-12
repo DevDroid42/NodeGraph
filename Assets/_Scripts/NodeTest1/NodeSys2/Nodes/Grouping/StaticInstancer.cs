@@ -91,12 +91,26 @@ public class StaticInstancer : GroupNodeBase
                 return;
             }
         }
-        mixer = new EvaluableMixRGB((IEvaluable)factor.GetData());
-        foreach (IEvaluable evaluable in groupOutputData)
+
+        if (mixer == null || mixer.elements.Count != groupOutputData.Length)
         {
-            mixer.AddElement(evaluable);
+            mixer = new EvaluableMixRGB((IEvaluable)factor.GetData());
+            foreach (IEvaluable evaluable in groupOutputData)
+            {
+                mixer.elements.Add(evaluable);
+            }
+            mixer.mixType = (EvaluableMixRGB.MixType)mixType.GetData();
         }
-        mixer.mixType = (EvaluableMixRGB.MixType)mixType.GetData();
+        else
+        {
+            mixer.factor = (IEvaluable)factor.GetData();
+            //if we are in this else then we know the mixer elements length is the same as the groupOutputData
+            for (int i = 0; i < mixer.elements.Count; i++)
+            {
+                mixer.elements[i] = groupOutputData[i];
+            }
+            mixer.mixType = (EvaluableMixRGB.MixType)mixType.GetData();
+        }
         output.Invoke(mixer);
     }
 

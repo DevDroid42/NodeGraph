@@ -27,11 +27,6 @@ public class EvaluableMixRGB : IEvaluable
         elements = new List<IEvaluable>();
     }
 
-    public void AddElement(IEvaluable element)
-    {
-        elements.Add(element);
-    }
-
     public ColorVec EvaluateColor(float vector)
     {
         ColorVec output = new ColorVec(0);        
@@ -172,7 +167,7 @@ public class EvaluableMixRGB : IEvaluable
         mixRGB.mixType = mixType;
         for (int i = 0; i < elements.Count; i++)
         {
-            mixRGB.AddElement((IEvaluable)elements[i].GetCopy());
+            mixRGB.elements.Add((IEvaluable)elements[i].GetCopy());
         }
         return mixRGB;
     }

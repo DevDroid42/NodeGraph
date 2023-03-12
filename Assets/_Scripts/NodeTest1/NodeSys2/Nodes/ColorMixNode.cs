@@ -76,7 +76,7 @@ public class ColorMixNode : Node
         EvaluableMixRGB mixRGB = new EvaluableMixRGB((IEvaluable)factorProp.GetData());
         for (int i = 0; i < elements.Count; i++)
         {
-            mixRGB.AddElement((IEvaluable)elements[i].GetData());
+            mixRGB.elements.Add((IEvaluable)elements[i].GetData());
         }
         mixRGB.mixType = (EvaluableMixRGB.MixType)mixTypeProp.GetData();
         return mixRGB;

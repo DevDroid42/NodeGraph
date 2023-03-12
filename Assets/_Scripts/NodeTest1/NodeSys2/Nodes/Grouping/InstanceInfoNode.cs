@@ -20,7 +20,6 @@ public class InstanceInfoNode : Node
 
     public override void Handle()
     {
-        Debug.Log("index: " + index + " count: " + count + " ratio: " + ratio);
         indexProp.Invoke(new EvaluableFloat(index));
         countProp.Invoke(new EvaluableFloat(count));
         ratioProp.Invoke(new EvaluableFloat(ratio));
