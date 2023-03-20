@@ -65,7 +65,6 @@ public class EvaluableMixRGB : IEvaluable
         {
             ColorVec elementColor = elements[i].EvaluateColor(vector);
             color += elementColor * fac;
-
         }
         return color;
     }
@@ -142,23 +141,7 @@ public class EvaluableMixRGB : IEvaluable
 
     private ColorVec Clamp(ColorVec input, float low, float high)
     {
-        float[] components = new float[4];
-        for (int i = 0; i < 4; i++)
-        {
-            if (input.GetComponent(i) < low)
-            {
-                components[i] = low;
-            }
-            else if (input.GetComponent(i) > high)
-            {
-                components[i] = high;
-            }
-            else
-            {
-                components[i] = input.GetComponent(i);
-            }
-        }
-        return new ColorVec(components);
+        return ColorOperations.ClampColor(input, low, high);
     }
 
     public float EvaluateValue(float vector)

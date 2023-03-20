@@ -46,7 +46,8 @@ public class EvaluableColorTable : IEvaluable
 
     private ColorVec Interpolate(float x)
     {
-        switch (keys.Count)
+        int keyCount = keys.Count;
+        switch (keyCount)
         {
             case 1:
                 return keys[0];
@@ -58,30 +59,22 @@ public class EvaluableColorTable : IEvaluable
         {
             // ((light I'm at)/last light)) x (Number of keys)
             // casted to int = lowest key
-
             
             if (x == 1)
             {
                 x = 0.99999f;
-            }
-            if (x == 0)
+            }else if (x == 0)
             {
                 x = 0.00001f;
             }
-            
 
-            //remap x 
-            float mapping1 = 1.0f / (keys.Count - 1);
-            float mapping2 = (keys.Count - 2.0f) / keys.Count;
-            //x = x * (mapping2 - mapping1) + mapping1;
-
-            int keyIndex1 = (int)((keys.Count - 1) * x);
+            int keyIndex1 = (int)((keyCount - 1) * x);
             ColorVec clr1 = keys[keyIndex1];
-            int keyIndex2 = (int)((keys.Count - 1) * x + 1);
+            int keyIndex2 = (int)((keyCount - 1) * x + 1);
             ColorVec clr2 = keys[keyIndex2];
 
-            float keyPercent1 = (float)keyIndex1 / (keys.Count - 1);
-            float keyPercent2 = (float)keyIndex2 / (keys.Count - 1);
+            float keyPercent1 = (float)keyIndex1 / (keyCount - 1);
+            float keyPercent2 = (float)keyIndex2 / (keyCount - 1);
 
             float g = (x - keyPercent1) / (keyPercent2 - keyPercent1);
             switch (interType)

@@ -18,6 +18,7 @@ public class ColorTableEditor : EditorBase
     {
         img = GetComponent<Image>();
         tex = new Texture2D(resolution, 1, TextureFormat.ARGB32, false);
+        img.sprite = Sprite.Create(tex, new Rect(0, 0, resolution, 1), new Vector2(0.5f, 0.5f));
         colors = new ColorVec[resolution];
     }
 
@@ -56,7 +57,7 @@ public class ColorTableEditor : EditorBase
                     //Debug.Log("Threaded Speed: " + stopWatch.ElapsedMilliseconds);
 
                     tex.Apply();
-                    img.sprite = Sprite.Create(tex, new Rect(0, 0, resolution, 1), new Vector2(0.5f, 0.5f));
+                    //img.sprite = Sprite.Create(tex, new Rect(0, 0, resolution, 1), new Vector2(0.5f, 0.5f));
                     break;
                 }
             default:

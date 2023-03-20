@@ -107,7 +107,7 @@ public class ColorOperations
         RGB, HSV
     }
 
-    public static ColorVec ClampColor(ColorVec c)
+    public static ColorVec ClampColor(ColorVec c, float low = 0, float high = 1)
     {
         return new ColorVec(
             Clamp(c.rx, 0, 1),

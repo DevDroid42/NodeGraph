@@ -9,6 +9,7 @@ public class ColorMixNode : Node
 {
     [JsonProperty] private Property mixTypeProp, factorProp, elementCountProp, outputProp;
     [JsonProperty] private List<Property> elements;
+    private EvaluableMixRGB mixer;
 
     public ColorMixNode(ColorVec pos) : base(pos)
     {
@@ -32,7 +33,8 @@ public class ColorMixNode : Node
 
     public override void Init2()
     {
-        outputProp.Invoke(CreateMixRGB());
+        UpdateMixRGB();
+        outputProp.Invoke(mixer);
     }
 
     private void ProcessRes()
@@ -68,18 +70,30 @@ public class ColorMixNode : Node
 
     public override void Handle()
     {
-        outputProp.Invoke(CreateMixRGB());
+        UpdateMixRGB();
+        outputProp.Invoke(mixer);
     }
 
-    private EvaluableMixRGB CreateMixRGB()
+    private void UpdateMixRGB()
     {
-        EvaluableMixRGB mixRGB = new EvaluableMixRGB((IEvaluable)factorProp.GetData());
-        for (int i = 0; i < elements.Count; i++)
+        if (mixer == null || mixer.elements.Count != elements.Count)
         {
-            mixRGB.elements.Add((IEvaluable)elements[i].GetData());
+            mixer = new EvaluableMixRGB((IEvaluable)factorProp.GetData());
+            for (int i = 0; i < elements.Count; i++)
+            {
+                mixer.elements.Add((IEvaluable)elements[i].GetData());
+            }
         }
-        mixRGB.mixType = (EvaluableMixRGB.MixType)mixTypeProp.GetData();
-        return mixRGB;
+        else
+        {
+            mixer.factor = (IEvaluable)factorProp.GetData();
+            for (int i = 0; i < mixer.elements.Count; i++)
+            {
+                mixer.elements[i] = (IEvaluable)elements[i].GetData();
+            }
+            
+        }
+        mixer.mixType = (EvaluableMixRGB.MixType)mixTypeProp.GetData();
     }
 
 }

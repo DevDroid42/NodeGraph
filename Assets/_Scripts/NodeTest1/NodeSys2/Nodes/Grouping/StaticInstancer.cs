@@ -99,7 +99,6 @@ public class StaticInstancer : GroupNodeBase
             {
                 mixer.elements.Add(evaluable);
             }
-            mixer.mixType = (EvaluableMixRGB.MixType)mixType.GetData();
         }
         else
         {
@@ -109,8 +108,8 @@ public class StaticInstancer : GroupNodeBase
             {
                 mixer.elements[i] = groupOutputData[i];
             }
-            mixer.mixType = (EvaluableMixRGB.MixType)mixType.GetData();
         }
+        mixer.mixType = (EvaluableMixRGB.MixType)mixType.GetData();
         output.Invoke(mixer);
     }
 
