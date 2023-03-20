@@ -76,10 +76,6 @@ namespace nodeSys2
 
         public Node(ColorVec position)
         {
-            if (position == null)
-            {
-                position = 0;
-            }
             xPos = position.rx;
             yPos = position.gy;
         }

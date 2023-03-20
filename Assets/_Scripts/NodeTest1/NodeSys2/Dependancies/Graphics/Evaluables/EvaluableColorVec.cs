@@ -28,7 +28,7 @@ public class EvaluableColorVec : IEvaluable
 
     public ColorVec EvaluateColor(float vector)
     {
-        return colorVec.GetCopy();
+        return colorVec;
     }
 
     public float EvaluateValue(float vector)

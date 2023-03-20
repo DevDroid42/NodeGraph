@@ -4,20 +4,12 @@ using Newtonsoft.Json.Converters;
 using UnityEngine;
 using System;
 
-public class ColorVec
+public readonly struct ColorVec
 {
-    public float rx;
-    public float gy;
-    public float bz;
-    public float aw;
-
-    public ColorVec()
-    {
-        rx = 1;
-        gy = 1;
-        bz = 1;
-        aw = 1;
-    }
+    public readonly float rx;
+    public readonly float gy;
+    public readonly float bz;
+    public readonly float aw;
 
     //creates a color from black to white
     public ColorVec(float value)
@@ -36,29 +28,31 @@ public class ColorVec
         this.aw = A;
     }
 
-    public void SetComponent(int i, float comp)
+    public ColorVec(float[] colors)
     {
-        switch (i)
+        float[] newColors = {1,1,1,1};
+        for (int i = 0; i < Math.Min(colors.Length, 4); i++)
         {
-            case 0:
-                rx = comp;
-                break;
-            case 1:
-                gy = comp;
-                break;
-            case 2:
-                bz = comp;
-                break;
-            case 3:
-                aw = comp;
-                break;
-            default:
-                Debug.LogWarning("Invalid vector compoent: " + i);
-                break;
+            newColors[i] = colors[i];
         }
+        rx = newColors[0];
+        gy = newColors[1];
+        bz = newColors[2];
+        aw = newColors[3];
     }
 
-    public float getComponent(int i)
+    public static ColorVec GetColorWithUpdatedComponent(ColorVec color, int component, float value)
+    {
+        float[] components = new float[4];
+        for (int i = 0; i < components.Length; i++)
+        {
+            components[i] = color.GetComponent(i);
+        }
+        components[component] = value;
+        return new ColorVec(components);
+    }
+
+    public float GetComponent(int i)
     {
         switch (i)
         {
@@ -78,16 +72,6 @@ public class ColorVec
                 Debug.LogWarning("Invalid vector compoent: " + i);
                 return 0;
         }
-    }
-
-    public ColorVec GetCopy()
-    {
-        ColorVec temp = new ColorVec();
-        temp.rx = rx;
-        temp.bz = bz;
-        temp.gy = gy;
-        temp.aw = aw;
-        return temp;
     }
 
     public bool Equals(ColorVec other)
@@ -125,11 +109,12 @@ public class ColorOperations
 
     public static ColorVec ClampColor(ColorVec c)
     {
-        c.rx = Clamp(c.rx, 0, 1);
-        c.gy = Clamp(c.gy, 0, 1);
-        c.bz = Clamp(c.bz, 0, 1);
-        c.aw = Clamp(c.aw, 0, 1);
-        return c;
+        return new ColorVec(
+            Clamp(c.rx, 0, 1),
+            Clamp(c.gy, 0, 1),
+            Clamp(c.bz, 0, 1),
+            Clamp(c.aw, 0, 1)
+        );
     }
 
     private static float Clamp(float val, float min, float max)

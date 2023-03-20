@@ -49,7 +49,7 @@ public class EvaluableMixRGB : IEvaluable
         {
             Clamp(output, low, high);
         }
-        return output.GetCopy();
+        return output;
     }
 
     private ColorVec Add(float vector)
@@ -142,18 +142,23 @@ public class EvaluableMixRGB : IEvaluable
 
     private ColorVec Clamp(ColorVec input, float low, float high)
     {
+        float[] components = new float[4];
         for (int i = 0; i < 4; i++)
         {
-            if (input.getComponent(i) < low)
+            if (input.GetComponent(i) < low)
             {
-                input.SetComponent(i, low);
+                components[i] = low;
             }
-            else if (input.getComponent(i) > high)
+            else if (input.GetComponent(i) > high)
             {
-                input.SetComponent(i, high);
+                components[i] = high;
+            }
+            else
+            {
+                components[i] = input.GetComponent(i);
             }
         }
-        return input;
+        return new ColorVec(components);
     }
 
     public float EvaluateValue(float vector)

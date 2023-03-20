@@ -88,11 +88,11 @@ public class ColorConstant : Node
         {
             EvaluableColorVec proccesedColor = new EvaluableColorVec(ProcessData());
             internalColor.SetData(proccesedColor);
-            internalColorDupe = ((IEvaluable)internalColor.GetData()).EvaluateColor(0).GetCopy();
+            internalColorDupe = ((IEvaluable)internalColor.GetData()).EvaluateColor(0);
         }
         else //the color has been changed by the picker. Chnage the float constants to match the internal color and reset the dupe
         {
-            internalColorDupe = ((IEvaluable)internalColor.GetData()).EvaluateColor(0).GetCopy();
+            internalColorDupe = ((IEvaluable)internalColor.GetData()).EvaluateColor(0);
             alpha.SetData(new EvaluableFloat(internalColorDupe.aw));
             if (rgb)
             {                
@@ -115,7 +115,7 @@ public class ColorConstant : Node
     {
         EvaluableColorVec proccesedColor = new EvaluableColorVec(ProcessData());
         internalColor.SetData(proccesedColor);
-        internalColorDupe = ((IEvaluable)internalColor.GetData()).EvaluateColor(0).GetCopy();
+        internalColorDupe = ((IEvaluable)internalColor.GetData()).EvaluateColor(0);
         ProcessColorChanges();
         internalColor.interactable = false;
         internalColor.Disc = "Color (Driven)";
@@ -145,7 +145,7 @@ public class ColorConstant : Node
         else
         {
             ColorVec color = ColorOperations.HsvToRgb(floatBuffer[0], floatBuffer[1], floatBuffer[2]);
-            color.aw = floatBuffer[3];
+            color =  ColorVec.GetColorWithUpdatedComponent(color, 3, floatBuffer[3]);
             return color;
         }
     }

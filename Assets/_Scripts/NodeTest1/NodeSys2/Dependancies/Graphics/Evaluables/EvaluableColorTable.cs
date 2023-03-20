@@ -28,11 +28,7 @@ public class EvaluableColorTable : IEvaluable
     {
         for (int i = 0; i < keyAmt; i++)
         {
-            ColorVec color = new ColorVec();
-            color.aw = 1;
-            color.rx = 1;
-            color.gy = 1;
-            color.bz = 1;
+            ColorVec color = new ColorVec(1);
             keys.Add(color);
         }
     }
@@ -173,7 +169,7 @@ public class EvaluableColorTable : IEvaluable
         EvaluableColorTable temp = new EvaluableColorTable(GetkeyAmt());
         for (int i = 0; i < temp.GetkeyAmt(); i++)
         {
-            temp.SetKey(i, keys[i].GetCopy());
+            temp.SetKey(i, keys[i]);
         }
         return temp;
     }
