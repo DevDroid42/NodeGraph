@@ -22,11 +22,19 @@ public class ColorTableEditor : EditorBase
         colors = new ColorVec[resolution];
     }
 
+    private void OnEnable()
+    {
+        if (img != null)
+        {
+            img.sprite = Sprite.Create(tex, new Rect(0, 0, resolution, 1), new Vector2(0.5f, 0.5f));
+        }
+    }
+
     // Update is called once per frame
     private float time;
     void Update()
     {
-        if (time > 0.040)
+        if (time > 0.02)
         {
             time = 0;
             UpdateTexture();

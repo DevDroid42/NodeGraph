@@ -15,6 +15,6 @@ public class fpsCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = ((int)(1 / Time.deltaTime)).ToString();
+        text.text = ((int)(1 / Time.smoothDeltaTime)).ToString();
     }
 }
