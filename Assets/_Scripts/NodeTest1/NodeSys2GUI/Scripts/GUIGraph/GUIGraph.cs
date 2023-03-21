@@ -15,6 +15,7 @@ public class GUIGraph : MonoBehaviour
     [Serializable]
     public class IntEvent : UnityEvent<int> { }
     public IntEvent groupDepthChanged;
+    public UnityEvent GUIUpdated;
     public Camera cam;
     public Transform NodeParent;
     //reference to node prefab
@@ -70,6 +71,16 @@ public class GUIGraph : MonoBehaviour
         UpdateGUI();
         undoRedo.ClearHistory();
         ActionPreformed();
+    }
+
+    public string GetCurrentName()
+    {
+        return graphRef.graphName;
+    }
+
+    public void SetCurrentName(string name)
+    {
+        graphRef.graphName = name;
     }
 
     public void SetRootGraph(Graph graph)
@@ -140,6 +151,7 @@ public class GUIGraph : MonoBehaviour
 
     public void UpdateGUI()
     {
+        GUIUpdated.Invoke();
         groupDepthChanged.Invoke(openedGraphs.Count);
         VerifyNodes();
         graphRef.InitGraph();

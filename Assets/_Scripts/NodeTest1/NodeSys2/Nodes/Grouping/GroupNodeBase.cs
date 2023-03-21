@@ -10,6 +10,14 @@ public class GroupNodeBase : Node
 
     public GroupNodeBase(ColorVec pos) : base(pos) { }
 
+    public override void Init()
+    {
+        if (graph.graphName != "")
+        {
+            base.nodeDisc = graph.graphName;
+        }
+    }
+
     protected void Addproperties(List<string> tags, List<Property> propertyList, bool input)
     {
         //iterate through every tag

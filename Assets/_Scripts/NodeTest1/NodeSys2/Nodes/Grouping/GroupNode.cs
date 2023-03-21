@@ -21,6 +21,8 @@ public class GroupNode : GroupNodeBase
 
     public override void Init()
     {
+        base.Init();
+
         frameDelagate -= Frame;
         frameDelagate += Frame;
 

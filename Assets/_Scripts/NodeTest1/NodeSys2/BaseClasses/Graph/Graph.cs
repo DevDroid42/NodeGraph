@@ -7,7 +7,8 @@ namespace nodeSys2
 {
     public class Graph
     {
-        public string GraphName = "";
+        public static string recordingDirectory = "";
+        public string graphName = "";
         public List<Node> nodes = new List<Node>();        
         public static NodeNetReceive nodeNetReceiver;
 
