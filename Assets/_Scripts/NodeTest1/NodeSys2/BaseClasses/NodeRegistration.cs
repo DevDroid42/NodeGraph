@@ -6,7 +6,8 @@ public class NodeRegistration
     //public enum NodeGroups {,Instancers,Math,Mixing}
 
     public enum NodeTypes {NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Transform , LED, Math, mixRGB, 
-        NetReceive, GroupInput, GroupOutput, Group, StaticInstancer, DynamicInstancer, InstancedPulse, InstanceInfo, logic, udpSend}
+        NetReceive, GroupInput, GroupOutput, Group, StaticInstancer, DynamicInstancer, InstancedPulse, InstanceInfo, logic,
+        udpSend, recording}
 
     public static Node GetNode(NodeTypes type, ColorVec pos)
     {
@@ -52,6 +53,8 @@ public class NodeRegistration
                 return new LogicNode(pos);
             case NodeTypes.udpSend:
                 return new LedUDP(pos);
+            case NodeTypes.recording:
+                return new RecordingNode(pos);
             default:
                 return null;
         }

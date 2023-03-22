@@ -23,6 +23,7 @@ public class TransformNode : Node
         pivot.interactable = true;
         rot = CreateInputProperty("Rotation", true, new EvaluableFloat(0));
         rot.interactable = true;
+        rot.visible = false;
         globalOffset = CreateInputProperty("Global Offset", true, new EvaluableFloat(0));
         globalOffset.interactable = true;
         output = CreateOutputProperty("Output");
