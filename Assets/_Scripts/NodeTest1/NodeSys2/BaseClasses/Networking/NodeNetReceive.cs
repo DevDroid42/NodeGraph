@@ -10,6 +10,15 @@ using System.Threading;
 
 public class NodeNetReceive
 {
+    //used to send a global message out when receiving network data
+    public delegate void NetworkDelagate(NetworkMessage message);
+    private static NetworkDelagate nodeNetDelagate;
+    public static void AddMethodToNetReceiveDelegate(NetworkDelagate method)
+    {
+        nodeNetDelagate -= method;
+        nodeNetDelagate += method;
+    }
+
     NodeNetReceiveThreaded netThreadObj;
     //List of addresses to send keep alive messages to.
     private List<string> activeAdresses;
@@ -38,10 +47,11 @@ public class NodeNetReceive
             {
                 Debug.Log(Encoding.ASCII.GetString(message.data));
             }
+            nodeNetDelagate.Invoke(message);
             //Debug.Log(message);
-            if (Node.nodeNetDelagate != null)
+            foreach (NetReceiveNode node in Graph.nodeCollection.GetNetReceiveNodes(message.ID.ToString(), message.dataType.ToString()))
             {
-                Node.nodeNetDelagate.Invoke(message);
+                node.ReceiveData(message);
             }
         }
     }

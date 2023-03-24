@@ -35,15 +35,12 @@ public class Recorder
     public void RecordFrame(string name, ColorVec[] frame)
     {
         FramesInMemory += 1;
-        if (records.ContainsKey(name))
-        {
-            records[name].RecordFrame(frame);
-        }
-        else
+        if (!records.ContainsKey(name))
         {
             records[name] = new Recording();
-            records[name].RecordFrame(frame);
+
         }
+        records[name].RecordFrame(frame);
     }
 
     public void ClearRecordings()
@@ -66,7 +63,8 @@ public class Recorder
         try
         {
             File.WriteAllText(path, sBuilder.ToString());
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             UnityEngine.Debug.LogWarning("Error Writing File: " + e.ToString());
         }

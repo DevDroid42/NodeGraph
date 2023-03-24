@@ -7,10 +7,16 @@ namespace nodeSys2
 {
     public class Graph
     {
+        public static NodeCollections nodeCollection;
         public static Recorder recorder = new Recorder();
         public string graphName = "";
         public List<Node> nodes = new List<Node>();        
         public static NodeNetReceive nodeNetReceiver;
+
+        public void ResetNodeCollections()
+        {
+            nodeCollection = new NodeCollections();
+        }
 
         //to be used after loading from json
         public void InitGraph()
@@ -89,5 +95,44 @@ namespace nodeSys2
             nodeNetReceiver.Shutdown();
         }
 
+    }
+
+    public class NodeCollections
+    {
+        private HashSet<RecordingNode> recordingNodes = new HashSet<RecordingNode>();
+        public void RegisterRecordingNode(RecordingNode node)
+        {
+            recordingNodes.Add(node);
+        }
+
+        public HashSet<RecordingNode> GetRecordingNodes()
+        {
+            return recordingNodes;
+        }
+
+        private Dictionary<string, List<NetReceiveNode>> netReceiveNodes = new Dictionary<string, List<NetReceiveNode>>();
+        public void RegisterNetReceiveNode(string ID, string dataType, NetReceiveNode node)
+        {
+            string key = ID + dataType;
+            if (!netReceiveNodes.ContainsKey(key))
+            {
+                netReceiveNodes.Add(key, new List<NetReceiveNode>());
+                
+            }            
+            netReceiveNodes[key].Add(node);
+        }
+
+        public List<NetReceiveNode> GetNetReceiveNodes(string ID, string dataType)
+        {
+            string key = ID + dataType;
+            if (netReceiveNodes.ContainsKey(key))
+            {
+                return netReceiveNodes[key];
+            }
+            else
+            {
+                return new List<NetReceiveNode>();
+            }
+        }
     }
 }

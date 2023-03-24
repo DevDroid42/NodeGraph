@@ -154,6 +154,11 @@ public class GUIGraph : MonoBehaviour
         GUIUpdated.Invoke();
         groupDepthChanged.Invoke(openedGraphs.Count);
         VerifyNodes();
+        graphRef.ResetNodeCollections();
+        foreach (Graph graph in openedGraphs)
+        {
+            graph.InitGraph();
+        }
         graphRef.InitGraph();
         for (int i = 0; i < guiNodes.Count; i++)
         {

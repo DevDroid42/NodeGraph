@@ -23,32 +23,25 @@ public class NetReceiveNode : Node
     public override void Init()
     {
         base.Init();
+        Graph.nodeCollection.RegisterNetReceiveNode(ID.GetData().ToString(), dataType.GetData().ToString(), this);
         ProccessEnums();
-        nodeNetDelagate -= ReceiveData;
-        nodeNetDelagate += ReceiveData;
     }
 
-    public override void ReceiveData(NetworkMessage message)
+    public void ReceiveData(NetworkMessage message)
     {
-        if (message.ID == ((StringData)ID.GetData()).txt && message.dataType == (NetworkMessage.DataType)dataType.GetData())
+        //string value = dataType.GetData().ToString();
+        switch ((NetworkMessage.DataType)dataType.GetData())
         {
-            //string value = dataType.GetData().ToString();
-            switch ((NetworkMessage.DataType)dataType.GetData())
-            {
-                case NetworkMessage.DataType.Float:
-                    output.Invoke(new EvaluableFloat(ByteConverter.GetFLoat(message.data)));
-                    break;
-                case NetworkMessage.DataType.ByteArray:
-                    output.Invoke(ByteConverter.GetColorTable(message.data));
-                    break;
-                default:
-                    Debug.LogWarning("Invalid data type received with ID of " + message.ID);
-                    break;
-            }
-
-
+            case NetworkMessage.DataType.Float:
+                output.Invoke(new EvaluableFloat(ByteConverter.GetFLoat(message.data)));
+                break;
+            case NetworkMessage.DataType.ByteArray:
+                output.Invoke(ByteConverter.GetColorTable(message.data));
+                break;
+            default:
+                Debug.LogWarning("Invalid data type received with ID of " + message.ID);
+                break;
         }
-
     }
 
     private void ProccessEnums()

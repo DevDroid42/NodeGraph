@@ -11,8 +11,7 @@ public class IncomingNetworkViewer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Node.nodeNetDelagate -= UpdateEntries;
-        Node.nodeNetDelagate += UpdateEntries;
+        NodeNetReceive.AddMethodToNetReceiveDelegate(UpdateEntries);
     }
 
     private void UpdateEntries(NetworkMessage message)

@@ -19,4 +19,10 @@ public class RecordingNode : Node
         armed = CreateInputProperty("Armed" , true, new EvaluableBool(false));
         armed.interactable = true;
     }
+
+    public override void Init()
+    {
+        base.Init();
+        Graph.nodeCollection.RegisterRecordingNode(this);
+    }
 }
