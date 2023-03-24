@@ -42,13 +42,6 @@ public class BatchEvaluation
     private static void ThreadedEvaluateRange(IEvaluable data, int subdivisions, float start, float end, ColorVec[] colors)
     {
         float evalRange = (end - (float)start);
-        /*
-        Parallel.For(0, subdivisions, pos =>
-        {
-            float position = (end - (float)start) * ((float)pos / subdivisions);
-            colors[pos] = data.EvaluateColor(position);
-        });
-        */
         var rangePartitioner = Partitioner.Create(0, subdivisions, 20);
         Parallel.ForEach(rangePartitioner, (range, loopState) =>
         {

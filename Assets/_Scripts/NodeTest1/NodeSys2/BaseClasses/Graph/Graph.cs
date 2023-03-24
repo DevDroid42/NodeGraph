@@ -7,7 +7,7 @@ namespace nodeSys2
 {
     public class Graph
     {
-        public static string recordingDirectory = "";
+        public static Recorder recorder = new Recorder();
         public string graphName = "";
         public List<Node> nodes = new List<Node>();        
         public static NodeNetReceive nodeNetReceiver;
@@ -15,6 +15,7 @@ namespace nodeSys2
         //to be used after loading from json
         public void InitGraph()
         {
+            recorder = new Recorder();
             if (nodeNetReceiver == null)
             {
                 nodeNetReceiver = new NodeNetReceive();
