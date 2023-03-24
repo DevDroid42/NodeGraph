@@ -28,8 +28,7 @@ public class LedUDP : Node
 
     public override void Init()
     {
-        frameDelagate -= Frame;
-        frameDelagate += Frame;
+        RegisterFrameMethod(Frame);
         port = (int)((IEvaluable)(portProp.GetData())).EvaluateValue(0);
         ip = (string)((StringData)(ipProp.GetData())).txt;
         ledCount = (int)((IEvaluable)(ledCountProp.GetData())).EvaluateValue(0);

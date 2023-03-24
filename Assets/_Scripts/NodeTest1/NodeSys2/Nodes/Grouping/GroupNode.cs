@@ -23,8 +23,7 @@ public class GroupNode : GroupNodeBase
     {
         base.Init();
 
-        frameDelagate -= Frame;
-        frameDelagate += Frame;
+        RegisterFrameMethod(Frame);
 
         groupOutDelegate = new GroupOutputNode.GroupOutDelegate(GroupOutHandler);
         group = new Group(graph, groupOutDelegate);

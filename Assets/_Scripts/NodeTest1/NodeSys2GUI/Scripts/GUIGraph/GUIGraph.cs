@@ -154,7 +154,7 @@ public class GUIGraph : MonoBehaviour
         GUIUpdated.Invoke();
         groupDepthChanged.Invoke(openedGraphs.Count);
         VerifyNodes();
-        graphRef.ResetNodeCollections();
+        Graph.ResetStaticData();
         foreach (Graph graph in openedGraphs)
         {
             graph.InitGraph();
@@ -367,9 +367,9 @@ public class GUIGraph : MonoBehaviour
             graph.UpdateGraph();
         }
         graphRef.UpdateGraph();
-        if (Node.frameDelagate != null)
+        if (Graph.frameDelagate != null)
         {
-            Node.frameDelagate.Invoke(Time.deltaTime);
+            Graph.frameDelagate.Invoke(Time.deltaTime);
         }
         //Debug.Log("Compute time: " + (Time.realtimeSinceStartup - time));
         CullNodes();

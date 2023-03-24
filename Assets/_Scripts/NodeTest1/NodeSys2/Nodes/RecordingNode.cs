@@ -6,6 +6,11 @@ using Newtonsoft.Json;
 
 public class RecordingNode : Node
 {
+    public bool Recording
+    {
+        get; private set;
+    }
+
     [JsonProperty] private Property recordingTrigger, armed, name, resolution;
 
     public RecordingNode(ColorVec pos) : base(pos)
@@ -23,6 +28,20 @@ public class RecordingNode : Node
     public override void Init()
     {
         base.Init();
+        Node.RegisterFrameMethod(Frame);
         Graph.nodeCollection.RegisterRecordingNode(this);
+    }
+
+    public override void Frame(float deltaTime)
+    {
+        base.Frame(deltaTime);
+    }
+
+    public override void Handle()
+    {
+        if (((Pulse)recordingTrigger.GetData()).PulsePresent())
+        {
+            
+        }
     }
 }

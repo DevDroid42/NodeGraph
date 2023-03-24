@@ -13,15 +13,21 @@ namespace nodeSys2
         public List<Node> nodes = new List<Node>();        
         public static NodeNetReceive nodeNetReceiver;
 
-        public void ResetNodeCollections()
+        public delegate void FloatDelagate(float num);
+        //Frame delagate is a delage that belongs to all nodes.
+        //It is called each frame by whatever host is currently running the graph. 
+        //this is used for methods outside nodes and so is a delagate instead of node collection
+        [JsonIgnore] public static FloatDelagate frameDelagate;
+
+        public static void ResetStaticData()
         {
+            recorder = new Recorder();
             nodeCollection = new NodeCollections();
         }
 
         //to be used after loading from json
         public void InitGraph()
         {
-            recorder = new Recorder();
             if (nodeNetReceiver == null)
             {
                 nodeNetReceiver = new NodeNetReceive();

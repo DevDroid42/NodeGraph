@@ -25,8 +25,8 @@ public class NodeNetReceive
 
     public NodeNetReceive()
     {
-        Node.frameDelagate -= Frame;
-        Node.frameDelagate += Frame;
+        Graph.frameDelagate -= Frame;
+        Graph.frameDelagate += Frame;
         netThreadObj = new NodeNetReceiveThreaded();
         Thread networkReceiveThread = new Thread(netThreadObj.StartLoop);
         networkReceiveThread.Start();

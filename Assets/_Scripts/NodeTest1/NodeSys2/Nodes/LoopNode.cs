@@ -44,8 +44,7 @@ public class LoopNode : Node
         EnumUtils.ConvertEnum<LoopType>(loopTypeProp);
         rateInverter = 1;
         current = start;
-        frameDelagate -= Frame;
-        frameDelagate += Frame;        
+        RegisterFrameMethod(Frame);
     }
 
     public override void Handle()

@@ -39,8 +39,7 @@ public class StaticInstancer : GroupNodeBase
     {
         base.Init();
 
-        frameDelagate -= Frame;
-        frameDelagate += Frame;
+        RegisterFrameMethod(Frame);
         ProccessEnums();
         groupOutDelegate = new GroupOutputNode.GroupOutDelegate(GroupOutputHandler);
         SetupInstances();

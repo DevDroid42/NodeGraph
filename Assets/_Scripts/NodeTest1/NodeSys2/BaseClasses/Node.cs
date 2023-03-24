@@ -8,18 +8,11 @@ namespace nodeSys2
 {
     public abstract class Node
     {
-        public delegate void FloatDelagate(float num);
-
-        //Frame delagate is a delage that belongs to all nodes.
-        //It is called each frame by whatever host is currently running the graph. 
-        //this is used for methods outside nodes and so is a delagate instead of node collection
-        [JsonIgnore] public static FloatDelagate frameDelagate;
-
         //TODO: swap all public references to frameDelagate with this:
-        public static void RegisterFrameMethod(FloatDelagate method)
+        public static void RegisterFrameMethod(Graph.FloatDelagate method)
         {
-            frameDelagate -= method;
-            frameDelagate += method;
+            Graph.frameDelagate -= method;
+            Graph.frameDelagate += method;
         }
 
         //GUI info
@@ -193,7 +186,7 @@ namespace nodeSys2
 
         public void CleanUp()
         {
-            frameDelagate -= Frame;
+            Graph.frameDelagate -= Frame;
         }
 
         public string GetName()
