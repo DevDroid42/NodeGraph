@@ -11,11 +11,19 @@ public class StringViewer : EditorBase
     // Update is called once per frame
     void Update()
     {
+        if (propCache != null && propCache.GetData() != null)
+        {
+            UpdateText();
+        }
+    }
+
+    private void UpdateText()
+    {
         if (propCache.GetData() is IEvaluable evaluable)
         {
             data.text = evaluable.EvaluateValue(0).ToString();
         }
-        else if (propCache != null && propCache.GetData() != null)
+        else
         {
             data.text = propCache.GetData().ToString();
         }

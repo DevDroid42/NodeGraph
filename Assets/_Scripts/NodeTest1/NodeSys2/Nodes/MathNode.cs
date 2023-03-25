@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using nodeSys2;
+using System.Linq;
 
 public class MathNode : Node
 {
@@ -26,8 +27,13 @@ public class MathNode : Node
         base.Init();
         EnumUtils.ConvertEnum<EvaluableMath.OperationType>(opTypeProp);
         EvaluableMath.OperationType opType = ((EvaluableMath.OperationType)opTypeProp.GetData());
-        if (opType == EvaluableMath.OperationType.Sin || opType == EvaluableMath.OperationType.Cos ||
-            opType == EvaluableMath.OperationType.Tan)
+        EvaluableMath.OperationType[] singleVarOps =
+        {
+            EvaluableMath.OperationType.Sin, EvaluableMath.OperationType.Cos,
+            EvaluableMath.OperationType.Tan, EvaluableMath.OperationType.Truncate,
+            EvaluableMath.OperationType.Round
+        };
+        if (singleVarOps.Contains(opType))
         {
             elementCountProp.SetData(new EvaluableFloat(1));
         }

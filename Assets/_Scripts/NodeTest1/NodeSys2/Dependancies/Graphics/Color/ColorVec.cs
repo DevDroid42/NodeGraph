@@ -125,6 +125,25 @@ public class ColorOperations
         RGB, HSV
     }
 
+    public static ColorVec Pow(ColorVec c, float exp)
+    {
+        return new ColorVec(
+            (float)Math.Pow(c.rx, exp),
+            (float)Math.Pow(c.gy, exp),
+            (float)Math.Pow(c.bz, exp),
+            (float)Math.Pow(c.aw, exp)
+        );
+    }
+    public static ColorVec Log(ColorVec c, float @base)
+    {
+        return new ColorVec(
+            (float)Math.Log(c.rx, @base),
+            (float)Math.Log(c.gy, @base),
+            (float)Math.Log(c.bz, @base),
+            (float)Math.Log(c.aw, @base)
+        );
+    }
+
     public static ColorVec ClampColor(ColorVec c, float low = 0, float high = 1)
     {
         return new ColorVec(

@@ -21,11 +21,12 @@ public class IncomingNetworkViewer : MonoBehaviour
             if (messages[i].GetMessage().CompareHeader(message))
             {
                 messages[i].UpdateNetworkMessage(message);
-                messages[i].gameObject.transform.SetAsFirstSibling();
+                //messages[i].gameObject.transform.SetAsFirstSibling();
                 return;
             }
         }
         NetworkMessageGUI tempGuiMsg = Instantiate(template, transform).GetComponent<NetworkMessageGUI>();
+        tempGuiMsg.gameObject.SetActive(true);
         tempGuiMsg.UpdateNetworkMessage(message);
         messages.Add(tempGuiMsg);
     }

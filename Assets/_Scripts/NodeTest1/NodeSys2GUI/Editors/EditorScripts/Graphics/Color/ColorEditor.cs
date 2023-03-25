@@ -42,8 +42,10 @@ public class ColorEditor : EditorBase
     }
 
     public void OpenPicker()
-    {        
-        Instantiate(PickerPrefab, PickerHolder).GetComponent<PickerScript>().Setup(prop);        
+    {
+        GameObject picker = Instantiate(PickerPrefab, PickerHolder);
+        picker.GetComponent<PickerScript>().Setup(prop);
+        picker.transform.position = CanvasUtilities.RaycastPosWorld();
     }
 
     public override void Setup(Property prop)
