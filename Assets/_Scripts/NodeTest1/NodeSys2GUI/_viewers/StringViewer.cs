@@ -7,19 +7,18 @@ public class StringViewer : EditorBase
 {
     public Property propCache;
     public Text data;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        if(propCache != null && propCache.GetData() != null)
+        if (propCache.GetData() is IEvaluable evaluable)
+        {
+            data.text = evaluable.EvaluateValue(0).ToString();
+        }
+        else if (propCache != null && propCache.GetData() != null)
         {
             data.text = propCache.GetData().ToString();
-        }        
+        }
     }
 
     public override void Setup(Property prop)

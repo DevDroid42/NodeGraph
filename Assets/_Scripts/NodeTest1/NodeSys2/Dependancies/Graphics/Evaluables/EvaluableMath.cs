@@ -56,9 +56,11 @@ public class EvaluableMath : IEvaluable
             case OperationType.Log:
                 return OperateValue(vector, (x, y) => (float)Math.Log(x, y));
             case OperationType.Sin:
-                return OperateValue(vector, (x, y) => (float)Math.Sin(x));
+                return (float)Math.Sin(elements[0].EvaluateValue(0));
             case OperationType.Cos:
-                return OperateValue(vector, (x, y) => (float)Math.Cos(x));
+                return (float)Math.Cos(elements[0].EvaluateValue(0));
+            case OperationType.Tan:
+                return (float)Math.Tan(elements[0].EvaluateValue(0));
             default:
                 return 0;
         }
@@ -66,8 +68,9 @@ public class EvaluableMath : IEvaluable
 
     private ColorVec OperateColor(float vector, Func<ColorVec, ColorVec, ColorVec> operation)
     {
-        ColorVec output = default;
-        for (int i = 0; i < elements.Count; i++)
+        if (elements.Count == 0) return default;
+        ColorVec output = elements[0].EvaluateColor(vector);
+        for (int i = 1; i < elements.Count; i++)
         {
             output = operation(output, elements[i].EvaluateColor(vector));
         }
@@ -76,8 +79,9 @@ public class EvaluableMath : IEvaluable
 
     private float OperateValue(float vector, Func<float, float, float> operation)
     {
-        float output = default;
-        for (int i = 0; i < elements.Count; i++)
+        if (elements.Count == 0) return default;
+        float output = elements[0].EvaluateValue(vector);
+        for (int i = 1; i < elements.Count; i++)
         {
             output = operation(output, elements[i].EvaluateValue(vector));
         }

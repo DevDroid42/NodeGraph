@@ -5,7 +5,7 @@ public class NodeRegistration
 {
     //public enum NodeGroups {,Instancers,Math,Mixing}
 
-    public enum NodeTypes {NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Transform , LED, Equation, mixRGB, 
+    public enum NodeTypes {NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Transform , LED, Equation, Math, mixRGB, 
         NetReceive, GroupInput, GroupOutput, Group, StaticInstancer, DynamicInstancer, InstancedPulse, InstanceInfo, logic,
         udpSend, recording}
 
@@ -39,6 +39,8 @@ public class NodeRegistration
                 return new GroupOutputNode(pos);
             case NodeTypes.Group:
                 return new GroupNode(pos);
+            case NodeTypes.Math:
+                return new MathNode(pos);
             case NodeTypes.mixRGB:
                 return new ColorMixNode(pos);
             case NodeTypes.StaticInstancer:
