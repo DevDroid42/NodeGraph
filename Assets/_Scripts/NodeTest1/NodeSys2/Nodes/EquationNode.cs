@@ -5,13 +5,13 @@ using nodeSys2;
 using System;
 using Newtonsoft.Json;
 
-public class MathNode : Node
+public class EquationNode : Node
 {
     [JsonProperty] private Property expression, status, vector, variableCount, valueOutput, EquationOutput;
     public List<Property> variables;
     private EvaluableCustomEquation equation;
 
-    public MathNode(ColorVec pos) : base(pos)
+    public EquationNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Math";
         variables = new List<Property>();
