@@ -13,8 +13,8 @@ public class Recorder
     class Recording
     {
         private Stopwatch timer = new Stopwatch();
-        //stores a tuple containing millesecond and frame
-        public List<(long, ColorVec[])> frames = new List<(long, ColorVec[])>();
+        //stores a tuple containing millesecond and frame. ulong instead of long to remove - from 0 value in tostring call
+        public List<(ulong, ColorVec[])> frames = new List<(ulong, ColorVec[])>();
         public Recording()
         {
             timer.Start();
@@ -22,7 +22,7 @@ public class Recorder
 
         public void RecordFrame(ColorVec[] frame)
         {
-            frames.Add((timer.ElapsedMilliseconds, frame));
+            frames.Add(((ulong)timer.ElapsedMilliseconds, frame));
         }
     }
 
@@ -58,6 +58,7 @@ public class Recorder
         {
             sBuilder.Append("-");
             sBuilder.Append(key);
+            sBuilder.Append("\n");
             GenerateSaveData(sBuilder, records[key]);
         }
         try

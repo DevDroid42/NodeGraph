@@ -11,9 +11,9 @@ public class EvaluableBool : IEvaluable
         this.val = val;
     }
 
-    public void Setval(bool number)
+    public void Setval(bool val)
     {
-        val = number;
+        this.val = val;
     }
 
     public ColorVec EvaluateColor(float vector)
@@ -45,6 +45,6 @@ public class EvaluableBool : IEvaluable
 
     public int GetResolution()
     {
-        throw new System.NotImplementedException();
+        return 1;
     }
 }
