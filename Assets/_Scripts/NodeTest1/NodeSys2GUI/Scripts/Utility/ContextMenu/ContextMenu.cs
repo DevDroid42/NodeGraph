@@ -34,11 +34,17 @@ public class ContextMenu : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void LateUpdate()
+    private void Update()
     {
-        if(Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(1) || Input.GetMouseButtonUp(0))
         {
-            //Destroy(gameObject);
+            StartCoroutine(DestroyCouroutine());
         }
+    }
+
+    IEnumerator DestroyCouroutine()
+    {
+        yield return null;
+        Destroy(gameObject);
     }
 }
