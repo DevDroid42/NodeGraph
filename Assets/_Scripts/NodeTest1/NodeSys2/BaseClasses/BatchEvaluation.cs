@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BatchEvaluation
 {
-    private static bool threaded = true;
+    private static bool threaded = false;
 
     /*
      * Returns an array of colors across a set range
@@ -35,7 +35,7 @@ public class BatchEvaluation
         float evalRange = (end - (float)start);
         for (int i = 0; i < subdivisions; i++)
         {
-            colors[i] = data.EvaluateColor((float)i / subdivisions-1);
+            colors[i] = data.EvaluateColor((float)i / (subdivisions - 1));
         }
     }
 

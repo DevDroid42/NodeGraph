@@ -1,10 +1,19 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 public class EvaluableTransform : IEvaluable
 {
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum OOBBehavior
+    {
+        continuous, tile, mirror
+    }
+    public OOBBehavior oobBehavior;
+
     //offset applied pre-scaling
     public float localOffset = 0;
     //offset applied post-scaling
@@ -29,15 +38,45 @@ public class EvaluableTransform : IEvaluable
         return input;
     }
 
+    private float OOBTransform(float x)
+    {
+        switch (oobBehavior)
+        {
+            case OOBBehavior.continuous:
+                return x;
+            case OOBBehavior.tile:
+                x = x - (int)x;
+                if (x < 0)
+                {
+                    x = x + 1;
+                }
+                return x;
+            case OOBBehavior.mirror:
+                int remain = ((int)x) % 2;
+                x = x - (int)x;
+                if (x < 0)
+                {
+                    x = x + 1;
+                }
+                if (remain != 0)
+                {
+                    x = -x + 1;
+                }
+                return x;
+            default:
+                return x;
+        }
+    }
+
     public ColorVec EvaluateColor(float vector)
     {
-        vector = TransformVector(vector);
+        vector = OOBTransform(TransformVector(vector));
         return child.EvaluateColor(vector);
     }
 
     public float EvaluateValue(float vector)
     {
-        vector = TransformVector(vector);
+        vector = OOBTransform(TransformVector(vector));
         return child.EvaluateValue(vector);
     }
 
@@ -57,5 +96,5 @@ public class EvaluableTransform : IEvaluable
         return child.GetResolution();
     }
 
-   
+
 }

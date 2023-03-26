@@ -8,12 +8,14 @@ using Newtonsoft.Json;
 
 public class TransformNode : Node
 {
-    [JsonProperty] private Property inputData, localOffset, scale, pivot, rot, globalOffset, output;
+    [JsonProperty] private Property OOBBehavior, inputData, localOffset, scale, pivot, rot, globalOffset, output;
     [JsonProperty] private EvaluableTransform evaluableTransform = new EvaluableTransform();
 
     public TransformNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Transform";
+        OOBBehavior = CreateInputProperty("OOB Behavior", false, new EvaluableTransform.OOBBehavior());
+        OOBBehavior.interactable = true;
         inputData = CreateInputProperty("Input", true, new EvaluableBlank());
         localOffset = CreateInputProperty("Local Offset", true, new EvaluableFloat(0));
         localOffset.interactable = true;
@@ -32,6 +34,7 @@ public class TransformNode : Node
     public override void Init()
     {
         base.Init();
+        EnumUtils.ConvertEnum<EvaluableTransform.OOBBehavior>(OOBBehavior);
         ManipulateTransform();
     }
 
@@ -45,6 +48,7 @@ public class TransformNode : Node
 
     private void ManipulateTransform()
     {
+        evaluableTransform.oobBehavior = ((EvaluableTransform.OOBBehavior)OOBBehavior.GetData());
         evaluableTransform.localOffset = ((IEvaluable)(localOffset.GetData())).EvaluateValue(0);
         evaluableTransform.scale = ((IEvaluable)(scale.GetData())).EvaluateValue(0);
         evaluableTransform.pivot = ((IEvaluable)(pivot.GetData())).EvaluateValue(0);

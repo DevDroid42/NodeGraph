@@ -62,7 +62,7 @@ public class EvaluableMath : IEvaluable
             case OperationType.Log:
                 return OperateValue(vector, (x, y) => (float)Math.Log(x, y), 2);
             case OperationType.Mod:
-                return OperateValue(vector, (x, y) => ((int)x) % ((int)y));
+                return OperateValue(vector, (x, y) => ((int)x) % ((int)((y==0)? 1 : y)));
             case OperationType.Sin:
                 return (float)Math.Sin(elements[0].EvaluateValue(vector));
             case OperationType.Cos:
