@@ -19,9 +19,10 @@ public class LogicNode : Node
     public LogicNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Logic";
+        epsilon = CreateInputProperty("epsilon", true, new EvaluableFloat(0.1f));
+        epsilon.interactable = true;
         data1 = CreateInputProperty("data1", true, new EvaluableFloat(0));
         data1.interactable = true;
-        epsilon = CreateInputProperty("epsilon", false, new EvaluableFloat(0.1f));
         compareMode = CreateInputProperty("Compare Mode", false, new ComparisonType());
         compareMode.interactable = true;
         data2 = CreateInputProperty("data2", true, new EvaluableFloat(0));
@@ -50,13 +51,13 @@ public class LogicNode : Node
         switch ((ComparisonType)compareMode.GetData())
         {
             case ComparisonType.GreaterThan:
-                Eval(data1.GetEvaluable().EvaluateValue(0) > ((IEvaluable)data2.GetData()).EvaluateValue(0));           
+                Eval(data1.GetEvaluable().EvaluateValue() > ((IEvaluable)data2.GetData()).EvaluateValue());           
                 break;
             case ComparisonType.LessThan:
-                Eval(data1.GetEvaluable().EvaluateValue(0) < ((IEvaluable)data2.GetData()).EvaluateValue(0));
+                Eval(data1.GetEvaluable().EvaluateValue() < ((IEvaluable)data2.GetData()).EvaluateValue());
                 break;
             case ComparisonType.Within:
-                Eval(Math.Abs(data1.GetEvaluable().EvaluateValue(0) - data2.GetEvaluable().EvaluateValue(0)) < epsilon.GetEvaluable().EvaluateValue(0));
+                Eval(Math.Abs(data1.GetEvaluable().EvaluateValue() - data2.GetEvaluable().EvaluateValue()) < epsilon.GetEvaluable().EvaluateValue());
                 break;
             case ComparisonType.Or:
                 Eval(((bool)data1.GetEvaluable().EvaluateColor(0)) || (bool)(((IEvaluable)data2.GetData()).EvaluateColor(0)));

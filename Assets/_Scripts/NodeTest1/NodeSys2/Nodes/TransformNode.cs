@@ -49,9 +49,9 @@ public class TransformNode : Node
     private void ManipulateTransform()
     {
         evaluableTransform.oobBehavior = ((EvaluableTransform.OOBBehavior)OOBBehavior.GetData());
-        evaluableTransform.localOffset = ((IEvaluable)(localOffset.GetData())).EvaluateValue(0);
-        evaluableTransform.scale = ((IEvaluable)(scale.GetData())).EvaluateValue(0);
-        evaluableTransform.pivot = ((IEvaluable)(pivot.GetData())).EvaluateValue(0);
-        evaluableTransform.globalOffset = ((IEvaluable)(globalOffset.GetData())).EvaluateValue(0);
+        evaluableTransform.localOffset = ((IEvaluable)(localOffset.GetData())).EvaluateValue();
+        evaluableTransform.scale = ((IEvaluable)(scale.GetData())).EvaluateValue();
+        evaluableTransform.pivot = ((IEvaluable)(pivot.GetData())).EvaluateValue();
+        evaluableTransform.globalOffset = ((IEvaluable)(globalOffset.GetData())).EvaluateValue();
     }
 }
