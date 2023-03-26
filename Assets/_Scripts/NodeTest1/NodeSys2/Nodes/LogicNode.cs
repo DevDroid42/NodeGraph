@@ -8,12 +8,12 @@ using System;
 
 public class LogicNode : Node
 {
-    [JsonProperty] private Property data1, compareMode, data2, pulseOutput, valueOutput;
+    [JsonProperty] private Property data1, compareMode, data2, epsilon, pulseOutput, valueOutput;
 
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ComparisonType
     {
-        greaterThen, lessThen, or, and
+        GreaterThan, LessThan, Within, Or, And
     }
 
     public LogicNode(ColorVec pos) : base(pos)
@@ -21,6 +21,7 @@ public class LogicNode : Node
         base.nodeDisc = "Logic";
         data1 = CreateInputProperty("data1", true, new EvaluableFloat(0));
         data1.interactable = true;
+        epsilon = CreateInputProperty("epsilon", false, new EvaluableFloat(0.1f));
         compareMode = CreateInputProperty("Compare Mode", false, new ComparisonType());
         compareMode.interactable = true;
         data2 = CreateInputProperty("data2", true, new EvaluableFloat(0));
@@ -33,6 +34,8 @@ public class LogicNode : Node
     {
         base.Init();
         EnumUtils.ConvertEnum<ComparisonType>(compareMode);
+        //only show epsilon for equality
+        epsilon.visible = (ComparisonType)compareMode.GetData() == ComparisonType.Within;   
     }
 
     public override void Init2()
@@ -46,17 +49,20 @@ public class LogicNode : Node
     {
         switch ((ComparisonType)compareMode.GetData())
         {
-            case ComparisonType.greaterThen:
-                Eval(((IEvaluable)data1.GetData()).EvaluateValue(0) > ((IEvaluable)data2.GetData()).EvaluateValue(0));           
+            case ComparisonType.GreaterThan:
+                Eval(data1.GetEvaluable().EvaluateValue(0) > ((IEvaluable)data2.GetData()).EvaluateValue(0));           
                 break;
-            case ComparisonType.lessThen:
-                Eval(((IEvaluable)data1.GetData()).EvaluateValue(0) < ((IEvaluable)data2.GetData()).EvaluateValue(0));
+            case ComparisonType.LessThan:
+                Eval(data1.GetEvaluable().EvaluateValue(0) < ((IEvaluable)data2.GetData()).EvaluateValue(0));
                 break;
-            case ComparisonType.or:
-                Eval(((bool)((IEvaluable)data1.GetData()).EvaluateColor(0)) || (bool)(((IEvaluable)data2.GetData()).EvaluateColor(0)));
+            case ComparisonType.Within:
+                Eval(Math.Abs(data1.GetEvaluable().EvaluateValue(0) - data2.GetEvaluable().EvaluateValue(0)) < epsilon.GetEvaluable().EvaluateValue(0));
                 break;
-            case ComparisonType.and:
-                Eval(((bool)((IEvaluable)data1.GetData()).EvaluateColor(0)) && (bool)(((IEvaluable)data2.GetData()).EvaluateColor(0)));
+            case ComparisonType.Or:
+                Eval(((bool)data1.GetEvaluable().EvaluateColor(0)) || (bool)(((IEvaluable)data2.GetData()).EvaluateColor(0)));
+                break;
+            case ComparisonType.And:
+                Eval(((bool)data1.GetEvaluable().EvaluateColor(0)) && (bool)(((IEvaluable)data2.GetData()).EvaluateColor(0)));
                 break;
             default:
                 break;

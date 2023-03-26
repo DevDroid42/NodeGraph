@@ -182,6 +182,11 @@ namespace nodeSys2
                 return false;
             }
 
-        }        
+        }
+        
+        public IEvaluable GetEvaluable()
+        {
+            return (IEvaluable)data;
+        }
     }
 }
