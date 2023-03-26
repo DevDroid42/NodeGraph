@@ -19,13 +19,13 @@ public readonly struct ColorVec
         bz = value;
         aw = 1;
     }
-
-    public ColorVec(float R, float G, float B = 0, float A = 1)
+    [JsonConstructor]
+    public ColorVec(float rx, float gy, float bz = 0, float aw = 1)
     {
-        this.rx = R;
-        this.gy = G;
-        this.bz = B;
-        this.aw = A;
+        this.rx = rx;
+        this.gy = gy;
+        this.bz = bz;
+        this.aw = aw;
     }
 
     public ColorVec(float[] colors)
