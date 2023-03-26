@@ -11,7 +11,7 @@ public class RemapNode : Node
 
     public RemapNode(ColorVec pos) : base(pos)
     {
-        base.nodeDisc = "Transform";
+        base.nodeDisc = "Remaper";
         input = CreateInputProperty("input", true, new EvaluableBlank());
         input.interactable = true;
         input.internalRepresentation = EditorTypeManagement.Editor.table;

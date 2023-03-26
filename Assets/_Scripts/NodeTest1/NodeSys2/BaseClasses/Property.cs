@@ -169,6 +169,22 @@ namespace nodeSys2
         {
             return dataPort.IsConnected();
         }
+        
+        //Helper Get Methods. Cast here instead of within nodes, exceptions possible
+        public IEvaluable GetEvaluable()
+        {
+            return (IEvaluable)data;
+        }
+
+        public Pulse GetPulse()
+        {
+            return (Pulse)data;
+        }
+
+        public T GetDataType<T>()
+        {
+            return (T)data;
+        }
 
         public bool TryGetDataType<T>(ref T reference)
         {
@@ -181,12 +197,6 @@ namespace nodeSys2
             {
                 return false;
             }
-
-        }
-        
-        public IEvaluable GetEvaluable()
-        {
-            return (IEvaluable)data;
         }
     }
 }
