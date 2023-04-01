@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EvaluableBool : IEvaluable
 {
-    private bool val;
+    [JsonProperty]private bool val;
 
     public EvaluableBool(bool val)
     {
