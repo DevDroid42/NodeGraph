@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -42,7 +43,9 @@ public class BatchEvaluation
     private static void ThreadedEvaluateRange(IEvaluable data, int subdivisions, float start, float end, ColorVec[] colors)
     {
         float evalRange = (end - (float)start);
-        var rangePartitioner = Partitioner.Create(0, subdivisions, 20);
+        //break up the work into equal chunks by core count
+        int threadRange = subdivisions / (Environment.ProcessorCount * 2); 
+        var rangePartitioner = Partitioner.Create(0, subdivisions, threadRange);
         Parallel.ForEach(rangePartitioner, (range, loopState) =>
         {
             //IEvaluable copiedData = (IEvaluable)data.GetCopy();

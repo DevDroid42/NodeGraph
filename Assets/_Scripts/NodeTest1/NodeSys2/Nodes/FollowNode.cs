@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using System;
 
 public class FollowNode : Node
 {
@@ -54,7 +55,9 @@ public class FollowNode : Node
     {
         int count = currentColors.Length;
         float rate = Mathf.Clamp(followRate.GetEvaluable().EvaluateValue(), 0, 1);
-        var rangePartitioner = Partitioner.Create(0, count, 5);
+        //break up the work into equal chunks by core count
+        int threadRange = count / (Environment.ProcessorCount * 2);
+        var rangePartitioner = Partitioner.Create(0, count, threadRange);
         Parallel.ForEach(rangePartitioner, (range, loopState) =>
         {
             for (int i = range.Item1; i < range.Item2; i++)

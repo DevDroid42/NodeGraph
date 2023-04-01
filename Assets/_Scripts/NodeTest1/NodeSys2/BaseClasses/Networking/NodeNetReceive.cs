@@ -13,6 +13,8 @@ public class NodeNetReceive
     //used to send a global message out when receiving network data
     public delegate void NetworkDelagate(NetworkMessage message);
     private static NetworkDelagate nodeNetDelagate;
+
+    //subscribe to all network messages
     public static void AddMethodToNetReceiveDelegate(NetworkDelagate method)
     {
         nodeNetDelagate -= method;
