@@ -4,6 +4,8 @@ using UnityEngine;
 using nodeSys2;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Collections.Concurrent;
+using System.Threading.Tasks;
 
 public class FollowNode : Node
 {
@@ -52,21 +54,25 @@ public class FollowNode : Node
     {
         int count = currentColors.Length;
         float rate = Mathf.Clamp(followRate.GetEvaluable().EvaluateValue(), 0, 1);
-        for (int i = 0; i < currentColors.Length; i++)
+        var rangePartitioner = Partitioner.Create(0, count, 5);
+        Parallel.ForEach(rangePartitioner, (range, loopState) =>
         {
-            float position = (count == 1) ? 0 : (float)i / (count - 1);
-            ColorVec targetColor = input.GetEvaluable().EvaluateColor(position);
-            if (snapUp.GetEvaluable().EvaluateValue() >= 0.5 && ((float)targetColor) > ((float)currentColors[i])
-            || snapDown.GetEvaluable().EvaluateValue() >= 0.5 && ((float)targetColor) < ((float)currentColors[i]))
+            for (int i = range.Item1; i < range.Item2; i++)
             {
-                currentColors[i] = targetColor;
+                float position = (count == 1) ? 0 : (float)i / (count - 1);
+                ColorVec targetColor = input.GetEvaluable().EvaluateColor(position);
+                if (snapUp.GetEvaluable().EvaluateValue() >= 0.5 && ((float)targetColor) > ((float)currentColors[i])
+                || snapDown.GetEvaluable().EvaluateValue() >= 0.5 && ((float)targetColor) < ((float)currentColors[i]))
+                {
+                    currentColors[i] = targetColor;
+                }
+                else
+                {
+                    currentColors[i] = ColorOperations.lerp(currentColors[i], targetColor, rate);
+                }
+                outputTable.SetKey(i, currentColors[i]);
             }
-            else
-            {
-                currentColors[i] = ColorOperations.lerp(currentColors[i], targetColor, rate);
-            }
-            outputTable.SetKey(i, currentColors[i]);
-        }
+        });
         output.Invoke(outputTable);
     }
 }
