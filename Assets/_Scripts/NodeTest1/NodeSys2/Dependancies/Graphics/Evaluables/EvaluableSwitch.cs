@@ -11,7 +11,7 @@ public class EvaluableSwitch : IEvaluable
 
     public ColorVec EvaluateColor(float vector = 0)
     {
-        return elements[currentElement].EvaluateColor(vector);
+        return elements[Mathf.Clamp(currentElement, 0, elements.Count - 1)].EvaluateColor(vector);
     }
 
     public float EvaluateValue(float vector = 0)

@@ -125,6 +125,12 @@ public class ColorOperations
         RGB, HSV
     }
 
+    public static ColorVec lerp(ColorVec clr1, ColorVec clr2, float g)
+    {
+        return new ColorVec((clr2.rx - clr1.rx) * g + clr1.rx, (clr2.gy - clr1.gy) * g + clr1.gy,
+                            (clr2.bz - clr1.bz) * g + clr1.bz);
+    }
+
     public static ColorVec Pow(ColorVec c, float exp)
     {
         return new ColorVec(

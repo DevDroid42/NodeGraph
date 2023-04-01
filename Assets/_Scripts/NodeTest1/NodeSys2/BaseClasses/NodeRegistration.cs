@@ -7,7 +7,7 @@ public class NodeRegistration
 
     public enum NodeTypes {NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Transform , LED, Equation, Math, mixRGB, 
         NetReceive, GroupInput, GroupOutput, Group, StaticInstancer, DynamicInstancer, InstancedPulse, InstanceInfo, logic,
-        udpSend, recording, remap, pulseRouter, Switch}
+        udpSend, recording, remap, pulseRouter, Switch, Follow}
 
     public static Node GetNode(NodeTypes type, ColorVec pos)
     {
@@ -63,6 +63,8 @@ public class NodeRegistration
                 return new PulseRouterNode(pos);
             case NodeTypes.Switch:
                 return new SwitchNode(pos);
+            case NodeTypes.Follow:
+                return new FollowNode(pos);
             default:
                 return null;
         }
