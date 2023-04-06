@@ -124,6 +124,7 @@ namespace nodeSys2
             }
             else
             {
+                this.data = data;
                 dataPort.Invoke(data);
             }
         }

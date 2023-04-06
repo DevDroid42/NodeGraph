@@ -127,6 +127,7 @@ namespace nodeSys2
             if (inputs.TrueForAll(prop => prop.ID != ID))
             {
                 Property tempRef = new Property(this, ID, true, connectable, defaultData, gate);
+                tempRef.interactable = false;
                 if (index < 0)
                 {
                     inputs.Add(tempRef);
