@@ -116,19 +116,19 @@ namespace nodeSys2
             return recordingNodes;
         }
 
-        private Dictionary<string, List<NetReceiveNode>> netReceiveNodes = new Dictionary<string, List<NetReceiveNode>>();
-        public void RegisterNetReceiveNode(string ID, string dataType, NetReceiveNode node)
+        private Dictionary<string, List<INetReceivable>> netReceiveNodes = new Dictionary<string, List<INetReceivable>>();
+        public void RegisterNetReceiveNode(string ID, string dataType, INetReceivable node)
         {
             string key = ID + dataType;
             if (!netReceiveNodes.ContainsKey(key))
             {
-                netReceiveNodes.Add(key, new List<NetReceiveNode>());
+                netReceiveNodes.Add(key, new List<INetReceivable>());
                 
             }            
             netReceiveNodes[key].Add(node);
         }
 
-        public List<NetReceiveNode> GetNetReceiveNodes(string ID, string dataType)
+        public List<INetReceivable> GetNetReceiveNodes(string ID, string dataType)
         {
             string key = ID + dataType;
             if (netReceiveNodes.ContainsKey(key))
@@ -137,7 +137,7 @@ namespace nodeSys2
             }
             else
             {
-                return new List<NetReceiveNode>();
+                return new List<INetReceivable>();
             }
         }
     }
