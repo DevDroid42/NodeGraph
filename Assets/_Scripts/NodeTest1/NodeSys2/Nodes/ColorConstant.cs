@@ -72,7 +72,7 @@ public class ColorConstant : Node
         //if all inputs are dissconnected this flag will ensure that users can edit the color 
         internalColor.interactable = true;
         //when data comes in this will be set to "color(Driven)" so reset it here on run
-        internalColor.Disc = "Color";        
+        internalColor.Disc = "Color";
     }
 
     public override void Init2()
@@ -95,10 +95,10 @@ public class ColorConstant : Node
             internalColorDupe = ((IEvaluable)internalColor.GetData()).EvaluateColor(0);
             alpha.SetData(new EvaluableFloat(internalColorDupe.aw));
             if (rgb)
-            {                
+            {
                 red.SetData(new EvaluableFloat(internalColorDupe.rx));
-                green.SetData(new EvaluableFloat(internalColorDupe.gy));                
-                blue.SetData(new EvaluableFloat(internalColorDupe.bz));                
+                green.SetData(new EvaluableFloat(internalColorDupe.gy));
+                blue.SetData(new EvaluableFloat(internalColorDupe.bz));
             }
             else
             {
@@ -107,9 +107,9 @@ public class ColorConstant : Node
                 green.SetData(new EvaluableFloat(HSVColor.gy));
                 blue.SetData(new EvaluableFloat(HSVColor.bz));
             }
-        }        
+        }
     }
-    
+
 
     public override void Handle()
     {
@@ -129,14 +129,7 @@ public class ColorConstant : Node
         float[] floatBuffer = new float[floatInputs.Length];
         for (int i = 0; i < floatInputs.Length; i++)
         {
-            if (floatInputs[i].TryGetDataType(ref c))
-            {
-                floatBuffer[i] = c.EvaluateValue(0);
-            }
-            else
-            {
-                floatBuffer[i] = 0;
-            }
+            floatBuffer[i] = floatInputs[i].GetEvaluable().EvaluateValue();
         }
         if (rgb)
         {
@@ -145,7 +138,7 @@ public class ColorConstant : Node
         else
         {
             ColorVec color = ColorOperations.HsvToRgb(floatBuffer[0], floatBuffer[1], floatBuffer[2]);
-            color =  ColorVec.GetColorWithUpdatedComponent(color, 3, floatBuffer[3]);
+            color = ColorVec.GetColorWithUpdatedComponent(color, 3, floatBuffer[3]);
             return color;
         }
     }

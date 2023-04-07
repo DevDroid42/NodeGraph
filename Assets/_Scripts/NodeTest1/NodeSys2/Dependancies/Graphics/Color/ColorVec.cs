@@ -89,7 +89,7 @@ public readonly struct ColorVec
 
     public static ColorVec operator +(ColorVec color1, ColorVec color2)
     {
-        return new  ColorVec(color1.rx + color2.rx, color1.gy + color2.gy, color1.bz + color2.bz, color1.aw + color2.aw);
+        return new ColorVec(color1.rx + color2.rx, color1.gy + color2.gy, color1.bz + color2.bz, color1.aw + color2.aw);
     }
 
     public static ColorVec operator -(ColorVec color1, ColorVec color2)
@@ -178,41 +178,48 @@ public class ColorOperations
 
     public static ColorVec RgbToHsv(ColorVec color)
     {
-        float r = color.rx * 255;
-        float g = color.gy * 255;
-        float b = color.bz * 255;
+        float r = color.rx;
+        float g = color.gy;
+        float b = color.bz;
 
-        // h, s, v = hue, saturation, value 
-        float cmax = Math.Max(r, Math.Max(g, b)); // maximum of r, g, b 
-        float cmin = Math.Min(r, Math.Min(g, b)); // minimum of r, g, b 
-        float diff = cmax - cmin; // diff of cmax and cmin. 
-        float h = -1, s = -1;
+        float v= 0, h = 0, s = 0;
+        float min = Math.Min(Math.Min(r, g), b);
+        float max = Math.Max(Math.Max(r, g), b);
 
-        // if cmax and cmax are equal then h = 0 
-        if (cmax == cmin)
-            h = 0;
+        v = max;
 
-        // if cmax equal r then compute h 
-        else if (cmax == r)
-            h = (60 * ((g - b) / diff) + 360) % 360;
+        float delta = max - min;
 
-        // if cmax equal g then compute h 
-        else if (cmax == g)
-            h = (60 * ((b - r) / diff) + 120) % 360;
-
-        // if cmax equal b then compute h 
-        else if (cmax == b)
-            h = (60 * ((r - g) / diff) + 240) % 360;
-
-        // if cmax equal zero 
-        if (cmax == 0)
-            s = 0;
+        if (max != 0)
+        {
+            s = delta / max;
+        }
         else
-            s = (diff / cmax) * 100;
+        {
+            s = 0;
+            return new ColorVec(h, s, v);
+        }
 
-        // compute v 
-        float v = cmax;
-        return new ColorVec(h / 255f, s / 255f, v / 255f);
+        if (r == max)
+        {
+            h = (g - b) / delta;
+        }
+        else if (g == max)
+        {
+            h = 2 + (b - r) / delta;
+        }
+        else
+        {
+            h = 4 + (r - g) / delta;
+        }
+
+        h *= 60;
+        if (h < 0)
+        {
+            h += 360;
+        }
+        h /= 360f;
+        return new ColorVec(h, s, v);
     }
 
     public static ColorVec HsvToRgb(ColorVec hsvData)
