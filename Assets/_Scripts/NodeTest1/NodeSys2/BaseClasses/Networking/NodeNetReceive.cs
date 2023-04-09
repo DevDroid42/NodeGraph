@@ -51,7 +51,7 @@ public class NodeNetReceive
             }
             nodeNetDelagate.Invoke(message);
             //Debug.Log(message);
-            foreach (NetReceiveNode node in Graph.nodeCollection.GetNetReceiveNodes(message.ID.ToString(), message.dataType.ToString()))
+            foreach (INetReceivable node in Graph.nodeCollection.GetNetReceiveNodes(message.ID.ToString(), message.dataType.ToString()))
             {
                 node.ReceiveData(message);
             }

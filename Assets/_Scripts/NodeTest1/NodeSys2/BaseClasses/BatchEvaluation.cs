@@ -44,7 +44,7 @@ public class BatchEvaluation
     {
         float evalRange = (end - (float)start);
         //break up the work into equal chunks by core count
-        int threadRange = subdivisions / (Environment.ProcessorCount * 2); 
+        int threadRange = Math.Max(subdivisions / (Environment.ProcessorCount * 2),2);
         var rangePartitioner = Partitioner.Create(0, subdivisions, threadRange);
         Parallel.ForEach(rangePartitioner, (range, loopState) =>
         {

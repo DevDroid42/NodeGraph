@@ -1,4 +1,5 @@
-﻿using nodeSys2;
+﻿using Newtonsoft.Json;
+using nodeSys2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class NetworkReceivableProps
         ID = parentNode.CreateInputProperty("Data ID", false, new StringData(""));
         ID.interactable = true;
     }
+
+    [JsonConstructor] public NetworkReceivableProps() { }
 
     public void init()
     {

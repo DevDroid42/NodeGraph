@@ -56,7 +56,7 @@ public class FollowNode : Node
         int count = currentColors.Length;
         float rate = Mathf.Clamp(followRate.GetEvaluable().EvaluateValue(), 0, 1);
         //break up the work into equal chunks by core count
-        int threadRange = count / (Environment.ProcessorCount * 2);
+        int threadRange = Math.Max(count / (Environment.ProcessorCount * 2), 2);
         var rangePartitioner = Partitioner.Create(0, count, threadRange);
         Parallel.ForEach(rangePartitioner, (range, loopState) =>
         {
