@@ -10,7 +10,7 @@ public class MidiInfoNode : Node
     public float position, deltaPos, velocity;
     [JsonProperty] private Property positonProp, deltaPosProp, velocityProp;
 
-    public MidiInstancer(ColorVec pos) : base(pos)
+    public MidiInfoNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Midi Info";
         positonProp = CreateOutputProperty("position");
