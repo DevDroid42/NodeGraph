@@ -39,11 +39,17 @@ public class StaticInstancer : GroupNodeBase
     {
         base.Init();
 
-        RegisterFrameMethod(Frame);
         ProccessEnums();
         groupOutDelegate = new GroupOutputNode.GroupOutDelegate(GroupOutputHandler);
         SetupInstances();
         SetupProperties();
+        RegisterFrameMethod(Frame);
+        InitGraphs();
+    }
+
+    public override void Init2()
+    {
+        Handle();
     }
 
     //if the group contains nodes that don't have respective properties add them here. 
@@ -73,9 +79,18 @@ public class StaticInstancer : GroupNodeBase
         {
             groups[i].AssignInstanceInfo(i, groups.Count, i/(float)(groups.Count));
             float position = i / (float)groups.Count;
-            groups[i].SetVector(position); 
+            groups[i].SetVector(position);
+            groups[i].PublishInfoNodeData();
         }
         groupOutputData = new IEvaluable[groups.Count];
+    }
+
+    private void InitGraphs()
+    {
+        for (int i = 0; i < groups.Count; i++)
+        {
+            groups[i].init();
+        }
     }
 
     private void GroupOutputHandler(object data, string ID, int index)

@@ -25,7 +25,7 @@ public class RecordingMenuScript : MonoBehaviour
 
     public void SetRecording(bool status)
     {
-        foreach (RecordingNode node in Graph.nodeCollection.GetRecordingNodes())
+        foreach (RecordingNode node in Graph.globalNodeCollection.GetRecordingNodes())
         {
             node.SetRecording(status);
         }
@@ -44,7 +44,7 @@ public class RecordingMenuScript : MonoBehaviour
     private int GetRecordingNodeCount()
     {
         int count = 0;
-        foreach (RecordingNode node in Graph.nodeCollection.GetRecordingNodes())
+        foreach (RecordingNode node in Graph.globalNodeCollection.GetRecordingNodes())
         {
             if (node.Recording)
             {

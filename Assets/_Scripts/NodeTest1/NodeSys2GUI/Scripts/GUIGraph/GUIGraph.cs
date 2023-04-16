@@ -155,11 +155,13 @@ public class GUIGraph : MonoBehaviour
         groupDepthChanged.Invoke(openedGraphs.Count);
         VerifyNodes();
         Graph.ResetStaticData();
+        Graph.initializing = true;
         foreach (Graph graph in openedGraphs)
         {
             graph.InitGraph();
         }
         graphRef.InitGraph();
+        Graph.initializing = false;
         for (int i = 0; i < guiNodes.Count; i++)
         {
             Destroy(guiNodes[i]);

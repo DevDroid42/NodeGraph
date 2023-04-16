@@ -100,7 +100,7 @@ namespace nodeSys2
             if (Isa(data, gateType))
             {
                 this.data = data;
-                if (node.Runnable())
+                if (node.Runnable() || Graph.initializing)
                 {
                     node.Handle();
                 }
@@ -144,7 +144,15 @@ namespace nodeSys2
 
         public void SetData(object data)
         {
-            this.data = data;
+            if (Isa(data, gateType))
+            {
+                this.data = data;
+            }
+            else
+            {
+                Debug.LogWarning("Invalid data type received at property: " + ID + "\t Expected type of: ("
+                    + gateType.Name + ") Instead got: (" + data.GetType().Name + ")");
+            }
         }
 
         //will auto dissconnect if connected and make the port not connectable

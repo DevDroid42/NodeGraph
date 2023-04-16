@@ -24,6 +24,6 @@ public class NetworkReceivableProps
 
     public void RegisterNetReceive(INetReceivable parentNode)
     {
-        Graph.nodeCollection.RegisterNetReceiveNode(ID.GetData().ToString(), dataType.GetData().ToString(), parentNode);
+        Graph.globalNodeCollection.RegisterNetReceiveNode(ID.GetData().ToString(), dataType.GetData().ToString(), parentNode);
     }
 }

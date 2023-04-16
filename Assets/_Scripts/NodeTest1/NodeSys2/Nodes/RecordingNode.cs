@@ -32,7 +32,7 @@ public class RecordingNode : Node
     {
         base.Init();
         RegisterFrameMethod(Frame);
-        Graph.nodeCollection.RegisterRecordingNode(this);
+        Graph.globalNodeCollection.RegisterRecordingNode(this);
     }
 
     public void SetRecording(bool state)

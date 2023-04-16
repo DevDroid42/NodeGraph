@@ -4,24 +4,34 @@ using Newtonsoft.Json;
 using UnityEngine;
 using nodeSys2;
 
-public class InstanceInfoNode : Node
+public class InstanceInfoNode : InfoNode
 {
-    [JsonIgnore]
-    public float index, count, ratio;
     [JsonProperty] private Property indexProp, countProp, ratioProp;
-    
+    [JsonProperty] private Property indexPropOut, countPropOut, ratioPropOut;
+
     public InstanceInfoNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Instance Info";
-        indexProp = CreateOutputProperty("Instance Index");
-        countProp = CreateOutputProperty("Total Instance Count");
-        ratioProp = CreateOutputProperty("Instance Ratio");
+        indexProp = CreateInputProperty("Info_index", false, new EvaluableFloat(0));
+        indexProp.visible = false;
+        RegisterInfoInputProperty(indexProp);
+        indexPropOut = CreateOutputProperty("Instance Index");
+
+        countProp = CreateInputProperty("Info_count", false, new EvaluableFloat(0));
+        countProp.visible = false;
+        RegisterInfoInputProperty(countProp);
+        countPropOut = CreateOutputProperty("Total Instance Count");
+
+        ratioProp = CreateInputProperty("Info_ratio", false, new EvaluableFloat(0));
+        ratioProp.visible = false;
+        RegisterInfoInputProperty(ratioProp);
+        ratioPropOut = CreateOutputProperty("Instance Ratio");
     }
 
     public override void Handle()
     {
-        indexProp.Invoke(new EvaluableFloat(index));
-        countProp.Invoke(new EvaluableFloat(count));
-        ratioProp.Invoke(new EvaluableFloat(ratio));
+        indexPropOut.Invoke(indexProp.GetData());
+        countPropOut.Invoke(countProp.GetData());
+        ratioPropOut.Invoke(ratioProp.GetData());
     }
 }

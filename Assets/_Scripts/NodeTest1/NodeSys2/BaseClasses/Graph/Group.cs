@@ -6,15 +6,17 @@ public class Group
 {
     private List<InstancedPulseNode> pulseNodes = new List<InstancedPulseNode>();
     private List<GroupInputNode> inputNodes = new List<GroupInputNode>();
+    private Dictionary<string, List<GroupInputNode>> inputNodesDict = new Dictionary<string, List<GroupInputNode>>();
     private List<GroupOutputNode> outputNodes = new List<GroupOutputNode>();
+    private List<InfoNode> infoNodes = new List<InfoNode>();
+    private Dictionary<string, List<InfoNode>> infoNodesDict = new Dictionary<string, List<InfoNode>>();
+
     private float vector = 0;
     private Graph graph;
 
     public Group(Graph graph, GroupOutputNode.GroupOutDelegate callback)
     {
         this.graph = graph;
-        graph.InitGraph();
-
         //iterate over all nodes
         for (int i = 0; i < graph.nodes.Count; i++)
         {
@@ -23,6 +25,7 @@ public class Group
                 case GroupInputNode node:
                     {
                         inputNodes.Add(node);
+                        RegisterInputNode(node);
                         break;
                     }
                 case InstancedPulseNode node:
@@ -37,27 +40,61 @@ public class Group
                         outputNodes.Add(node);
                         break;
                     }
+                case InfoNode node:
+                    {
+                        infoNodes.Add(node);
+                        RegisterInfoNode(node);
+                        break;
+                    }
             }
         }
+    }
+
+    public void init()
+    {
+        graph.InitGraph();
+    }
+
+    private void RegisterInfoNode(InfoNode node)
+    {
+        foreach (string name in node.GetNames())
+        {
+            if (!infoNodesDict.ContainsKey(name))
+            {
+                infoNodesDict.Add(name, new List<InfoNode>());
+            }
+            infoNodesDict[name].Add(node);
+        }   
+    }
+
+    public void PublishInfoNodeData()
+    {
+        for (int i = 0; i < infoNodes.Count; i++)
+        {
+            infoNodes[i].Handle();
+        }
+    }
+
+    private void RegisterInputNode(GroupInputNode node)
+    {
+        if(!inputNodesDict.ContainsKey(node.getName()))
+        {
+            inputNodesDict.Add(node.getName(), new List<GroupInputNode>());
+        }
+        inputNodesDict[node.getName()].Add(node);
     }
 
     //assigns the index of all output nodes in this group
     public void AssignInstanceInfo(int index, int count, float ratio)
     {
         //iterate over all nodes
-        for (int i = 0; i < graph.nodes.Count; i++)
+        foreach (GroupOutputNode outputNode in outputNodes)
         {
-            if(graph.nodes[i] is GroupOutputNode output)
-            {
-                output.instanceIndex = index;
-            }else if(graph.nodes[i] is InstanceInfoNode instanceInfo)
-            {
-                instanceInfo.index = index;
-                instanceInfo.count = count;
-                instanceInfo.ratio = ratio;
-                instanceInfo.Handle();
-            }
+            outputNode.instanceIndex = index;
         }
+        PublishToGraph("Info_index", new EvaluableFloat(index));
+        PublishToGraph("Info_count", new EvaluableFloat(count));
+        PublishToGraph("Info_ratio", new EvaluableFloat(ratio));
     }
 
     public List<string> GetInputTags()
@@ -88,23 +125,40 @@ public class Group
         graph.UpdateGraph();
     }
 
-    public void PublishToGraph(string ID, object data)
+    private void PublishInputNodes(string id, object data)
     {
-        foreach (GroupInputNode node in inputNodes)
+        if (!inputNodesDict.ContainsKey(id)) return;
+
+        List<GroupInputNode> inputNodes = inputNodesDict[id];
+        for (int i = 0; i < inputNodes.Count; i++)
         {
-            //if instanced data then run handle on data that is evaluated instead.
-            if (ID == node.getName())
+            GroupInputNode node = inputNodes[i];
+            if ((GroupInputNode.InputType)node.inputType.GetData() == GroupInputNode.InputType.Instanced && data is IEvaluable eData)
             {
-                if ((GroupInputNode.InputType)node.inputType.GetData() == GroupInputNode.InputType.Instanced && data is IEvaluable eData)
-                {
-                    node.input.Handle(new EvaluableColorVec(eData.EvaluateColor(vector)));
-                }
-                else
-                {
-                    node.input.Handle(data);
-                }
+                node.input.Handle(new EvaluableColorVec(eData.EvaluateColor(vector)));
+            }
+            else
+            {
+                node.input.Handle(data);
             }
         }
+    }
+
+    private void PublishInfoNodes(string id, object data)
+    {
+        if (!infoNodesDict.ContainsKey(id)) return;
+
+        List<InfoNode> infoNodes = infoNodesDict[id];
+        for (int i = 0; i < infoNodes.Count; i++)
+        {
+            infoNodes[i].PublishData(id, data);
+        }
+    }
+
+    public void PublishToGraph(string id, object data)
+    {
+        PublishInputNodes(id, data);
+        PublishInfoNodes(id, data);
     }
 
     public void PulseGraph()

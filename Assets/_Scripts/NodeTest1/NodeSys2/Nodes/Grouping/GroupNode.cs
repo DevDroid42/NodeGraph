@@ -24,10 +24,16 @@ public class GroupNode : GroupNodeBase
         base.Init();
 
         RegisterFrameMethod(Frame);
-
         groupOutDelegate = new GroupOutputNode.GroupOutDelegate(GroupOutHandler);
         group = new Group(graph, groupOutDelegate);
+        group.init();
         SetupProperties();
+    }
+
+    public override void Init2()
+    {
+        //this might be needed to fix the group not passing manually entered values 
+        //Handle();
     }
 
     private void GroupOutHandler(object data, string ID, int index)

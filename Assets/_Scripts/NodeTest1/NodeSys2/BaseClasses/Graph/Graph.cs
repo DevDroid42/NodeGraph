@@ -7,8 +7,9 @@ namespace nodeSys2
 {
     public class Graph
     {
-        public static NodeCollections nodeCollection;
+        public static NodeCollections globalNodeCollection;
         public static Recorder recorder = new Recorder();
+        public static bool initializing = false;
         public string graphName = "";
         public List<Node> nodes = new List<Node>();        
         public static NodeNetReceive nodeNetReceiver;
@@ -22,7 +23,7 @@ namespace nodeSys2
         public static void ResetStaticData()
         {
             recorder = new Recorder();
-            nodeCollection = new NodeCollections();
+            globalNodeCollection = new NodeCollections();
         }
 
         //to be used after loading from json
