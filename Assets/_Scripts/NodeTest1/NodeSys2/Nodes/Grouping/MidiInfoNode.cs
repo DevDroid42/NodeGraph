@@ -4,24 +4,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using nodeSys2;
 
-public class MidiInfoNode : Node
+//public float position, deltaPos, velocity;
+public class MidiInfoNode : InfoNode
 {
-    [JsonIgnore]
-    public float position, deltaPos, velocity;
-    [JsonProperty] private Property positonProp, deltaPosProp, velocityProp;
+    public static readonly string 
+        posKey = "Info_position",
+        deltaPosKey = "Info_deltaPos",
+        velocityKey = "Info_velocity";
+
+    [JsonProperty] private Property positionProp, deltaPosProp, velocityProp;
+    [JsonProperty] private Property positionPropOut, deltaPosPropOut, velocityPropOut;
 
     public MidiInfoNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Midi Info";
-        positonProp = CreateOutputProperty("position");
-        deltaPosProp = CreateOutputProperty("delta position");
-        velocityProp = CreateOutputProperty("velocity");
+        positionProp = CreateInputProperty(posKey, false, new EvaluableFloat(0));
+        positionProp.visible = false;
+        RegisterInfoInputProperty(positionProp);
+        positionPropOut = CreateOutputProperty("Note Position");
+
+        deltaPosProp = CreateInputProperty(deltaPosKey, false, new EvaluableFloat(0));
+        deltaPosProp.visible = false;
+        RegisterInfoInputProperty(deltaPosProp);
+        deltaPosPropOut = CreateOutputProperty("Note Delta Position");
+
+        velocityProp = CreateInputProperty(velocityKey, false, new EvaluableFloat(0));
+        velocityProp.visible = false;
+        RegisterInfoInputProperty(velocityProp);
+        velocityPropOut = CreateOutputProperty("Note Velocity");
     }
 
     public override void Handle()
     {
-        positonProp.Invoke(new EvaluableFloat(position));
-        deltaPosProp.Invoke(new EvaluableFloat(deltaPos));
-        velocityProp.Invoke(new EvaluableFloat(velocity));
+        positionPropOut.Invoke(positionProp.GetData());
+        deltaPosPropOut.Invoke(deltaPosProp.GetData());
+        velocityPropOut.Invoke(velocityProp.GetData());
     }
 }

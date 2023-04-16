@@ -6,23 +6,28 @@ using nodeSys2;
 
 public class InstanceInfoNode : InfoNode
 {
+    public static readonly string
+        indexKey = "Info_index",
+        countKey = "Info_count",
+        ratioKey = "Info_ratio";
+
     [JsonProperty] private Property indexProp, countProp, ratioProp;
     [JsonProperty] private Property indexPropOut, countPropOut, ratioPropOut;
 
     public InstanceInfoNode(ColorVec pos) : base(pos)
     {
         base.nodeDisc = "Instance Info";
-        indexProp = CreateInputProperty("Info_index", false, new EvaluableFloat(0));
+        indexProp = CreateInputProperty(indexKey, false, new EvaluableFloat(0));
         indexProp.visible = false;
         RegisterInfoInputProperty(indexProp);
         indexPropOut = CreateOutputProperty("Instance Index");
 
-        countProp = CreateInputProperty("Info_count", false, new EvaluableFloat(0));
+        countProp = CreateInputProperty(countKey, false, new EvaluableFloat(0));
         countProp.visible = false;
         RegisterInfoInputProperty(countProp);
         countPropOut = CreateOutputProperty("Total Instance Count");
 
-        ratioProp = CreateInputProperty("Info_ratio", false, new EvaluableFloat(0));
+        ratioProp = CreateInputProperty(ratioKey, false, new EvaluableFloat(0));
         ratioProp.visible = false;
         RegisterInfoInputProperty(ratioProp);
         ratioPropOut = CreateOutputProperty("Instance Ratio");

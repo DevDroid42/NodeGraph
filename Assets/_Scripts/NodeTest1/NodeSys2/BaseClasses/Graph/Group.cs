@@ -92,9 +92,9 @@ public class Group
         {
             outputNode.instanceIndex = index;
         }
-        PublishToGraph("Info_index", new EvaluableFloat(index));
-        PublishToGraph("Info_count", new EvaluableFloat(count));
-        PublishToGraph("Info_ratio", new EvaluableFloat(ratio));
+        PublishToGraph(InstanceInfoNode.ratioKey, new EvaluableFloat(index));
+        PublishToGraph(InstanceInfoNode.countKey, new EvaluableFloat(count));
+        PublishToGraph(InstanceInfoNode.ratioKey, new EvaluableFloat(ratio));
     }
 
     public List<string> GetInputTags()
