@@ -75,6 +75,7 @@ public class StaticInstancer : GroupNodeBase
                 groups.Add(g);
             }
         }
+        groupOutputData = new IEvaluable[groups.Count];
         for (int i = 0; i < groups.Count; i++)
         {
             groups[i].AssignInstanceInfo(i, groups.Count, i/(float)(groups.Count));
@@ -82,7 +83,6 @@ public class StaticInstancer : GroupNodeBase
             groups[i].SetVector(position);
             groups[i].PublishInfoNodeData();
         }
-        groupOutputData = new IEvaluable[groups.Count];
     }
 
     private void InitGraphs()
