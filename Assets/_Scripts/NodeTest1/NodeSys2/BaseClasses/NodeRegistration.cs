@@ -6,8 +6,8 @@ public class NodeRegistration
     //public enum NodeGroups {,Instancers,Math,Mixing}
 
     public enum NodeTypes {NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Transform , LED, Equation, Math, mixRGB, 
-        NetReceive, MidiReceive, GroupInput, GroupOutput, Group, StaticInstancer, DynamicInstancer, InstancedPulse, InstanceInfo, logic,
-        udpSend, recording, remap, pulseRouter, Switch, Follow}
+        NetReceive, MidiReceive, MidiInstancer, MidiInfo, GroupInput, GroupOutput, Group, StaticInstancer, DynamicInstancer, 
+        InstancedPulse, InstanceInfo, logic, udpSend, recording, remap, pulseRouter, Switch, Follow}
 
     public static Node GetNode(NodeTypes type, ColorVec pos)
     {
@@ -67,6 +67,10 @@ public class NodeRegistration
                 return new FollowNode(pos);
             case NodeTypes.MidiReceive:
                 return new MidiReceiveNode(pos);
+            case NodeTypes.MidiInstancer:
+                return new MidiInstancer(pos);
+            case NodeTypes.MidiInfo:
+                return new MidiInfoNode(pos);
             default:
                 return null;
         }

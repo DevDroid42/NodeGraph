@@ -10,6 +10,9 @@ public class MidiInstancer : StaticInstancer, INetReceivable
     [JsonProperty] private MidiProperties midiProps;
     [JsonProperty] private Property output;
     private int currentInstance;
+    private int low, high, size;
+    private float lastPos;
+    private byte[] incoming;
 
     public MidiInstancer(ColorVec pos) : base(pos)
     {
@@ -50,6 +53,13 @@ public class MidiInstancer : StaticInstancer, INetReceivable
                         groups[currentInstance].PublishToGraph(prop.ID, prop.GetData());
                     }
                 }
+                float velocity = incoming[pressed[i]] / 255f;
+                float position = pressed[i] - low / (float)size;
+                lastPos = position;
+                float deltaPos = position - lastPos;
+                groups[currentInstance].PublishToGraph(MidiInfoNode.velocityKey, new EvaluableFloat(velocity));
+                groups[currentInstance].PublishToGraph(MidiInfoNode.posKey, new EvaluableFloat(position));
+                groups[currentInstance].PublishToGraph(MidiInfoNode.deltaPosKey, new EvaluableFloat(deltaPos));
                 groups[currentInstance].PulseGraph();
                 currentInstance = (currentInstance + 1) % groups.Count;
             }
@@ -59,7 +69,10 @@ public class MidiInstancer : StaticInstancer, INetReceivable
 
     public void ReceiveData(NetworkMessage message)
     {
-        byte[] incoming = message.data;
+        incoming = message.data;
+        low = Mathf.Max((int)midiProps.lowerBound.GetEvaluable().EvaluateValue(), 0);
+        high = Mathf.Min((int)midiProps.upperBound.GetEvaluable().EvaluateValue(), incoming.Length);
+        size = Mathf.Max(high - low, 0);
         midiProps.UpdateState(incoming);
     }
 }
