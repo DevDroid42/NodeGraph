@@ -33,7 +33,7 @@ public class GroupNode : GroupNodeBase
     public override void Init2()
     {
         //this might be needed to fix the group not passing manually entered values 
-        //Handle();
+        Handle();
     }
 
     private void GroupOutHandler(object data, string ID, int index)
