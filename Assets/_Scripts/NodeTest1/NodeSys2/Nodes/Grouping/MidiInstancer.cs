@@ -8,7 +8,6 @@ public class MidiInstancer : StaticInstancer, INetReceivable
 {
     [JsonProperty] private NetworkReceivableProps netReceiveProps;
     [JsonProperty] private MidiProperties midiProps;
-    [JsonProperty] private Property output;
     private int currentInstance;
     private int low, high, size;
     private float lastPos;
@@ -16,12 +15,11 @@ public class MidiInstancer : StaticInstancer, INetReceivable
 
     public MidiInstancer(ColorVec pos) : base(pos)
     {
-        base.nodeDisc = "Midi Receive";
+        base.nodeDisc = "Midi Instancer";
         netReceiveProps = new NetworkReceivableProps(this);
         netReceiveProps.dataType.visible = false;
         netReceiveProps.dataType.SetData(NetworkMessage.DataType.ByteArray);
         midiProps = new MidiProperties(this);
-        output = CreateOutputProperty("Output");
     }
 
     public override void Init()
