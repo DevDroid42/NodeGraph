@@ -50,9 +50,23 @@ public class Group
         }
     }
 
-    public void init()
+    public void Init()
     {
-        graph.InitGraph();
+        for (int i = 0; i < graph.nodes.Count; i++)
+        {
+            graph.nodes[i].InitProperties();
+        }
+        for (int i = 0; i < graph.nodes.Count; i++)
+        {
+            graph.nodes[i].Init();
+        }
+    }
+    public void Init2()
+    {
+        for (int i = 0; i < graph.nodes.Count; i++)
+        {
+            graph.nodes[i].Init2();
+        }
     }
 
     private void RegisterInfoNode(InfoNode node)
@@ -152,6 +166,7 @@ public class Group
         for (int i = 0; i < infoNodes.Count; i++)
         {
             infoNodes[i].PublishData(id, data);
+            infoNodes[i].Handle();
         }
     }
 

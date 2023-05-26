@@ -38,7 +38,6 @@ public class StaticInstancer : GroupNodeBase
     public override void Init()
     {
         base.Init();
-
         ProccessEnums();
         groupOutDelegate = new GroupOutputNode.GroupOutDelegate(GroupOutputHandler);
         SetupInstances();
@@ -49,6 +48,7 @@ public class StaticInstancer : GroupNodeBase
 
     public override void Init2()
     {
+        InitGraphs2();
         Handle();
     }
 
@@ -88,8 +88,16 @@ public class StaticInstancer : GroupNodeBase
     private void InitGraphs()
     {
         for (int i = 0; i < groups.Count; i++)
+        { 
+            groups[i].Init();
+        }
+    }
+
+    private void InitGraphs2()
+    {
+        for (int i = 0; i < groups.Count; i++)
         {
-            groups[i].init();
+            groups[i].Init2();
         }
     }
 

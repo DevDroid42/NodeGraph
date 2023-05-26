@@ -26,7 +26,7 @@ public class GroupNode : GroupNodeBase
         RegisterFrameMethod(Frame);
         groupOutDelegate = new GroupOutputNode.GroupOutDelegate(GroupOutHandler);
         group = new Group(graph, groupOutDelegate);
-        group.init();
+        group.Init();
         SetupProperties();
     }
 

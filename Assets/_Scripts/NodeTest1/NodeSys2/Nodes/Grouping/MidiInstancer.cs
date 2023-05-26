@@ -35,6 +35,7 @@ public class MidiInstancer : StaticInstancer, INetReceivable
     private void HandlePressed(List<int> pressed)
     {
         this.pressed = pressed;
+        Handle();
     }
 
     public override void Handle()
@@ -46,15 +47,12 @@ public class MidiInstancer : StaticInstancer, INetReceivable
                 //Debug.Log("InstanceRunning: " + currentInstance + "\t Group Count:" + groups.Count);
                 foreach (Property prop in groupInputs)
                 {
-                    if (groups[currentInstance] != null)
-                    {
-                        groups[currentInstance].PublishToGraph(prop.ID, prop.GetData());
-                    }
+                    groups[currentInstance].PublishToGraph(prop.ID, prop.GetData());
                 }
                 float velocity = incoming[pressed[i]] / 255f;
-                float position = pressed[i] - low / (float)size;
-                lastPos = position;
+                float position = (pressed[i] - low) / (float)(high - low);
                 float deltaPos = position - lastPos;
+                lastPos = position;
                 groups[currentInstance].PublishToGraph(MidiInfoNode.velocityKey, new EvaluableFloat(velocity));
                 groups[currentInstance].PublishToGraph(MidiInfoNode.posKey, new EvaluableFloat(position));
                 groups[currentInstance].PublishToGraph(MidiInfoNode.deltaPosKey, new EvaluableFloat(deltaPos));
