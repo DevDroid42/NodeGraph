@@ -17,5 +17,30 @@ public class NoiseNode : Node
         offsetx.interactable = true;
         offsety = CreateInputProperty("Offset Y", true, new EvaluableFloat(1));
         offsety.interactable = true;
+        output = CreateOutputProperty("Output");
+    }
+
+    private void UpdateNoise()
+    {
+        noise.scale = scale.GetEvaluable().EvaluateValue();
+        noise.offsetx = offsetx.GetEvaluable().EvaluateValue();
+        noise.offsety = offsety.GetEvaluable().EvaluateValue();
+    }
+
+    public override void Init()
+    {
+        noise = new EvaluableNoise();
+        UpdateNoise();
+    }
+
+    public override void Init2()
+    {
+        output.Invoke(noise);
+    }
+
+    public override void Handle()
+    {
+        UpdateNoise();
+        output.Invoke(noise);
     }
 }

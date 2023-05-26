@@ -5,7 +5,7 @@ public class NodeRegistration
 {
     //public enum NodeGroups {,Instancers,Math,Mixing}
 
-    public enum NodeTypes {NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Transform , LED, Equation, Math, mixRGB, 
+    public enum NodeTypes {NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Noise, Transform , LED, Equation, Math, mixRGB, 
         NetReceive, MidiReceive, MidiInstancer, MidiInfo, GroupInput, GroupOutput, Group, StaticInstancer, DynamicInstancer, 
         InstancedPulse, InstanceInfo, logic, udpSend, recording, remap, pulseRouter, Switch, Follow}
 
@@ -71,6 +71,8 @@ public class NodeRegistration
                 return new MidiInstancer(pos);
             case NodeTypes.MidiInfo:
                 return new MidiInfoNode(pos);
+            case NodeTypes.Noise:
+                return new NoiseNode(pos);
             default:
                 return null;
         }
