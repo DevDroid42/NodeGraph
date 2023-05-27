@@ -11,6 +11,7 @@ public class NoiseNode : Node
 
     public NoiseNode(ColorVec pos) : base(pos)
     {
+        nodeDisc = "Noise";
         scale = CreateInputProperty("Scale", true, new EvaluableFloat(1));
         scale.interactable = true;
         offsetx = CreateInputProperty("Offset X", true, new EvaluableFloat(1));
