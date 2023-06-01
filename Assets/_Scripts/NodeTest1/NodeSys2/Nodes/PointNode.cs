@@ -21,6 +21,8 @@ public class PointNode : Node
         pointColorProp.interactable = true;
         backgroundColorProp = CreateInputProperty("Background Color", true, new EvaluableColorVec(new ColorVec(0)));
         backgroundColorProp.interactable = true;
+        interpolationEnabledProp = CreateInputProperty("Interpolation", true, new EvaluableBool(true));
+        interpolationEnabledProp.interactable = true;
         outputProp = CreateOutputProperty("Output");
     }
 
@@ -50,8 +52,23 @@ public class PointNode : Node
         size = sizeProp.GetEvaluable().EvaluateValue();
         float newPos = positionProp.GetEvaluable().EvaluateValue();
         float deltaPos = newPos - pos;
+
         point.start = newPos - (size / 2.0f);
         point.end = newPos + (size / 2.0f);
+        if (interpolationEnabledProp.GetEvaluable().EvaluateValue() >= 0.5f)
+        {
+            if (deltaPos > 0)
+            {
+                point.start = pos - (size / 2.0f);
+                point.end = newPos + (size / 2.0f);
+            }
+            else if(deltaPos < 0)
+            {
+                point.start = newPos - (size / 2.0f);
+                point.end = pos + (size / 2.0f);
+            }
+        }
+        pos = newPos;
     }
 
 }
