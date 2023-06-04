@@ -7,6 +7,13 @@ using UnityEngine;
 
 public class EvaluableGradient : IEvaluable
 {
+    /*
+     * Todo:
+     * Create Array based off of lists. This array will be reinitialized when elements are added with ToArray
+     * and will be sorted each time positions are updated
+     */
+
+
     [JsonProperty]
     private float minPos, maxPos;
     private ColorVec minColor, maxColor;
