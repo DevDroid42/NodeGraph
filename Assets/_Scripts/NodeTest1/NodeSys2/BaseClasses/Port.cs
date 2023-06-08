@@ -80,7 +80,7 @@ namespace nodeSys2
         {
             if (property.isInput && lastData != null)
             {
-                Handle(lastData.GetCopy());
+                //Handle(lastData.GetCopy());
             }
             if (connected)
             {
