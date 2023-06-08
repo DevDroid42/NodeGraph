@@ -29,13 +29,6 @@ public class EvaluableGradient : IEvaluable
             return position.ToString() + "," + color.ToString();
         }
     }
-    /*
-     * Todo:
-     * Create Array based off of lists. This array will be reinitialized when elements are added with ToArray
-     * and will be sorted each time positions are updated
-     */
-
-
     
     //used to access the keys by index
     [JsonProperty] private List<Key> keys = new List<Key>();
