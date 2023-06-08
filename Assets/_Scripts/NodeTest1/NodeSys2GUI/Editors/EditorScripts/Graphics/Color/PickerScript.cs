@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using nodeSys2;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PickerScript : MonoBehaviour
 {
+    public Text title;
     Property prop;
     public void Setup(Property prop)
     {
+        title.text = prop.Disc;
         this.prop = prop;
     }
 
