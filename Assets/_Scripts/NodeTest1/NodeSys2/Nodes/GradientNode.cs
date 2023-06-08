@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 public class GradientNode : Node
 {
-    [JsonProperty] private Property resolution, output;
+    [JsonProperty] private Property interpolationType, resolution, output;
     //first prop is the position second is the color
     [JsonProperty] private List<(Property, Property)> keyProps;
     EvaluableGradient colorTable;
@@ -16,6 +16,8 @@ public class GradientNode : Node
     {
         base.nodeDisc = "Gradient";
         keyProps = new List<(Property, Property)>(0);
+        interpolationType = CreateInputProperty("Interpolation Mode", false, new EvaluableColorTable.InterpolationType());
+        interpolationType.interactable = true;
         resolution = CreateInputProperty("Resolution", false, new EvaluableFloat(3));
         resolution.interactable = true;
         output = CreateOutputProperty("Output");
@@ -24,6 +26,7 @@ public class GradientNode : Node
     public override void Init()
     {
         base.Init();
+        EnumUtils.ConvertEnum<EvaluableColorTable.InterpolationType>(interpolationType);
         ProcessRes();
         SetColors();
     }
@@ -83,6 +86,7 @@ public class GradientNode : Node
             //Debug.Log("Reseting gradient Resolution from: " + colorTable.GetkeyAmt() + " to: " + keyProps.Count);
             colorTable = new EvaluableGradient(keyProps.Count);
         }
+        colorTable.interType = (EvaluableColorTable.InterpolationType)interpolationType.GetData();
         for (int i = 0; i < keyProps.Count; i++)
         {
             float position = keyProps[i].Item1.GetEvaluable().EvaluateValue();
