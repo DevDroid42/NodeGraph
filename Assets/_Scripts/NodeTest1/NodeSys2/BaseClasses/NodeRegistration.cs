@@ -5,9 +5,13 @@ public class NodeRegistration
 {
     //public enum NodeGroups {,Instancers,Math,Mixing}
 
-    public enum NodeTypes {NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Point, Noise, Transform , LED, Equation, Math, mixRGB, 
-        NetReceive, MidiReceive, MidiInstancer, MidiInfo, GroupInput, GroupOutput, Group, StaticInstancer, DynamicInstancer, 
-        InstancedPulse, InstanceInfo, logic, udpSend, recording, remap, pulseRouter, Switch, Follow}
+    public enum NodeTypes
+    {
+        NumberConstant, Add, Loop, AdvancedLoop, ColorConst, ColorTable, Gradient, Point, Noise, Transform,
+        LED, Equation, Math, mixRGB, NetReceive, MidiReceive, MidiInstancer, MidiInfo, GroupInput, GroupOutput, Group,
+        StaticInstancer, DynamicInstancer, InstancedPulse, InstanceInfo, logic, udpSend, recording, remap, pulseRouter, Switch,
+        Follow
+    }
 
     public static Node GetNode(NodeTypes type, ColorVec pos)
     {
@@ -17,7 +21,7 @@ public class NodeRegistration
                 return new FloatConstant(pos);
             case NodeTypes.Add:
                 return new AddNode(pos);
-            case NodeTypes.Loop:                               
+            case NodeTypes.Loop:
                 return new LoopNode(pos);
             case NodeTypes.AdvancedLoop:
                 return new AdvancedLoopNode(pos);
@@ -75,6 +79,8 @@ public class NodeRegistration
                 return new NoiseNode(pos);
             case NodeTypes.Point:
                 return new PointNode(pos);
+            case NodeTypes.Gradient:
+                return new GradientNode(pos);
             default:
                 return null;
         }

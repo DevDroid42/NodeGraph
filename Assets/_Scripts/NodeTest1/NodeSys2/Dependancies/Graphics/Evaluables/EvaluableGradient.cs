@@ -7,6 +7,28 @@ using UnityEngine;
 
 public class EvaluableGradient : IEvaluable
 {
+    class Key
+    {
+        public float position;
+        public ColorVec color;
+
+        public Key(float position, ColorVec color)
+        {
+            this.position = position;
+            this.color = color;
+        }
+
+        public Key()
+        {
+            this.position = 0;
+            this.color = 0;
+        }
+
+        public override string ToString()
+        {
+            return position.ToString() + "," + color.ToString();
+        }
+    }
     /*
      * Todo:
      * Create Array based off of lists. This array will be reinitialized when elements are added with ToArray
@@ -14,111 +36,128 @@ public class EvaluableGradient : IEvaluable
      */
 
 
-    [JsonProperty]
-    private float minPos, maxPos;
-    private ColorVec minColor, maxColor;
-    private int count;
-    private List<ColorVec> colors;
-    private List<float> positions;
+    
+    //used to access the keys by index
+    [JsonProperty] private List<Key> keys = new List<Key>();
+    //used to generate the colors
+    [JsonProperty] private List<Key> keysSorted = new List<Key>();
 
     //brightness mutliplier
     public EvaluableColorTable.InterpolationType interType = EvaluableColorTable.InterpolationType.linear;
 
-    public EvaluableGradient()
+    public EvaluableGradient(int keyCount)
     {
-        colors = new List<ColorVec>();
-        positions = new List<float>();
+        for (int i = 0; i < keyCount; i++)
+        {
+            AddKey(0, 0);
+        }
     }
 
     public void SetKeyColor(int index, ColorVec color)
     {
-        colors[index] = color;
+        keys[index].color = color;
+    }
+
+    private void Sort()
+    {
+        keysSorted.Sort((a, b) => a.position.CompareTo(b.position));
     }
 
     public void SetKeyPositon(int index, float position)
     {
-        positions[index] = position;
-        UpdateMinMax();
+        keys[index].position = position;
+        Sort();
     }
 
     public void AddKey(float position, ColorVec color)
     {
-        count++;
-        positions.Add(position);
-        colors.Add(color);
-        UpdateMinMax();
+        Key newKey = new Key(position, color);
+        keys.Add(newKey);
+        keysSorted.Add(newKey);
+        Sort();
     }
 
+    /*
     public void RemoveKey(int index)
     {
-        count--;
-        positions.RemoveAt(index);
-        colors.RemoveAt(index);
-        UpdateMinMax();
+        Key keyToRemove = keys[index];
+        keys.Remove(keyToRemove);
+        keysSorted.Remove(keyToRemove);
+        Sort();
     }
+    */
 
     public int GetkeyAmt()
     {
-        return colors.Count;
+        return keys.Count;
     }
 
-    private void UpdateMinMax()
+    public float GetKeyPosition(int i)
     {
-        minPos = positions.Min();
-        minColor = colors[positions.IndexOf(minPos)];
-        maxPos = positions.Max();
-        maxColor = colors[positions.IndexOf(maxPos)];
+        return keys[i].position;
     }
 
-    private int GetLeftIndex(float position)
+    public ColorVec GetKeyColor(int i)
     {
-        int closestIndex = -1;
-        float bestDelta = float.MaxValue;
-        for (int i = 0; i < count; i++)
+        return keys[i].color;
+    }
+
+
+    private int KeyCompare(Key k1, Key k2, float pos)
+    {
+        if(k1.position < pos && k2.position < pos)
         {
-            float delta = position - positions[i];
-            if (positions[i] < position && (delta < bestDelta))
-            {
-                closestIndex = i;
-                bestDelta = delta;
-            }
+            return 1;
         }
-        return closestIndex;
+        else if(k1.position > pos && k2.position > pos)
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
     }
 
-    private int GetRightIndex(float position)
+    //binary search for the two keys that are at the specificed location
+    private (Key, Key) GetKeysAtLocation(float loc, int currentPos, int currentSpeed, int levelsDeep = 0)
     {
-        int closestIndex = -1;
-        float bestDelta = float.MaxValue;
-        for (int i = 0; i < count; i++)
+        if (levelsDeep > keys.Count)
         {
-            float delta = positions[i] - position;
-            if (positions[i] > position && (delta < bestDelta))
-            {
-                closestIndex = i;
-                bestDelta = delta;
-            }
+            Debug.LogWarning("couldn't find key combo");
+            return (new Key(), new Key());
         }
-        return closestIndex;
+        int result = KeyCompare(keysSorted[currentPos], keysSorted[currentPos + 1], loc);
+        if (result == 0)
+        {
+            return (keysSorted[currentPos], keysSorted[currentPos + 1]);
+        }
+
+        currentSpeed = Mathf.Max((int)(Mathf.Abs(currentSpeed * 0.5f)), 1);
+        if (result < 0) // result is to the left
+        {
+            return GetKeysAtLocation(loc, currentPos - currentSpeed, currentSpeed, levelsDeep + 1);
+        }
+        else // result is to the right
+        {
+            return GetKeysAtLocation(loc, currentPos + currentSpeed, currentSpeed, levelsDeep + 1);
+        }
     }
 
     private ColorVec Interpolate(float x)
     {
-        if (count == 1)
+        if (keys.Count == 1)
         {
-            return colors[0];
+            return keysSorted[0].color;
         }
-        if(x < minPos)
+        if(x < keysSorted[0].position)
         {
-            return minColor;
+            return keysSorted[0].color;
         }
-        if(x > maxPos)
+        if(x > keysSorted[keysSorted.Count - 1].position)
         {
-            return maxColor;
+            return keysSorted[keysSorted.Count - 1].color;
         }
-
-        // ((light I'm at)/last light)) x (Number of keys)
-        // casted to int = lowest key
 
         if (x == 1)
         {
@@ -129,15 +168,11 @@ public class EvaluableGradient : IEvaluable
             x = 0.00001f;
         }
 
-        int keyIndex1 = GetLeftIndex(x);
-        ColorVec clr1 = colors[keyIndex1];
-        int keyIndex2 = GetRightIndex(x);
-        ColorVec clr2 = colors[keyIndex2];
+        (Key k1, Key k2) = GetKeysAtLocation(x, (keysSorted.Count-1) / 2, Mathf.Max(keysSorted.Count / 4, 1));
+        ColorVec clr1 = k1.color, clr2 = k2.color;
+        // percentage of way x is between k1 and k2
+        float g = (x - k1.position) / (k2.position - k1.position);
 
-        float keyPercent1 = (float)keyIndex1 / (count - 1);
-        float keyPercent2 = (float)keyIndex2 / (count - 1);
-
-        float g = (x - keyPercent1) / (keyPercent2 - keyPercent1);
         switch (interType)
         {
             case EvaluableColorTable.InterpolationType.linear:
@@ -170,17 +205,17 @@ public class EvaluableGradient : IEvaluable
 
     public object GetCopy()
     {
-        EvaluableGradient gradient = new EvaluableGradient();
-        for (int i = 0; i < count; i++)
+        EvaluableGradient gradient = new EvaluableGradient(0);
+        foreach (Key key in keys)
         {
-            gradient.AddKey(positions[i], colors[i]);
+            gradient.AddKey(key.position, key.color);
         }
         return gradient;
     }
 
     public int GetResolution()
     {
-        return count;
+        return keys.Count;
     }
 
 }
