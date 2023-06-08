@@ -71,7 +71,7 @@ public class FollowNode : Node
                 }
                 else
                 {
-                    currentColors[i] = ColorOperations.lerp(currentColors[i], targetColor, rate);
+                    currentColors[i] = ColorOperations.Lerp(currentColors[i], targetColor, rate);
                 }
                 outputTable.SetKey(i, currentColors[i]);
             }

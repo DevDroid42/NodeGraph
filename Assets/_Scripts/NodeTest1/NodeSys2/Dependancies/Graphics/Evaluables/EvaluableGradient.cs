@@ -161,7 +161,7 @@ public class EvaluableGradient : IEvaluable
             x = 0.00001f;
         }
 
-        (Key k1, Key k2) = GetKeysAtLocation(x, (keysSorted.Count-1) / 2, Mathf.Max(keysSorted.Count / 4, 1));
+        (Key k1, Key k2) = GetKeysAtLocation(x, (keysSorted.Count-1) / 2, Mathf.Max(keysSorted.Count / 2, 1));
         ColorVec clr1 = k1.color, clr2 = k2.color;
         // percentage of way x is between k1 and k2
         float g = (x - k1.position) / (k2.position - k1.position);
@@ -169,7 +169,9 @@ public class EvaluableGradient : IEvaluable
         switch (interType)
         {
             case EvaluableColorTable.InterpolationType.linear:
-                return ColorOperations.lerp(clr1, clr2, g);
+                return ColorOperations.Lerp(clr1, clr2, g);
+            case EvaluableColorTable.InterpolationType.sinusoidal:
+                return ColorOperations.Slerp(clr1, clr2, g);
             case EvaluableColorTable.InterpolationType.closest:
                 if (g < 0.5)
                 {

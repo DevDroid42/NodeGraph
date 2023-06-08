@@ -13,7 +13,7 @@ public class EvaluableColorTable : IEvaluable
     [JsonConverter(typeof(StringEnumConverter))]
     public enum InterpolationType
     {
-        linear, closest
+        linear, sinusoidal, closest
     }
     public InterpolationType interType = InterpolationType.linear;
 
@@ -80,9 +80,9 @@ public class EvaluableColorTable : IEvaluable
             switch (interType)
             {
                 case InterpolationType.linear:
-                    ColorVec c = new ColorVec((clr2.rx - clr1.rx) * g + clr1.rx, (clr2.gy - clr1.gy) * g + clr1.gy,
-                            (clr2.bz - clr1.bz) * g + clr1.bz);
-                    return c;
+                    return ColorOperations.Lerp(clr1, clr2, g);
+                case InterpolationType.sinusoidal:
+                    return ColorOperations.Slerp(clr1, clr2, g);
                 case InterpolationType.closest:
                     if (g < 0.5)
                     {
