@@ -78,9 +78,9 @@ namespace nodeSys2
         //Removes the reference from the connected port. 
         public void Disconnect()
         {
-            if (property.isInput && lastData != null)
+            if (property.isInput && lastData != null && connected)
             {
-                //Handle(lastData.GetCopy());
+                Handle(lastData.GetCopy());
             }
             if (connected)
             {
