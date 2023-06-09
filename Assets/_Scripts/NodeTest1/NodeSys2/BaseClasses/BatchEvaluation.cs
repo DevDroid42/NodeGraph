@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class BatchEvaluation
 {
-    private static bool threaded = false;
+    private static bool threaded = true;
 
     /*
      * Returns an array of colors across a set range
