@@ -160,6 +160,7 @@ public class GUIGraph : MonoBehaviour
         {
             graph.InitGraph();
         }
+        graphRef.ClearNodeFrameRegistration();
         graphRef.InitGraph();
         Graph.initializing = false;
         for (int i = 0; i < guiNodes.Count; i++)

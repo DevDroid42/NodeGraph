@@ -29,7 +29,6 @@ namespace nodeSys2
         //to be used after loading from json
         public void InitGraph()
         {
-            ClearNodeFrameRegistration();
             if (nodeNetReceiver == null)
             {
                 nodeNetReceiver = new NodeNetReceive();
@@ -49,7 +48,7 @@ namespace nodeSys2
         }
 
         //clears all frame registrations from the frameDelegate
-        private void ClearNodeFrameRegistration()
+        public void ClearNodeFrameRegistration()
         {
             if (frameDelagate is null) return;
             foreach (var item in frameDelagate.GetInvocationList())
