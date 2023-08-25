@@ -153,6 +153,10 @@ public class StaticInstancer : GroupNodeBase
 
     public override void Frame(float deltaTime)
     {
+        if(groups.Count > 400)
+        {
+            Debug.LogWarning("Exessive group count");
+        }
         for (int i = 0; i < groups.Count; i++)
         {
             groups[i].UpdateGraph();

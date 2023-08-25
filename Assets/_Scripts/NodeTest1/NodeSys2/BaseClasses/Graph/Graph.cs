@@ -29,6 +29,7 @@ namespace nodeSys2
         //to be used after loading from json
         public void InitGraph()
         {
+            ClearNodeFrameRegistration();
             if (nodeNetReceiver == null)
             {
                 nodeNetReceiver = new NodeNetReceive();
@@ -44,6 +45,19 @@ namespace nodeSys2
             for (int i = 0; i < nodes.Count; i++)
             {
                 nodes[i].Init2();
+            }
+        }
+
+        //clears all frame registrations from the frameDelegate
+        private void ClearNodeFrameRegistration()
+        {
+            if (frameDelagate is null) return;
+            foreach (var item in frameDelagate.GetInvocationList())
+            {
+                if (item.Target is Node node)
+                {
+                    frameDelagate -= node.Frame;
+                }
             }
         }
 
