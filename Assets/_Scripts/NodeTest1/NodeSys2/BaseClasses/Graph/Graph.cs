@@ -14,11 +14,7 @@ namespace nodeSys2
         public List<Node> nodes = new List<Node>();        
         public static NodeNetReceive nodeNetReceiver;
 
-        public delegate void FloatDelagate(float num);
-        //Frame delagate is a delage that belongs to all nodes.
-        //It is called each frame by whatever host is currently running the graph. 
-        //this is used for methods outside nodes and so is a delagate instead of node collection
-        [JsonIgnore] public static FloatDelagate frameDelagate;
+        [JsonIgnore] public static List<IFrame> registeredFrames = new List<IFrame>();
 
         public static void ResetStaticData()
         {
@@ -50,12 +46,11 @@ namespace nodeSys2
         //clears all frame registrations from the frameDelegate
         public void ClearNodeFrameRegistration()
         {
-            if (frameDelagate is null) return;
-            foreach (var item in frameDelagate.GetInvocationList())
+            for (int i = registeredFrames.Count - 1; i >= 0; i--)
             {
-                if (item.Target is Node node)
+                if(registeredFrames[i] is Node)
                 {
-                    frameDelagate -= node.Frame;
+                    registeredFrames.RemoveAt(i);
                 }
             }
         }

@@ -28,6 +28,7 @@ public class PointNode : Node
 
     public override void Init()
     {
+        base.Init();
         point = new EvaluablePoint();
         size = sizeProp.GetEvaluable().EvaluateValue();
         pos = positionProp.GetEvaluable().EvaluateValue();

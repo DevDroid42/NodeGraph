@@ -22,8 +22,6 @@ public class GroupNode : GroupNodeBase
     public override void Init()
     {
         base.Init();
-
-        RegisterFrameMethod(Frame);
         groupOutDelegate = new GroupOutputNode.GroupOutDelegate(GroupOutHandler);
         group = new Group(graph, groupOutDelegate);
         group.Init();

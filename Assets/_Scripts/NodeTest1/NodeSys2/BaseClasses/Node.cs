@@ -6,15 +6,8 @@ using UnityEngine;
 
 namespace nodeSys2
 {
-    public abstract class Node
+    public abstract class Node : IFrame
     {
-        //TODO: swap all public references to frameDelagate with this:
-        public static void RegisterFrameMethod(Graph.FloatDelagate method)
-        {
-            Graph.frameDelagate -= method;
-            Graph.frameDelagate += method;
-        }
-
         //GUI info
         public float xPos, yPos;
         public float xScale = 250, yScale = 10;
@@ -60,7 +53,6 @@ namespace nodeSys2
             {
                 //this will clear all delagates pointing towards this node to avoid delagates pointing to null function locations
                 inputs[i].dataPort.Disconnect();
-                CleanUp();
             }
             MarkedForDeletion = true;
         }
@@ -185,11 +177,6 @@ namespace nodeSys2
             return false;
         }
 
-        public void CleanUp()
-        {
-            Graph.frameDelagate -= Frame;
-        }
-
         public string GetName()
         {
             return nodeDisc;
@@ -199,7 +186,7 @@ namespace nodeSys2
         //it is not garanteed that all nodes downstream are initialized yet
         public virtual void Init()
         {
-
+            Graph.registeredFrames.Add(this);
         }
 
         //this init method runs after all nodes have had their init method run. This is useful for sending constants down the graph

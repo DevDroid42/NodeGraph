@@ -40,11 +40,11 @@ public class LoopNode : Node
 
     public override void Init()
     {
+        base.Init();
         processData();
         EnumUtils.ConvertEnum<LoopType>(loopTypeProp);
         rateInverter = 1;
         current = start;
-        RegisterFrameMethod(Frame);
     }
 
     public override void Handle()

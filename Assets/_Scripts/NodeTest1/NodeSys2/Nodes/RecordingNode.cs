@@ -31,7 +31,6 @@ public class RecordingNode : Node
     public override void Init()
     {
         base.Init();
-        RegisterFrameMethod(Frame);
         Graph.globalNodeCollection.RegisterRecordingNode(this);
     }
 

@@ -8,7 +8,7 @@ using System.Text;
 using UnityEngine;
 using System.Threading;
 
-public class NodeNetReceive
+public class NodeNetReceive : IFrame
 {
     //used to send a global message out when receiving network data
     public delegate void NetworkDelagate(NetworkMessage message);
@@ -27,8 +27,7 @@ public class NodeNetReceive
 
     public NodeNetReceive()
     {
-        Graph.frameDelagate -= Frame;
-        Graph.frameDelagate += Frame;
+        Graph.registeredFrames.Add(this);
         netThreadObj = new NodeNetReceiveThreaded();
         Thread networkReceiveThread = new Thread(netThreadObj.StartLoop);
         networkReceiveThread.Start();
@@ -40,7 +39,7 @@ public class NodeNetReceive
     }
 
 
-    private void Frame(float delta)
+    public void Frame(float delta)
     {
         List<NetworkMessage> messages = netThreadObj.GetMessages();
         foreach (NetworkMessage message in messages)

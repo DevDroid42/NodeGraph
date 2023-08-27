@@ -370,9 +370,9 @@ public class GUIGraph : MonoBehaviour
             graph.UpdateGraph();
         }
         graphRef.UpdateGraph();
-        if (Graph.frameDelagate != null)
+        for (int i = 0; i < Graph.registeredFrames.Count; i++)
         {
-            Graph.frameDelagate.Invoke(Time.deltaTime);
+            Graph.registeredFrames[i].Frame(Time.deltaTime);
         }
         //Debug.Log("Compute time: " + (Time.realtimeSinceStartup - time));
         CullNodes();

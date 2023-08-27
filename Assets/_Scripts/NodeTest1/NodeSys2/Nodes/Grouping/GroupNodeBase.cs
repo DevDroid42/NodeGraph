@@ -12,6 +12,7 @@ public class GroupNodeBase : Node
 
     public override void Init()
     {
+        base.Init();
         if (graph.graphName != "")
         {
             base.nodeDisc = graph.graphName;

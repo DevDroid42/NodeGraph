@@ -42,7 +42,6 @@ public class StaticInstancer : GroupNodeBase
         groupOutDelegate = new GroupOutputNode.GroupOutDelegate(GroupOutputHandler);
         SetupInstances();
         SetupProperties();
-        RegisterFrameMethod(Frame);
         InitGraphs();
     }
 

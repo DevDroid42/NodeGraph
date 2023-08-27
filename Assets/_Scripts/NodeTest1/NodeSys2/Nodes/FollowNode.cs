@@ -41,7 +41,7 @@ public class FollowNode : Node
 
     public override void Init()
     {
-        RegisterFrameMethod(Frame);
+        base.Init();
         int res = (int)resolution.GetEvaluable().EvaluateValue();
         if (res < 0)
         {

@@ -30,6 +30,7 @@ public class NoiseNode : Node
 
     public override void Init()
     {
+        base.Init();
         noise = new EvaluableNoise();
         UpdateNoise();
     }
