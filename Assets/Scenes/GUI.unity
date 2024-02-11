@@ -438,6 +438,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointerEnter:
     m_PersistentCalls:
+      m_Calls: []
+  SingleClick:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1286903377}
         m_MethodName: ToggleMenu
@@ -450,9 +453,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  SingleClick:
-    m_PersistentCalls:
-      m_Calls: []
   DoubleClick:
     m_PersistentCalls:
       m_Calls: []
@@ -3090,6 +3090,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointerEnter:
     m_PersistentCalls:
+      m_Calls: []
+  SingleClick:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1286903377}
         m_MethodName: ToggleMenu
@@ -3102,9 +3105,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  SingleClick:
-    m_PersistentCalls:
-      m_Calls: []
   DoubleClick:
     m_PersistentCalls:
       m_Calls: []

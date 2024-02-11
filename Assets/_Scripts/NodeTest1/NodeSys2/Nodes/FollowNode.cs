@@ -54,7 +54,6 @@ public class FollowNode : Node
     public override void Frame(float deltaTime)
     {
         int count = currentColors.Length;
-        float rate = Mathf.Clamp(followRate.GetEvaluable().EvaluateValue(), 0, 1);
         //break up the work into equal chunks by core count
         int threadRange = Math.Max(count / (Environment.ProcessorCount * 2), 2);
         var rangePartitioner = Partitioner.Create(0, count, threadRange);
@@ -63,6 +62,7 @@ public class FollowNode : Node
             for (int i = range.Item1; i < range.Item2; i++)
             {
                 float position = (count == 1) ? 0 : (float)i / (count - 1);
+                float rate = Mathf.Clamp(followRate.GetEvaluable().EvaluateValue(position), 0, 1);
                 ColorVec targetColor = input.GetEvaluable().EvaluateColor(position);
                 if (snapUp.GetEvaluable().EvaluateValue() >= 0.5 && ((float)targetColor) > ((float)currentColors[i])
                 || snapDown.GetEvaluable().EvaluateValue() >= 0.5 && ((float)targetColor) < ((float)currentColors[i]))
