@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Comment CommentText="Provides inputs and outputs from groups">
+    <Position X="15.092" Y="4.194" Height="0.342" Width="2.542" />
+  </Comment>
+  <Comment CommentText="Sometimes we might want varrying data per instance. This gives a way to push arbitrary data. ">
+    <Position X="15.966" Y="6.101" Height="0.486" Width="2.542" />
+  </Comment>
+  <Class Name="nodeSys2.Node">
+    <Position X="19.5" Y="2.75" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAgAQAAgAIAAAAAAAQAASAAAAAEAAJISAAACAwQCBAE=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Node.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DynamicInstancer" Collapsed="true">
+    <Position X="23.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAIgAAACAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\Grouping\DynamicInstancer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GroupInputNode" Collapsed="true">
+    <Position X="16.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAACAAEABIAAAAGAABAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\Grouping\GroupInputNode.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GroupNode" Collapsed="true">
+    <Position X="22.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAgABIAAAAAAAAAAAAAAAAIAAAAAAAIAAAACCAAAAAE=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\Grouping\GroupNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GroupNodeBase" Collapsed="true">
+    <Position X="23.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAACAAAABAAAAACAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\Grouping\GroupNodeBase.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="graph" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GroupOutputNode" Collapsed="true">
+    <Position X="14.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAABAAAAAEABIAAAAEAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\Grouping\GroupOutputNode.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="InfoNode" Collapsed="true">
+    <Position X="18.5" Y="6" Width="2" />
+    <InheritanceLine Type="nodeSys2.Node" ManuallyRouted="true">
+      <Path>
+        <Point X="20.625" Y="3.921" />
+        <Point X="20.625" Y="4.632" />
+        <Point X="19.5" Y="4.632" />
+        <Point X="19.5" Y="6" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAgAAAAAAAAAAAAAAAAAAAgAACAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\Grouping\InfoNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InstancedPulseNode" Collapsed="true">
+    <Position X="21" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\Grouping\InstancedPulseNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InstanceInfoNode" Collapsed="true">
+    <Position X="19.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEBAAAAAAAAAAABAACIAAAAAAIAAACAQAAAAII=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\Grouping\InstanceInfoNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MidiInfoNode" Collapsed="true">
+    <Position X="17.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIIAAAEAAAAQACAAAAAAAAAAAAAAAAIAAABAAggAABA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\Grouping\MidiInfoNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MidiInstancer" Collapsed="true">
+    <Position X="25.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQEAAAAAAAAAAAAAJAACAIAAAAAAAIAAEQCACAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\Grouping\MidiInstancer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StaticInstancer" Collapsed="true">
+    <Position X="24.5" Y="7.25" Width="1.5" />
+    <AssociationLine Name="groups" Type="Group">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.081" Y="0.069" Height="0.182" Width="1.524" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>YAgBAAgEAAAAQCBABBBAAAIACAAAAAKAAAACCABAAAE=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\Grouping\StaticInstancer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="groups" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="nodeSys2.Graph" Collapsed="true">
+    <Position X="27.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgIAAAAgIAAhAEgAAAAAAAAAACgAAAAACAAAAQAAIAg=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Graph\Graph.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Group" Collapsed="true">
+    <Position X="27.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIgEAAAgAQIBAAQAgAAABAAAHAAAQACgigACFAAAAAI=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Graph\Group.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="graph" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

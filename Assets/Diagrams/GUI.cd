@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="GUIGraph" Collapsed="true">
+    <Position X="14.25" Y="5.25" Width="2.5" />
+    <NestedTypes>
+      <Class Name="GUIGraph.IntEvent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\_Scripts\NodeTest1\NodeSys2GUI\Scripts\GUIGraph\GUIGraph.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="GUIGraph.StringEvent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\_Scripts\NodeTest1\NodeSys2GUI\Scripts\GUIGraph\GUIGraph.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>CA4IBDhMAChACCqEIFAQAAAwAhIAIABIAAAAEQQInkg=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2GUI\Scripts\GUIGraph\GUIGraph.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="openedGraphs" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="GUINode" Collapsed="true">
+    <Position X="16.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAAAgCAEABAAQEAAIAAWAAAAAAAAIIAFCAEAAUA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2GUI\Scripts\GUINode\GUINode.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="GUIGraphRef" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GUIPort" Collapsed="true">
+    <Position X="14.25" Y="7" Width="1.5" />
+    <AssociationLine Name="GUIGraphRef" Type="GUIGraph" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="14.25" Y="7.25" />
+        <Point X="13.875" Y="7.25" />
+        <Point X="13.875" Y="5.596" />
+        <Point X="14.25" Y="5.596" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ggUAAABAIiIIABEAAQBBABACCAAAAgAAIAAAAgIAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2GUI\Scripts\GUIPort\GUIPort.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="portRef" />
+      <Field Name="GUIGraphRef" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="nodeSys2.Port" Collapsed="true">
+    <Position X="14.25" Y="8" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="nodeSys2.Port.PortDelagate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Port.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>BAQIAABAAAAIAAhAAAAAAIBAAAAAABIAAAAABAAAAAE=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Port.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="nodeSys2.Graph" Collapsed="true">
+    <Position X="19.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgIAAAAgIAAhAEgAAAAAAAAAACgAAAAACAAAAQAAIAg=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Graph\Graph.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

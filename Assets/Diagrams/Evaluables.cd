@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="EvaluableBlank" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAgAAAAAAAAQAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableBlank.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EvaluableBool" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAIAAAAAAAAAEgAAAAAAAAQAAAAAIAAAACAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableBool.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EvaluableColorTable" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CABAAAQAAAAIAAAAgAAAAAQAAQAAAAAgAAAACAAAAQA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableColorTable.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EvaluableColorVec" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAIAAAAAAAAEAAAgAgAAAAAAQAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableColorVec.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EvaluableFloat" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAACAAAAAAAAAEggAAAAAAAQAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableFloat.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EvaluableGradient" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAIAAAAAAAJAAAAgAIQAAQAAwAAAAAgAAAAaABAAQA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableGradient.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EvaluableMath" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="7" Width="2.5" />
+    <NestedTypes>
+      <Enum Name="EvaluableMath.OperationType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableMath.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>CACAAAAAAAAAABAQgBAAAAAAAQAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableMath.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EvaluableMixRGB" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAIAAAABAAAQQRAAhAABCAIAAQAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableMixRGB.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EvaluableNoise" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAgAAAwAACAQAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableNoise.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EvaluablePoint" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAACAAABAAAggAAAAAAAAQAAAAgAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluablePoint.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EvaluableRemap" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAEAAAAAAAAAAAgAAAAAAAAQAAABAAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableRemap.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EvaluableSwitch" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAABAAgAAAAAAAAQAAAAAAAAAACQAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableSwitch.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EvaluableTransform" BaseTypeListCollapsed="true">
+    <Position X="11" Y="7" Width="2.25" />
+    <NestedTypes>
+      <Enum Name="EvaluableTransform.OOBBehavior" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableTransform.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>CAAAIAAABAAAgAAAgCCAABACAQAAAAAAAAAASAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Evaluables\EvaluableTransform.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Struct Name="ColorVec">
+    <Position X="8.25" Y="4" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAkAAEAAAAAAAAAE4AcEBAAAAEAAAAAABAAAAIAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Dependancies\Graphics\Color\ColorVec.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

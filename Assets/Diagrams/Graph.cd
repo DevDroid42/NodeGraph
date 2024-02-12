@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Comment CommentText="static - Holds nodes that need global references for things like incoming network data or recording across all sub-graphs.">
+    <Position X="22.985" Y="3.714" Height="0.51" Width="4.783" />
+  </Comment>
+  <Comment CommentText="Unique collection of nodes per graph">
+    <Position X="21.607" Y="6.664" Height="0.317" Width="2.401" />
+  </Comment>
+  <Comment CommentText="The highest level class that holds all nodes. Because there can be nodes that hold graphs static variables are needed">
+    <Position X="17.597" Y="3.618" Height="0.601" Width="2.822" />
+  </Comment>
+  <Comment CommentText="Data defined at runtime. Can be hardcoded at start or can be connected to other properties">
+    <Position X="26.303" Y="6.256" Height="0.474" Width="2.891" />
+  </Comment>
+  <Comment CommentText="Abstraction Layer to handle connecting properties to each other">
+    <Position X="30.553" Y="6.797" Height="0.474" Width="2.891" />
+  </Comment>
+  <Comment CommentText="Handles incoming network data on each frame. Checks threaded code for new messages. Calls subscribed nodes with incoming data">
+    <Position X="21.826" Y="0.586" Height="0.633" Width="3.353" />
+  </Comment>
+  <Comment CommentText="Separate Thread that handles incoming network traffic">
+    <Position X="26.789" Y="0.91" Height="0.346" Width="3.353" />
+  </Comment>
+  <Comment CommentText="asbtraction of raw incoming data">
+    <Position X="31.04" Y="0.928" Height="0.339" Width="2.219" />
+  </Comment>
+  <Class Name="nodeSys2.Graph">
+    <Position X="17.5" Y="4.25" Width="3" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="globalNodeCollection" Type="nodeSys2.NodeCollections" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20.5" Y="4.512" />
+        <Point X="20.875" Y="4.512" />
+        <Point X="20.875" Y="4.5" />
+        <Point X="22.75" Y="4.5" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgIAAAAgIAAhAEgAAAAAAAAAACgAAAAACAAAAQAAIAg=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Graph\Graph.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="globalNodeCollection" />
+      <Field Name="nodeNetReceiver" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="nodes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="nodeSys2.NodeCollections">
+    <Position X="22.75" Y="4.25" Width="5.25" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAABABAAAAQAQAEAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Graph\Graph.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="nodeSys2.Node">
+    <Position X="20.75" Y="7" Width="3.25" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAgAQAAgAIAAAAAAAQAASAAAAAEAAJISAAACAwQCBAE=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Node.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="inputs" />
+      <Field Name="outputs" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="nodeSys2.Property">
+    <Position X="26.25" Y="6.75" Width="3" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQAAAgAxEACIgARAAYAAAAAAAABAIhIgAAAQSAAgAEA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Property.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="dataPort" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="nodeSys2.Port">
+    <Position X="30.5" Y="7.25" Width="3" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="nodeSys2.Port.PortDelagate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Port.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>BAQIAABAAAAIAAhAAAAAAIBAAAAAABIAAAAABAAAAAE=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Port.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NodeNetReceive">
+    <Position X="21" Y="1.25" Width="4.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="NodeNetReceive.NetworkDelagate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Networking\NodeNetReceive.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAQAAAAAAAAAAAAEgEAE=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Networking\NodeNetReceive.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="netThreadObj" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="NodeNetReceiveThreaded">
+    <Position X="26.75" Y="1.25" Width="3.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="messageQueue" Type="NetworkMessage" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="28.188" Y="2.805" />
+        <Point X="28.188" Y="3.5" />
+        <Point X="31" Y="3.5" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAkAAgAAAAAAAAAAAAEAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Networking\NodeNetReceive.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="messageQueue" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="NetworkMessage">
+    <Position X="31" Y="1.25" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="NetworkMessage.DataType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Networking\NetworkMessage.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>CAABAgAAAAAAgAAEAAAABAAAACAAAAAgAAAwAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Networking\NetworkMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

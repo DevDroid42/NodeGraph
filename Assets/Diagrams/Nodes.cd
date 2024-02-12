@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TransformNode" Collapsed="true">
+    <Position X="20.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABgAAgAAACCAAAAQCCAAAAAIAAAACAQAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\TransformNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AddNode" Collapsed="true">
+    <Position X="17" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAACAAAAAIAACDCAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\AddNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ColorConstant" Collapsed="true">
+    <Position X="18.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAgQAAAAAAAAAAAACgIAAABABAAAAAIAAAASAABABgA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\ColorConstant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ColorMixNode" Collapsed="true">
+    <Position X="20.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAggAAAAAABAAAAAgAAIQAAAABAIAAAACAAAACAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\ColorMixNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ColorTableNode" Collapsed="true">
+    <Position X="22.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAgAAAAAAAAiAACAAABAqAAAgCAABAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\ColorTableNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EquationNode" Collapsed="true">
+    <Position X="24" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwAAAAAAAAAAAABAAAQAAAAQBAARAIAAAAiIAAEIAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\EquationNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FloatConstant" Collapsed="true">
+    <Position X="17" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\FloatConstant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FollowNode" Collapsed="true">
+    <Position X="18.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAgAAEAAAAAAAEAAAACAACBAAABAAAABCAAAAAAE=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\FollowNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GradientNode" Collapsed="true">
+    <Position X="20.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAgAAAAAAAACAACAAABAoAAAgKAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\GradientNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LedUDP" Collapsed="true">
+    <Position X="22.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAEAAAABABoAAAAiAAAAICU=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\LedUDP.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LogicNode" Collapsed="true">
+    <Position X="24" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAEAAIAAAgAAAAAAAABAAAABAAgIAAAAiAAAABAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\LogicNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LoopNode" Collapsed="true">
+    <Position X="14.25" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAQkFCAAgAQBAAgIgAAAAAAiAAAAAIAgAACAAAQAAE=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\LoopNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AdvancedLoopNode" Collapsed="true">
+    <Position X="14.25" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\LoopNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MathNode" Collapsed="true">
+    <Position X="17" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAgAAAAAAABAAQAAgAAAAAAAABAIAAAACAAAAGAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\MathNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NoiseNode" Collapsed="true">
+    <Position X="18.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAgAAAAAAAAAAAAAwAACCAAAAAIAAAACAAgAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\NoiseNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PointNode" Collapsed="true">
+    <Position X="20.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAACACAAAAAABAIAAAIAAAAAIAAIACAACAAAACBQ=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\PointNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PulseRouterNode" Collapsed="true">
+    <Position X="22.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAABAAAAAAAAAAAAAABGoAAAACAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\PulseRouterNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecordingNode" Collapsed="true">
+    <Position X="24" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAIAAAAAQAAACAAAAAMABKACAACAAAAAAE=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\RecordingNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemapNode" Collapsed="true">
+    <Position X="17" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAABAAAAAAAAAACAAAABIAAAACAAAQAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\RemapNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwitchNode" Collapsed="true">
+    <Position X="18.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAABCAAAAAgAAAAAAABAIAAAACAQAACAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\SwitchNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MidiReceiveNode" Collapsed="true">
+    <Position X="13.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAEAIAAAEAAAAAAAIAACAIAAAAAAAAAAEQGACAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\NetworkReceivers\MidiReceiveNode.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="NetReceiveNode" Collapsed="true">
+    <Position X="15.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAACQAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\NetworkReceivers\netReceiveNode.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

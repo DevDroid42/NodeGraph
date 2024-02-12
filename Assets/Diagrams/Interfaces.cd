@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Interface Name="IFrame">
+    <Position X="14.5" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\IFrame.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="INetReceivable">
+    <Position X="17" Y="3" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Networking\INetReceivable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ICopyable">
+    <Position X="12.5" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Graph\IEvaluable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IEvaluable">
+    <Position X="12.5" Y="4.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAQAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\BaseClasses\Graph\IEvaluable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="INameable">
+    <Position X="20.5" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\NodeTest1\NodeSys2\Nodes\Grouping\Nameable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
